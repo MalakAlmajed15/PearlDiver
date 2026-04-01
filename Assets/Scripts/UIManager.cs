@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
     public void AddPearl()
     {
         pearls++;
-        pearlText.text = "Pearls: " + pearls;
+        pearlText.text = "10/" + pearls;
         if (pearls >= 10) ShowVictory();
     }
 
