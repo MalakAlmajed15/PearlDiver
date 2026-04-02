@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 531799c2eff9c784386d725a74b092c7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 53519
+  packageName: AQUAS Water LITE
+  packageVersion: 1.2.1
+  assetPath: Assets/AQUAS-Lite/Scripts/AQUAS_Lite_CamNav.cs
+  uploadId: 335520
