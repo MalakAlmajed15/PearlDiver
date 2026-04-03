@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5c9c6b01d22c84a4e90e10d6f492a2fa
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 303626
+  packageName: Underwater Sunken Ship Environment
+  packageVersion: 1.0
+  assetPath: Assets/LeartesStudios/UnderwaterShip/HDRP/Scene/HDRP_UnderwaterShip/README_About_ExtraFogs.txt
+  uploadId: 739828

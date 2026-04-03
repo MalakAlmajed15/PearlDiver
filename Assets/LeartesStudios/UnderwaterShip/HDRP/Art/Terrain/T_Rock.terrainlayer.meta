@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7b576798b4e02114995abed95ba89073
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 8574412962073106934
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 303626
+  packageName: Underwater Sunken Ship Environment
+  packageVersion: 1.0
+  assetPath: Assets/LeartesStudios/UnderwaterShip/HDRP/Art/Terrain/T_Rock.terrainlayer
+  uploadId: 739828
