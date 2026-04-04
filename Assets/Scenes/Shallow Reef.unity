@@ -194,27 +194,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3447742079981357586, guid: 270a3f8770ebc0a47acf4a3f2a1aa785, type: 3}
       propertyPath: m_LocalScale.x
-      value: 50
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3447742079981357586, guid: 270a3f8770ebc0a47acf4a3f2a1aa785, type: 3}
       propertyPath: m_LocalScale.y
-      value: 50
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3447742079981357586, guid: 270a3f8770ebc0a47acf4a3f2a1aa785, type: 3}
       propertyPath: m_LocalScale.z
       value: 50
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3447742079981357586, guid: 270a3f8770ebc0a47acf4a3f2a1aa785, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 310
+      value: 367.2
       objectReference: {fileID: 0}
     - target: {fileID: 3447742079981357586, guid: 270a3f8770ebc0a47acf4a3f2a1aa785, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 74
+      value: 10.8
       objectReference: {fileID: 0}
     - target: {fileID: 3447742079981357586, guid: 270a3f8770ebc0a47acf4a3f2a1aa785, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 95
+      value: 242.7
       objectReference: {fileID: 0}
     - target: {fileID: 3447742079981357586, guid: 270a3f8770ebc0a47acf4a3f2a1aa785, type: 3}
       propertyPath: m_LocalRotation.w
@@ -372,7 +373,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 179
+  field of view: 45
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -399,12 +400,12 @@ Transform:
   m_GameObject: {fileID: 1524376338}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 267, y: 91, z: 81}
+  m_LocalPosition: {x: 367.058, y: 10.771, z: 240.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 30, y: 597.9, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 720, z: 0}
 --- !u!1 &1807973333
 GameObject:
   m_ObjectHideFlags: 0
