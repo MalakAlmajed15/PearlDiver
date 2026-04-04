@@ -244,6 +244,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crab2
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6d3392c5256a5c45974b6f84831224c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -312,6 +316,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a2ba44d297778c34693874be66fd5e14, type: 3}
       propertyPath: m_Name
       value: Crab1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a2ba44d297778c34693874be66fd5e14, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -570,6 +578,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 48cff5c3da6fd2741a37e60efa10f6a0, type: 3}
       propertyPath: m_Name
       value: jellfish
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 48cff5c3da6fd2741a37e60efa10f6a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
