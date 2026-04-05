@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Shallow Reef.unity
     guid: 68ad889c395b4b84685961211032831c
+  - enabled: 1
+    path: Assets/Scenes/UI Scene.unity
+    guid: d0456b237f121e84caa7aaaead6c9564
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
