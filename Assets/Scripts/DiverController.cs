@@ -4,44 +4,45 @@ public class DiverController : MonoBehaviour
 {
     public float swimSpeed = 5f;
     public float verticalSpeed = 3f;
-    public float mouseSensitivity = 2f;
-    public Transform cameraTransform;
 
     private Rigidbody rb;
-    private float yaw, pitch;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
-        rb.linearDamping = 3f;
+        rb.linearDamping = 3f;          // replaces linearDamping
+        rb.angularDamping = 0.05f;
         Cursor.lockState = CursorLockMode.Locked;
-    }
-
-    void Update()
-    {
-       
-        yaw += Input.GetAxis("Mouse X") * mouseSensitivity;
-        pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
-        pitch = Mathf.Clamp(pitch, -75f, 75f);
-
-        transform.localRotation = Quaternion.Euler(0, yaw, 0);
-        cameraTransform.localRotation = Quaternion.Euler(pitch, 0, 0);
     }
 
     void FixedUpdate()
     {
-       
-        float h = Input.GetAxis("Horizontal"); 
-        float v = Input.GetAxis("Vertical");   
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
 
-        Vector3 move = (transform.right * h
-                      + transform.forward * v) * swimSpeed;
+        Vector3 inputDir = new Vector3(h, 0, v).normalized;
 
-        
-        if (Input.GetKey(KeyCode.Space)) move.y = verticalSpeed;
-        else if (Input.GetKey(KeyCode.LeftShift)) move.y = -verticalSpeed;
+        if (inputDir.magnitude > 0.1f)
+        {
+            // Move relative to diver�s facing direction
+            Vector3 move = transform.TransformDirection(inputDir) * swimSpeed;
 
-        rb.linearVelocity = move;
+            if (Input.GetKey(KeyCode.Space)) move.y = verticalSpeed;
+            else if (Input.GetKey(KeyCode.LeftShift)) move.y = -verticalSpeed;
+
+            rb.linearVelocity = move;
+
+            // Smoothly rotate diver toward movement direction
+            transform.rotation = Quaternion.Lerp(
+                transform.rotation,
+                Quaternion.LookRotation(new Vector3(move.x, 0, move.z)),
+                Time.deltaTime * 5f
+            );
+        }
+        else
+        {
+            rb.linearVelocity = Vector3.zero;
+        }
     }
 }
