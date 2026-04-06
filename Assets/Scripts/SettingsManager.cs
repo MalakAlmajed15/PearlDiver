@@ -9,16 +9,14 @@ public class SettingsManager : MonoBehaviour
 
     public void SetVolume(float sliderValue)
     {
-        // Sliders go 0 to 1, but Mixers use Decibels (-80 to 0)
-        mainMixer.SetFloat("MyExposedVolume", Mathf.Log10(sliderValue) * 20);
+        float normalized = Mathf.Clamp(sliderValue, 0.0001f, 1f);
+        mainMixer.SetFloat("MyExposedVolume", Mathf.Log10(normalized) * 20);
     }
 
     public void SetBrightness(float sliderValue)
     {
-        // Adjust the intensity of your main light
+        // Slider 0-100, scale to a reasonable intensity range
         if (directionalLight != null)
-        {
-            directionalLight.intensity = sliderValue;
-        }
+            directionalLight.intensity = sliderValue / 100f * 3f; // 0 to 3 intensity
     }
 }
