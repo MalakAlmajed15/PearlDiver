@@ -6,6 +6,25 @@ public class SettingsManager : MonoBehaviour
 {
     public AudioMixer mainMixer;
     public Light directionalLight;
+    public Slider volumeSlider;
+    public Slider brightnessSlider;
+
+    void Start()
+    {
+        // Set sliders to current values when game starts
+        volumeSlider.value = 1f; // default full volume
+        brightnessSlider.value = directionalLight.intensity;
+    }
+
+    public void OnSettingsOpen()
+    {
+        // Call this when the Settings button is clicked
+        float currentVol;
+        mainMixer.GetFloat("MyExposedVolume", out currentVol);
+        // Convert dB back to 0-1
+        volumeSlider.value = Mathf.Pow(10, currentVol / 20);
+        brightnessSlider.value = directionalLight.intensity;
+    }
 
     public void SetVolume(float sliderValue)
     {
@@ -15,8 +34,7 @@ public class SettingsManager : MonoBehaviour
 
     public void SetBrightness(float sliderValue)
     {
-        // Slider 0-100, scale to a reasonable intensity range
         if (directionalLight != null)
-            directionalLight.intensity = sliderValue / 100f * 3f; // 0 to 3 intensity
+            directionalLight.intensity = sliderValue;
     }
 }

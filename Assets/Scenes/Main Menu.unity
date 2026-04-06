@@ -1531,6 +1531,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SettingsManager
   mainMixer: {fileID: 24100000, guid: 5100927b51f653f4293814b3910c3e21, type: 2}
   directionalLight: {fileID: 894327419}
+  volumeSlider: {fileID: 0}
+  brightnessSlider: {fileID: 0}
 --- !u!1 &824402674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1829,7 +1831,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 210, y: -134}
-  m_SizeDelta: {x: 160, y: 20}
+  m_SizeDelta: {x: 252, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &944091748
 MonoBehaviour:
@@ -1932,7 +1934,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 210, y: 28}
-  m_SizeDelta: {x: 160, y: 20}
+  m_SizeDelta: {x: 252, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &972555782
 MonoBehaviour:
@@ -2562,9 +2564,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2029099864}
-        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: OpenSettings
+      - m_Target: {fileID: 2029099866}
+        m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
+        m_MethodName: OnSettingsOpen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4255,6 +4257,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SettingsManager
   mainMixer: {fileID: 24100000, guid: 5100927b51f653f4293814b3910c3e21, type: 2}
   directionalLight: {fileID: 894327419}
+  volumeSlider: {fileID: 972555782}
+  brightnessSlider: {fileID: 944091748}
 --- !u!1 &2071518799
 GameObject:
   m_ObjectHideFlags: 0
