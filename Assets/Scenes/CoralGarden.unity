@@ -3386,9 +3386,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8897093224108074265}
   - component: {fileID: 3579238973461433684}
+  - component: {fileID: 8897093224108074266}
   - component: {fileID: 8897093224108074268}
   - component: {fileID: 8897093224108074267}
-  - component: {fileID: 8897093224108074266}
   m_Layer: 0
   m_Name: diver
   m_TagString: Diver
