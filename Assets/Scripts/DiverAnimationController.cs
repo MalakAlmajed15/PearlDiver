@@ -4,6 +4,7 @@ public class DiverAnimationController : MonoBehaviour
 {
     private Animator animator;
     private Rigidbody rb;
+    private bool isUnderwater = false;
 
     void Start()
     {
@@ -16,11 +17,37 @@ public class DiverAnimationController : MonoBehaviour
         // Check if player is moving
         bool isMoving = rb.linearVelocity.magnitude > 0.1f;
 
-        // Switch between Idle and Swim
-        animator.SetBool("isSwimming", isMoving);
+        if (isUnderwater)
+        {
+            // Underwater — use swim animation
+            animator.SetBool("isSwimming", isMoving);
+            animator.SetBool("isWalking", false);
+        }
+        else
+        {
+            // On land — use walk animation
+            animator.SetBool("isWalking", isMoving);
+            animator.SetBool("isSwimming", false);
+        }
     }
 
-    // Call this when diver gets hit
+    // Called when entering water
+    public void EnterWater()
+    {
+        isUnderwater = true;
+        animator.SetBool("isSwimming", true);
+        animator.SetBool("isWalking", false);
+    }
+
+    // Called when exiting water
+    public void ExitWater()
+    {
+        isUnderwater = false;
+        animator.SetBool("isSwimming", false);
+        animator.SetBool("isWalking", true);
+    }
+
+    // Called when diver gets hit
     public void TriggerHit()
     {
         animator.SetTrigger("isHit");
