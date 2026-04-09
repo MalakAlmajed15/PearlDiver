@@ -19,35 +19,32 @@ public class DiverAnimationController : MonoBehaviour
 
         if (isUnderwater)
         {
-            // Underwater — use swim animation
+            // Underwater — swim animation
             animator.SetBool("isSwimming", isMoving);
-            animator.SetBool("isWalking", false);
         }
         else
         {
-            // On land — use walk animation
-            animator.SetBool("isWalking", isMoving);
+            // On land — walk animation plays automatically
+            // since Walk is the default state
             animator.SetBool("isSwimming", false);
         }
     }
 
-    // Called when entering water
+    // Called when diver enters water
     public void EnterWater()
     {
         isUnderwater = true;
         animator.SetBool("isSwimming", true);
-        animator.SetBool("isWalking", false);
     }
 
-    // Called when exiting water
+    // Called when diver exits water
     public void ExitWater()
     {
         isUnderwater = false;
         animator.SetBool("isSwimming", false);
-        animator.SetBool("isWalking", true);
     }
 
-    // Called when diver gets hit
+    // Called when diver gets hit by enemy
     public void TriggerHit()
     {
         animator.SetTrigger("isHit");
