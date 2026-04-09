@@ -19,12 +19,12 @@ public class DiverAnimationController : MonoBehaviour
 
         if (isUnderwater)
         {
-            // Underwater — swim animation
+            // Underwater swim animation
             animator.SetBool("isSwimming", isMoving);
         }
         else
         {
-            // On land — walk animation plays automatically
+            // On land walk animation plays automatically
             // since Walk is the default state
             animator.SetBool("isSwimming", false);
         }
