@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 239162d307d6e554e8360cee06c07637
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - bronzeMedal: {fileID: 21300000, guid: c518cafa68793944cbd2107517048c70, type: 3}
+  - silverMedal: {instanceID: 0}
+  - goldMedal: {instanceID: 0}
+  - noMedal: {instanceID: 0}
+  - backButton: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

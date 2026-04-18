@@ -9,10 +9,22 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: eb74f868d50fb594ba0700e9b3b296c4
   - enabled: 1
+    path: Assets/Scenes/LevelScreen.unity
+    guid: 803105d8fe00f974f85c97eec82a0345
+  - enabled: 1
     path: Assets/Scenes/Shallow Reef.unity
     guid: 68ad889c395b4b84685961211032831c
   - enabled: 1
     path: Assets/Scenes/UI Scene.unity
     guid: d0456b237f121e84caa7aaaead6c9564
+  - enabled: 1
+    path: Assets/Scenes/CoralGarden.unity
+    guid: 3899706219ddc5a489989b42b2041846
+  - enabled: 1
+    path: Assets/Scenes/DeepCave.unity
+    guid: 1f7f8cbec7155d940a4b4788a28cb6eb
+  - enabled: 1
+    path: Assets/Scenes/ShipWreck.unity
+    guid: e71aa3e217a5618498ecb5c9c07046dd
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
