@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // Required for switching scenes
+using UnityEngine.SceneManagement; 
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -8,13 +8,13 @@ public class MainMenuManager : MonoBehaviour
     public GameObject creditsPopup;
     public GameObject settingsPopup;
 
-    [Header("Scene Settings")]
-    public string levelSceneName = "Shallow Reef";
+    //[Header("Scene Settings")]
+    //public string levelSceneName = "Shallow Reef";
 
 
     public void StartGame()
     {
-        SceneManager.LoadScene(levelSceneName); //add the level scene
+        SceneManager.LoadScene(1); 
     }
 
     public void OpenInstructions()
