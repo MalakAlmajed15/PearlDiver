@@ -28,7 +28,7 @@ public static class GameData
 
     public static bool IsUnlocked(int levelIndex)
     {
-        if (levelIndex == 1) return true; // Level 1 always unlocked
+        if (levelIndex == 1) return true; // Level 1 ALWAYS unlocked
         return PlayerPrefs.GetInt("Level" + levelIndex + "_Unlocked", 0) == 1;
     }
 

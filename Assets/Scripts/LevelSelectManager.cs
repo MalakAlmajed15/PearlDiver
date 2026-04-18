@@ -18,16 +18,15 @@ public class LevelSelectManager : MonoBehaviour
     }
 
     [Header("Level Cards (assign all 5 in order)")]
-    public LevelCard[] levelCards; // size 5
+    public LevelCard[] levelCards;
 
     [Header("Medal Sprites")]
     public Sprite bronzeMedal;
     public Sprite silverMedal;
     public Sprite goldMedal;
-    public Sprite noMedal;
 
     [Header("Scene Names (must match Build Settings)")]
-    public string[] levelSceneNames; // e.g. "Level1", "Level2" ... size 5
+    public string[] levelSceneNames;
 
     [Header("Back Button")]
     public Button backButton;
@@ -35,7 +34,7 @@ public class LevelSelectManager : MonoBehaviour
 
     private string[] levelNames = {
         "Shallow Reef",
-        "CoralGarden",
+        "Coral Garden",
         "Sunken Dhow",
         "Deep Cave",
         "Treasure Cove"
@@ -47,51 +46,56 @@ public class LevelSelectManager : MonoBehaviour
 
         for (int i = 0; i < 5; i++)
         {
-            int levelIndex = i + 1; // 1-based
+            int levelIndex = i + 1;
             LevelCard card = levelCards[i];
             bool unlocked = GameData.IsUnlocked(levelIndex);
 
-            // Level name
-            card.levelNameText.text = "Level " + levelIndex + "\n" + levelNames[i];
+            //card.levelNameText.text = "Level " + levelIndex + "\n" + levelNames[i];
 
-            // Lock overlay
-            card.lockOverlay.gameObject.SetActive(!unlocked);
+            if (card.lockOverlay != null)
+                card.lockOverlay.gameObject.SetActive(!unlocked);
+
             card.playButton.interactable = unlocked;
 
             if (unlocked)
             {
-                // Best time
                 float best = GameData.GetBestTime(levelIndex);
                 card.bestTimeText.text = best >= 0
                     ? "Best: " + GameData.FormatTime(best)
                     : "Best: --:--";
 
-                // Pearl count
                 int pearls = GameData.GetPearls(levelIndex);
                 int total = GameData.GetTotalPearls(levelIndex);
                 card.pearlCountText.text = total > 0
                     ? "Pearls: " + pearls + "/" + total
                     : "Pearls: -/-";
 
-                // Medal
+                // Show medal only if earned, hide otherwise
                 int medal = GameData.GetMedal(levelIndex);
-                card.medalImage.sprite = medal switch
+                if (medal == 0)
                 {
-                    3 => goldMedal,
-                    2 => silverMedal,
-                    1 => bronzeMedal,
-                    _ => noMedal
-                };
+                    card.medalImage.gameObject.SetActive(false);
+                }
+                else
+                {
+                    card.medalImage.gameObject.SetActive(true);
+                    card.medalImage.sprite = medal switch
+                    {
+                        3 => goldMedal,
+                        2 => silverMedal,
+                        _ => bronzeMedal
+                    };
+                }
 
-                // Button loads the level
+                string sceneToLoad = levelSceneNames[i];
                 card.playButton.onClick.AddListener(() =>
-                    SceneManager.LoadScene(levelSceneNames[levelIndex - 1]));
+                    SceneManager.LoadScene(sceneToLoad));
             }
             else
             {
-                card.bestTimeText.text = "🔒 Locked";
+                card.bestTimeText.text = "Play levels to unlock";
                 card.pearlCountText.text = "";
-                card.medalImage.sprite = noMedal;
+                card.medalImage.gameObject.SetActive(false); 
             }
         }
     }
