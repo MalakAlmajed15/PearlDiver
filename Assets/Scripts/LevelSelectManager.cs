@@ -13,7 +13,6 @@ public class LevelSelectManager : MonoBehaviour
         public TextMeshProUGUI bestTimeText;
         public TextMeshProUGUI pearlCountText;
         public Image medalImage;
-        public Image lockOverlay;
         public Button playButton;
     }
 
@@ -32,6 +31,13 @@ public class LevelSelectManager : MonoBehaviour
     public Button backButton;
     public string mainMenuSceneName = "MainMenu";
 
+    [Header("Button Style")]
+    public Color lockedButtonColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+    public Color buttonTextColor = Color.white;
+
+    
+    //public Color playButtonColor = new Color(0.514f, 0.608f, 0.816f, 1f);
+
     private string[] levelNames = {
         "Shallow Reef",
         "Coral Garden",
@@ -42,7 +48,8 @@ public class LevelSelectManager : MonoBehaviour
 
     void Start()
     {
-        backButton.onClick.AddListener(() => SceneManager.LoadScene(mainMenuSceneName));
+        backButton.onClick.AddListener(() =>
+            SceneManager.LoadScene(mainMenuSceneName));
 
         for (int i = 0; i < 5; i++)
         {
@@ -50,12 +57,10 @@ public class LevelSelectManager : MonoBehaviour
             LevelCard card = levelCards[i];
             bool unlocked = GameData.IsUnlocked(levelIndex);
 
-            //card.levelNameText.text = "Level " + levelIndex + "\n" + levelNames[i];
-
-            if (card.lockOverlay != null)
-                card.lockOverlay.gameObject.SetActive(!unlocked);
-
             card.playButton.interactable = unlocked;
+
+          
+            StyleButton(card.playButton, unlocked);
 
             if (unlocked)
             {
@@ -70,7 +75,6 @@ public class LevelSelectManager : MonoBehaviour
                     ? "Pearls: " + pearls + "/" + total
                     : "Pearls: -/-";
 
-                // Show medal only if earned, hide otherwise
                 int medal = GameData.GetMedal(levelIndex);
                 if (medal == 0)
                 {
@@ -95,8 +99,25 @@ public class LevelSelectManager : MonoBehaviour
             {
                 card.bestTimeText.text = "Play levels to unlock";
                 card.pearlCountText.text = "";
-                card.medalImage.gameObject.SetActive(false); 
+                card.medalImage.gameObject.SetActive(false);
             }
         }
+    }
+
+    private void StyleButton(Button btn, bool unlocked)
+    {
+   
+        btn.transition = Selectable.Transition.None;
+
+        //Image img = btn.GetComponent<Image>();
+        //if (img != null)
+        //{
+        //    img.color = unlocked ? playButtonColor : lockedButtonColor;
+        //}
+
+       
+        TextMeshProUGUI tmp = btn.GetComponentInChildren<TextMeshProUGUI>(true);
+        if (tmp != null)
+            tmp.color = buttonTextColor;
     }
 }
