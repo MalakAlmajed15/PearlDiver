@@ -417,7 +417,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 280, y: 220}
-  m_Spacing: {x: -100, y: 40}
+  m_Spacing: {x: -45, y: 43.1}
   m_Constraint: 1
   m_ConstraintCount: 3
 --- !u!1 &187717732
@@ -607,7 +607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2901961, g: 0.3647059, b: 0.5450981, a: 1}
+  m_Color: {r: 0.5137255, g: 0.60784316, b: 0.8156863, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -781,7 +781,6 @@ GameObject:
   - component: {fileID: 287947080}
   - component: {fileID: 287947079}
   - component: {fileID: 287947078}
-  - component: {fileID: 287947081}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -904,21 +903,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 287947076}
   m_CullTransparentMesh: 1
---- !u!114 &287947081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 287947076}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 2, y: -2}
-  m_UseGraphicAlpha: 1
 --- !u!1 &373271641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,7 +1620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2901961, g: 0.3647059, b: 0.5450981, a: 1}
+  m_Color: {r: 0.5137255, g: 0.60784316, b: 0.8156863, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1790,7 +1774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2901961, g: 0.3647059, b: 0.5450981, a: 1}
+  m_Color: {r: 0.5137255, g: 0.60784316, b: 0.81568635, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2276,7 +2260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2901961, g: 0.3647059, b: 0.5450981, a: 1}
+  m_Color: {r: 0.5137255, g: 0.60784316, b: 0.8156863, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2709,7 +2693,7 @@ MonoBehaviour:
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -3191,36 +3175,31 @@ MonoBehaviour:
     bestTimeText: {fileID: 589245565}
     pearlCountText: {fileID: 2083109022}
     medalImage: {fileID: 1759127811}
-    lockOverlay: {fileID: 0}
     playButton: {fileID: 287947078}
-  - cardRoot: {fileID: 0}
-    levelNameText: {fileID: 0}
-    bestTimeText: {fileID: 0}
-    pearlCountText: {fileID: 0}
-    medalImage: {fileID: 0}
-    lockOverlay: {fileID: 0}
-    playButton: {fileID: 0}
-  - cardRoot: {fileID: 0}
-    levelNameText: {fileID: 0}
-    bestTimeText: {fileID: 0}
-    pearlCountText: {fileID: 0}
-    medalImage: {fileID: 0}
-    lockOverlay: {fileID: 0}
-    playButton: {fileID: 0}
-  - cardRoot: {fileID: 0}
-    levelNameText: {fileID: 0}
-    bestTimeText: {fileID: 0}
-    pearlCountText: {fileID: 0}
-    medalImage: {fileID: 0}
-    lockOverlay: {fileID: 0}
-    playButton: {fileID: 0}
-  - cardRoot: {fileID: 0}
-    levelNameText: {fileID: 0}
-    bestTimeText: {fileID: 0}
-    pearlCountText: {fileID: 0}
-    medalImage: {fileID: 0}
-    lockOverlay: {fileID: 0}
-    playButton: {fileID: 0}
+  - cardRoot: {fileID: 41154239}
+    levelNameText: {fileID: 473282330}
+    bestTimeText: {fileID: 1601561019}
+    pearlCountText: {fileID: 1913739638}
+    medalImage: {fileID: 1884148397}
+    playButton: {fileID: 2033669779}
+  - cardRoot: {fileID: 398631837}
+    levelNameText: {fileID: 187717734}
+    bestTimeText: {fileID: 1180705869}
+    pearlCountText: {fileID: 90539908}
+    medalImage: {fileID: 1779354637}
+    playButton: {fileID: 1691691292}
+  - cardRoot: {fileID: 779355191}
+    levelNameText: {fileID: 1170351540}
+    bestTimeText: {fileID: 270398213}
+    pearlCountText: {fileID: 1976732259}
+    medalImage: {fileID: 373271643}
+    playButton: {fileID: 419020398}
+  - cardRoot: {fileID: 885473779}
+    levelNameText: {fileID: 1389567183}
+    bestTimeText: {fileID: 594202669}
+    pearlCountText: {fileID: 507621817}
+    medalImage: {fileID: 655895875}
+    playButton: {fileID: 856180765}
   bronzeMedal: {fileID: 21300000, guid: c518cafa68793944cbd2107517048c70, type: 3}
   silverMedal: {fileID: 21300000, guid: f0bfb52712df9844e8777e1a7900d8f7, type: 3}
   goldMedal: {fileID: 21300000, guid: d35c1d2587d8e0944bf6a5cc0e8dc5a8, type: 3}
@@ -3232,6 +3211,8 @@ MonoBehaviour:
   - Treasure Cove
   backButton: {fileID: 1345985650}
   mainMenuSceneName: Main Menu
+  lockedButtonColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  buttonTextColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &969285721
 Transform:
   m_ObjectHideFlags: 0
@@ -4262,7 +4243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2901961, g: 0.3647059, b: 0.5450981, a: 1}
+  m_Color: {r: 0.5137255, g: 0.60784316, b: 0.8156863, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
