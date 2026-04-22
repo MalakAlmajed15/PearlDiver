@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "com.budorf.underwater-swim": {
+      "version": "https://github.com/mdj128/yt-underwater-scene.git?path=UnderwaterSwimController",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.inputsystem": "1.6.3"
+      },
+      "hash": "7e330ca62cebbb691b74f14b9abc0179f7745bd7"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -118,6 +127,15 @@
       "source": "registry",
       "dependencies": {
         "com.unity.test-framework": "1.1.33"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.inputsystem": {
+      "version": "1.19.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.uielements": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
