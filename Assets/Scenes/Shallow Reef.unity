@@ -252,7 +252,11 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 03310ff8a58837d4f92f61b62fef577b, type: 2}
     - target: {fileID: 5866666021909216657, guid: 392e4e3aebb8a9f4497711998aa721c1, type: 3}
       propertyPath: m_UpdateMode
-      value: 2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 392e4e3aebb8a9f4497711998aa721c1, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 392e4e3aebb8a9f4497711998aa721c1, type: 3}
       propertyPath: m_AnimatePhysics
@@ -2869,6 +2873,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1522392067619764368, guid: bbace04b68be1dd4bb576ba2b95af658, type: 3}
   m_PrefabInstance: {fileID: 1345505053}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &1345505061 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6453959658663306606, guid: bbace04b68be1dd4bb576ba2b95af658, type: 3}
+  m_PrefabInstance: {fileID: 1345505053}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1385282158
 GameObject:
   m_ObjectHideFlags: 0
@@ -3705,7 +3714,7 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1345505061}
 --- !u!95 &1661099653 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 392e4e3aebb8a9f4497711998aa721c1, type: 3}
