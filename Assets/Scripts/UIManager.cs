@@ -44,12 +44,23 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L)) LoseLife();
 
     }
-
+    public int totalPearlsInLevel = 0;
     public void AddPearl()
     {
         pearls++;
-        pearlText.text = pearls + "/10" ;
-        if (pearls >= 10) ShowVictory();
+        UpdatePearlUI();
+
+        // Victory is now based on the actual number of pearls in the scene
+        if (pearls >= totalPearlsInLevel && totalPearlsInLevel > 0)
+        {
+            ShowVictory();
+        }
+    }
+
+    public void UpdatePearlUI()
+    {
+        // Now it shows "1/5", "2/12", etc., based on the level
+        pearlText.text = pearls + "/" + totalPearlsInLevel;
     }
 
     public void LoseLife()
@@ -86,7 +97,7 @@ public class UIManager : MonoBehaviour
 
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         // Check if this is the final level
-        if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings) 
+        if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings - 1) 
         {
             nextContainer.SetActive(false);
             mainMenuButton.SetActive(true);
@@ -136,8 +147,9 @@ public class UIManager : MonoBehaviour
         // Get the index of the current level and add 1
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
+
         // Check if the next scene actually exists in Build Settings
-        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings - 1)
         {
             SceneManager.LoadScene(nextSceneIndex);
             ResetUI(); // Reset stats for the new level
