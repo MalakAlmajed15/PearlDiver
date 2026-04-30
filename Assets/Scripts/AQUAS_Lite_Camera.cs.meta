@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 291d507246cbca44792415504567738f
+timeCreated: 1449577477
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 53519
+  packageName: AQUAS Water LITE
+  packageVersion: 1.2.1
+  assetPath: Assets/AQUAS-Lite/Scripts/AQUAS_Lite_Camera.cs
+  uploadId: 335520
