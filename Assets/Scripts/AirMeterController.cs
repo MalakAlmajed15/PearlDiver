@@ -1,4 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class AirMeterController : MonoBehaviour
@@ -14,7 +17,7 @@ public class AirMeterController : MonoBehaviour
     public int lives = 3;
 
     private float currentAir;
-    private bool isDepleting = true;
+    public bool isDepleting = false;
 
     void Start()
     {
@@ -27,12 +30,10 @@ public class AirMeterController : MonoBehaviour
     {
         if (isDepleting)
         {
-        
             currentAir -= airDepletionRate * Time.deltaTime;
             currentAir = Mathf.Clamp(currentAir, 0, maxAir);
             airSlider.value = currentAir;
 
-        
             if (currentAir <= 0)
             {
                 isDepleting = false;
@@ -48,20 +49,31 @@ public class AirMeterController : MonoBehaviour
         isDepleting = true;
         Debug.Log("Air refilled!");
     }
-
     void LoseLife()
     {
         lives--;
         Debug.Log("Lost a life! Lives left: " + lives);
 
+        // Tell UIManager to update hearts
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.LoseLife();
+        }
+
         if (lives <= 0)
         {
             Debug.Log("Game Over!");
-          
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         else
         {
+            StartCoroutine(FlashRed());
             Invoke("RefillAir", 1f);
         }
+    }
+    IEnumerator FlashRed()
+    {
+        Debug.Log("Life lost!");
+        yield return new WaitForSeconds(0.5f);
     }
 }
