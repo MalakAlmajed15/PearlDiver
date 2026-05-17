@@ -6089,7 +6089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d662ba15984b0344494afef14679bdea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnderwaterVisuals
-  playerController: {fileID: 0}
+  playerController: {fileID: 1810730236}
   includeCameraPosition: 1
   cameraCheckRadius: 0.1
   adjustFog: 1
@@ -7669,6 +7669,17 @@ MonoBehaviour:
   airSlider: {fileID: 116962671}
   lives: 3
   isDepleting: 1
+--- !u!114 &1810730236 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7219905094295064076, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
+  m_PrefabInstance: {fileID: 1691972815}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484263986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfd997346ebaa3e4b8ce1d25b9b3586e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnderwaterSwimController.Runtime::UnderwaterSwimController
 --- !u!1 &1843939039
 GameObject:
   m_ObjectHideFlags: 0
