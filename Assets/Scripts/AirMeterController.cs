@@ -28,6 +28,14 @@ public class AirMeterController : MonoBehaviour
 
     void Update()
     {
+        // Stop depleting if diver is above water surface
+        if (transform.position.y >= 8f)
+        {
+            isDepleting = false;
+            RefillAir();
+            return;
+        }
+
         if (isDepleting)
         {
             currentAir -= airDepletionRate * Time.deltaTime;
