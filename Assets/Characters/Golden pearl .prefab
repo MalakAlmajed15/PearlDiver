@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &2829711802668626585
+--- !u!1001 &4723432385581949770
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5146498424201529914, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 92.347
+      value: 121.2929
       objectReference: {fileID: 0}
     - target: {fileID: 5146498424201529914, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.44736332
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5146498424201529914, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 449.12952
+      value: 854.3806
       objectReference: {fileID: 0}
     - target: {fileID: 5146498424201529914, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -62,38 +62,45 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5487593953015599232, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
       propertyPath: m_Name
-      value: pearl (1) Variant
+      value: 'Golden pearl '
       objectReference: {fileID: 0}
     - target: {fileID: 5487593953015599232, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
       propertyPath: m_TagString
       value: Collectible
       objectReference: {fileID: 0}
+    - target: {fileID: 6280029780804645205, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6bdaa169293328943916bea4754163f9, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5487593953015599232, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4740745516391724026}
+      addedObject: {fileID: 8591289782016870651}
     - targetCorrespondingSourceObject: {fileID: 5487593953015599232, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3376104588364250739}
+      addedObject: {fileID: 1756428592409376408}
     - targetCorrespondingSourceObject: {fileID: 5487593953015599232, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5750043619038525972}
+      addedObject: {fileID: 1683310802744854657}
+    - targetCorrespondingSourceObject: {fileID: 5487593953015599232, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3775248583741571639}
   m_SourcePrefab: {fileID: 100100000, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
---- !u!1 &7738026679663632921 stripped
+--- !u!1 &984838177013609418 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5487593953015599232, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
-  m_PrefabInstance: {fileID: 2829711802668626585}
+  m_PrefabInstance: {fileID: 4723432385581949770}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &4740745516391724026
+--- !u!54 &8591289782016870651
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7738026679663632921}
+  m_GameObject: {fileID: 984838177013609418}
   serializedVersion: 5
   m_Mass: 1
   m_LinearDamping: 0
@@ -114,13 +121,13 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &3376104588364250739
+--- !u!135 &1756428592409376408
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7738026679663632921}
+  m_GameObject: {fileID: 984838177013609418}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -135,13 +142,13 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.009502427
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5750043619038525972
+--- !u!114 &1683310802744854657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7738026679663632921}
+  m_GameObject: {fileID: 984838177013609418}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b3de04273589cdc498869fb8e0a026ae, type: 3}
@@ -151,3 +158,15 @@ MonoBehaviour:
   collectSound: {fileID: 0}
   floatAmplitude: 0.1
   floatFrequency: 1
+--- !u!114 &3775248583741571639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984838177013609418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5f9b6fdeb3f874db27b845fcd1e081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GoldenPearl

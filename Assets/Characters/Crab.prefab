@@ -13,6 +13,18 @@ PrefabInstance:
       value: Crab
       objectReference: {fileID: 0}
     - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.02
       objectReference: {fileID: 0}

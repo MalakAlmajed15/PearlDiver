@@ -13,6 +13,18 @@ PrefabInstance:
       value: jellyfish
       objectReference: {fileID: 0}
     - target: {fileID: 2774220344278030320, guid: 462b0f447714f0942b3139e54aa5ecb7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 462b0f447714f0942b3139e54aa5ecb7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 462b0f447714f0942b3139e54aa5ecb7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 462b0f447714f0942b3139e54aa5ecb7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.5280879
       objectReference: {fileID: 0}
