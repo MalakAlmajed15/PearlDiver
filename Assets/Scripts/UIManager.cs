@@ -131,7 +131,7 @@ public class UIManager : MonoBehaviour
         int totalLevelScore = levelScore + timeBonus;
 
         // Update CUMULATIVE stats (only if winning)
-        if (pearls >= 10)
+        if (pearls >= totalPearlsInLevel && totalPearlsInLevel > 0)
         {
             totalScore += totalLevelScore;
             totalPearls += pearls;

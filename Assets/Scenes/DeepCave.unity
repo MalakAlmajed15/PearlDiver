@@ -1469,6 +1469,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: pearl (1) Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8098037503828100044, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f0eb0dbac222c074bb9be0378147b35d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2018,6 +2022,55 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 262838624}
   m_SourcePrefab: {fileID: 100100000, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
+--- !u!1 &1533007877
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1533007879}
+  - component: {fileID: 1533007878}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1533007878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533007877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: afb77870aec338a459db28c284f28022, type: 2}
+--- !u!4 &1533007879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533007877}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 86.37725, y: 0.14154668, z: 449.26724}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1915603962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2186,9 +2239,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fed6a54435d182a40b2217c043216174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 3
   invincibilityDuration: 2
   flashInterval: 0.1
   modelObject: {fileID: 458427280}
+  renderersToFlash: []
+  scriptsToDisableOnDeath: []
+  collidersToDisableOnDeath: []
+  objectsToDisableOnDeath: []
+  gameOverUI: {fileID: 0}
+  disableRendererOnDeath: 0
+  renderersToDisableOnDeath: []
+  playerRigidbody: {fileID: 0}
+  knockbackForceMultiplier: 1
+  enableDebugDamageKey: 1
+  debugDamageKey: 107
 --- !u!1 &2034273193 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5487593953015599232, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
@@ -2406,3 +2471,4 @@ SceneRoots:
   - {fileID: 654420601}
   - {fileID: 225069762}
   - {fileID: 978591029}
+  - {fileID: 1533007879}
