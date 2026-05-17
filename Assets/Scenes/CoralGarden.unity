@@ -1362,6 +1362,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab5f9b6fdeb3f874db27b845fcd1e081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoldenPearl
+--- !u!1 &951378948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 951378950}
+  - component: {fileID: 951378949}
+  m_Layer: 0
+  m_Name: PearlSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &951378949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951378948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13888604a8a14654cb7e45e4bf9a956a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PearlSpawner
+  pearlPrefab: {fileID: 1438645166}
+  numberOfPearls: 7
+  minX: -20
+  maxX: 20
+  minZ: -20
+  maxZ: 20
+  spawnY: -5
+--- !u!4 &951378950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951378948}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 117.2295, y: 0, z: 852.1027}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &967435932
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1789,6 +1840,11 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1438645166 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7738026679663632921, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
+  m_PrefabInstance: {fileID: 192031226}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1476801663
 GameObject:
   m_ObjectHideFlags: 0
@@ -2511,3 +2567,4 @@ SceneRoots:
   - {fileID: 500626758}
   - {fileID: 764021416}
   - {fileID: 1329257004}
+  - {fileID: 951378950}
