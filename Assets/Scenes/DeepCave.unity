@@ -745,6 +745,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &458427280 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8979592024465774055, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
+  m_PrefabInstance: {fileID: 8303237583592048831}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &487326128
 GameObject:
   m_ObjectHideFlags: 0
@@ -2164,6 +2169,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &2003196582 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2714039080396267233, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
+  m_PrefabInstance: {fileID: 8303237583592048831}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2003196583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003196582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fed6a54435d182a40b2217c043216174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  invincibilityDuration: 2
+  flashInterval: 0.1
+  modelObject: {fileID: 458427280}
 --- !u!1 &2034273193 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5487593953015599232, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
@@ -2353,7 +2378,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2714039080396267233, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2003196583}
   m_SourcePrefab: {fileID: 100100000, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
