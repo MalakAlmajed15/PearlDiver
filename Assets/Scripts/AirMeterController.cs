@@ -9,6 +9,7 @@ public class AirMeterController : MonoBehaviour
     [Header("Air Settings")]
     public float maxAir = 100f;
     public float airDepletionRate = 5f;
+    public float airRefillRate = 20f; // How fast air refills at surface
 
     [Header("UI")]
     public Slider airSlider;
@@ -28,25 +29,31 @@ public class AirMeterController : MonoBehaviour
 
     void Update()
     {
-        // Stop depleting if diver is above water surface
+        
         if (transform.position.y >= 8f)
         {
             isDepleting = false;
-            RefillAir();
+
+            if (currentAir < maxAir)
+            {
+                currentAir += airRefillRate * Time.deltaTime;
+                currentAir = Mathf.Clamp(currentAir, 0, maxAir);
+                airSlider.value = currentAir;
+            }
             return;
         }
 
-        if (isDepleting)
-        {
-            currentAir -= airDepletionRate * Time.deltaTime;
-            currentAir = Mathf.Clamp(currentAir, 0, maxAir);
-            airSlider.value = currentAir;
+      
+        isDepleting = true;
 
-            if (currentAir <= 0)
-            {
-                isDepleting = false;
-                LoseLife();
-            }
+        currentAir -= airDepletionRate * Time.deltaTime;
+        currentAir = Mathf.Clamp(currentAir, 0, maxAir);
+        airSlider.value = currentAir;
+
+        if (currentAir <= 0)
+        {
+            isDepleting = false;
+            LoseLife();
         }
     }
 
@@ -57,12 +64,12 @@ public class AirMeterController : MonoBehaviour
         isDepleting = true;
         Debug.Log("Air refilled!");
     }
+
     void LoseLife()
     {
         lives--;
         Debug.Log("Lost a life! Lives left: " + lives);
 
-        // Tell UIManager to update hearts
         if (UIManager.Instance != null)
         {
             UIManager.Instance.LoseLife();
@@ -76,9 +83,10 @@ public class AirMeterController : MonoBehaviour
         else
         {
             StartCoroutine(FlashRed());
-            Invoke("RefillAir", 1f);
+            Invoke("RefillAir", 1f); // Still used for the "penalty refill" after death
         }
     }
+
     IEnumerator FlashRed()
     {
         Debug.Log("Life lost!");

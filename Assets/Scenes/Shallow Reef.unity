@@ -317,6 +317,7 @@ GameObject:
   m_Component:
   - component: {fileID: 345639815}
   - component: {fileID: 345639816}
+  - component: {fileID: 345639817}
   m_Layer: 5
   m_Name: AirMeter
   m_TagString: Untagged
@@ -397,6 +398,23 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &345639817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345639814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66bc29f2477d4a34bb45ac38c619ba15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AirMeterController
+  maxAir: 100
+  airDepletionRate: 5
+  airSlider: {fileID: 345639816}
+  lives: 3
+  isDepleting: 1
 --- !u!1 &350536024
 GameObject:
   m_ObjectHideFlags: 0
