@@ -1628,11 +1628,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PearlSpawner
   pearlPrefab: {fileID: 7738026679663632921, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
   numberOfPearls: 7
-  minX: 400
-  maxX: 530
-  minZ: 420
-  maxZ: 540
-  spawnY: -4
+  minX: 390
+  maxX: 540
+  minZ: 390
+  maxZ: 560
+  spawnY: -6
 --- !u!4 &951378950
 Transform:
   m_ObjectHideFlags: 0
@@ -1642,7 +1642,7 @@ Transform:
   m_GameObject: {fileID: 951378948}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 117.2295, y: 0, z: 852.1027}
+  m_LocalPosition: {x: 264, y: 0, z: 478}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2479,7 +2479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2542,9 +2542,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1297054237}
     - target: {fileID: 7219905094295064076, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
+      propertyPath: maxWorldHeight
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7219905094295064076, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 866326049}
+    - target: {fileID: 7219905094295064076, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
+      propertyPath: clampToWorldHeight
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2904,8 +2912,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 50.000004, y: 0, z: 49.999996}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 50.000004, y: 5, z: 49.999996}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &2126489012
 GameObject:
   m_ObjectHideFlags: 0
