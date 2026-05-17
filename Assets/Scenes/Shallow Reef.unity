@@ -412,6 +412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AirMeterController
   maxAir: 100
   airDepletionRate: 5
+  airRefillRate: 20
   airSlider: {fileID: 345639816}
   lives: 3
   isDepleting: 1
@@ -5395,7 +5396,7 @@ GameObject:
   - component: {fileID: 419319347}
   m_Layer: 0
   m_Name: water_terrain
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -5470,6 +5471,61 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -35, y: -10, z: -15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &426130239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 426130241}
+  - component: {fileID: 426130240}
+  m_Layer: 0
+  m_Name: SpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &426130240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426130239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eff9c0e0e083b6d43a1112ab43db68bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
+  creaturePrefabs:
+  - {fileID: 813246751584668348, guid: d8ce4b1c89e7f3a4d97361f43851ed33, type: 3}
+  - {fileID: 3983046566720953969, guid: 86976c7844fee734898a2abd0ca314d2, type: 3}
+  - {fileID: 1891742659991760961, guid: 4e699c67df2ce0e4887a45535ed9817c, type: 3}
+  minSpawnTime: 2
+  maxSpawnTime: 5
+  minX: 195
+  maxX: 235
+  minY: -5
+  maxY: 5
+  spawnZ: 469
+--- !u!4 &426130241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426130239}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.90783, y: -7.47391, z: 20.30158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11018,6 +11074,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AirMeterController
   maxAir: 100
   airDepletionRate: 5
+  airRefillRate: 20
   airSlider: {fileID: 345639816}
   lives: 3
   isDepleting: 1
@@ -21751,3 +21808,4 @@ SceneRoots:
   - {fileID: 2002144503}
   - {fileID: 1356102827}
   - {fileID: 1843995185}
+  - {fileID: 426130241}

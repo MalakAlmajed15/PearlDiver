@@ -1,0 +1,186 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2910168364917774087
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -6689036041284674117, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      propertyPath: m_Name
+      value: Crab
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -6689036041284674117, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6560801632751256014}
+    - targetCorrespondingSourceObject: {fileID: -6689036041284674117, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6150211134236590661}
+    - targetCorrespondingSourceObject: {fileID: -6689036041284674117, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4851253739768355655}
+  m_SourcePrefab: {fileID: -5645937942226959685, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+--- !u!1 &813246751584668348 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6689036041284674117, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
+  m_PrefabInstance: {fileID: 2910168364917774087}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &6560801632751256014
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813246751584668348}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &6150211134236590661
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813246751584668348}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4851253739768355655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813246751584668348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126ca1977d5f58141825f53acb1dd41d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrabAI
+  player: {fileID: 0}
+  pointA: {fileID: 0}
+  pointB: {fileID: 0}
+  audioSource: {fileID: 0}
+  detectSfx: {fileID: 0}
+  attackWindupSfx: {fileID: 0}
+  hitSfx: {fileID: 0}
+  patrolSpeed: 1.5
+  chaseSpeed: 2.2
+  rotationSmoothSpeed: 8
+  reachDistance: 0.2
+  groundY: 0
+  useMovementStartDelay: 1
+  movementStartDelay: 0.08
+  movementDelayTurnThreshold: 30
+  randomizeMovementStats: 1
+  useManualMovementMultipliers: 0
+  patrolSpeedMultiplier: 1
+  chaseSpeedMultiplier: 1
+  patrolSpeedVariance: 0.15
+  chaseSpeedVariance: 0.2
+  returnHomeSpeedMultiplier: 0.85
+  detectionRange: 4
+  alertRange: 5.2
+  loseRange: 5.5
+  maxChaseDistanceFromHome: 6
+  returnHomeReengageDelay: 0.75
+  attackRange: 1.2
+  attackWindupTime: 0.4
+  attackCooldown: 1
+  lungeDistance: 0.6
+  lungeSpeed: 6
+  randomizeAttackStats: 1
+  useManualAttackMultipliers: 0
+  attackWindupMultiplier: 1
+  lungeDistanceMultiplier: 1
+  attackWindupVariance: 0.08
+  lungeDistanceVariance: 0.08
+  backstepDistance: 0.5
+  backstepSpeed: 4
+  recoverTime: 0.4
+  startRecoverIfPlayerWithinRange: 1
+  cancelRecoverIfPlayerBeyondRange: 1.6
+  damage: 1
+  damageCooldown: 1.5
+  patrolPauseTime: 0.5
+  turnBeforePatrolMove: 1
+  patrolTurnThreshold: 10
+  randomizeAudioPitch: 1
+  minAudioPitch: 0.96
+  maxAudioPitch: 1.04
+  modelYawOffset: 0
+  keepUpright: 1
