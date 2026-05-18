@@ -9,6 +9,7 @@ TagManager:
   - Collectible
   - Water
   - FxTemporaire
+  - AirMeterUI
   layers:
   - Default
   - TransparentFX
