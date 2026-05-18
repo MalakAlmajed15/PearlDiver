@@ -14,22 +14,45 @@ public class AirMeterController : MonoBehaviour
     [Header("UI")]
     public Slider airSlider;
 
-    [Header("Lives")]
-    public int lives = 3;
+    // removed the 'lives' variable from here
+    // The UIManager is now in complete control of tracking lives.
 
     private float currentAir;
     public bool isDepleting = false;
 
+    // NEW: A lock to stop the script from taking 60 lives a second
+    private bool isRecovering = false;
+
     void Start()
     {
         currentAir = maxAir;
-        airSlider.maxValue = maxAir;
-        airSlider.value = maxAir;
+        //airSlider.maxValue = maxAir;
+        //airSlider.value = maxAir;
     }
 
     void Update()
     {
-        
+        // search for it using the Tag
+        if (airSlider == null)
+        {
+            GameObject sliderObj = GameObject.FindWithTag("AirMeterUI");
+
+            if (sliderObj != null)
+            {
+                airSlider = sliderObj.GetComponent<Slider>();
+                airSlider.maxValue = maxAir;
+                airSlider.value = currentAir;
+            }
+            else
+            {
+                // Wait safely until the UI Scene is fully loaded
+                return;
+            }
+        }
+
+        // NEW: If the diver is choking/recovering, freeze the air math!
+        if (isRecovering) return;
+
         if (transform.position.y >= 8f)
         {
             isDepleting = false;
@@ -43,7 +66,7 @@ public class AirMeterController : MonoBehaviour
             return;
         }
 
-      
+
         isDepleting = true;
 
         currentAir -= airDepletionRate * Time.deltaTime;
@@ -53,6 +76,7 @@ public class AirMeterController : MonoBehaviour
         if (currentAir <= 0)
         {
             isDepleting = false;
+            isRecovering = true;
             LoseLife();
         }
     }
@@ -60,30 +84,32 @@ public class AirMeterController : MonoBehaviour
     public void RefillAir()
     {
         currentAir = maxAir;
-        airSlider.value = maxAir;
+        if (airSlider != null) airSlider.value = maxAir;
         isDepleting = true;
+        isRecovering = false;
         Debug.Log("Air refilled!");
     }
 
     void LoseLife()
     {
-        lives--;
-        Debug.Log("Lost a life! Lives left: " + lives);
-
+        // it tells the UIManager to handle the actual life loss
         if (UIManager.Instance != null)
         {
             UIManager.Instance.LoseLife();
-        }
 
-        if (lives <= 0)
-        {
-            Debug.Log("Game Over!");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-        else
-        {
-            StartCoroutine(FlashRed());
-            Invoke("RefillAir", 1f); // Still used for the "penalty refill" after death
+            // it checks the UIManager's lives to see if it's Game Over
+            if (UIManager.Instance.lives <= 0)
+            {
+                Debug.Log("Game Over triggered by Air!");
+                // REMOVED the SceneManager.LoadScene from here. 
+                // The UIManager will now show the Game Over panel and wait for the player to press restart
+            }
+            else
+            {
+                // If we still have lives, flash red and refill the air
+                StartCoroutine(FlashRed());
+                Invoke("RefillAir", 0.5f);
+            }
         }
     }
 

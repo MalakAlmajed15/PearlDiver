@@ -1108,6 +1108,23 @@ MonoBehaviour:
   seabedLayer:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &2003196590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003196582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66bc29f2477d4a34bb45ac38c619ba15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AirMeterController
+  maxAir: 100
+  airDepletionRate: 5
+  airRefillRate: 20
+  airSlider: {fileID: 0}
+  isDepleting: 0
 --- !u!1001 &8303237583592048831
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1188,6 +1205,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2714039080396267233, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2003196584}
+    - targetCorrespondingSourceObject: {fileID: 2714039080396267233, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2003196590}
   m_SourcePrefab: {fileID: 100100000, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
