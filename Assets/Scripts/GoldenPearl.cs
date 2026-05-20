@@ -6,13 +6,19 @@ public class GoldenPearl : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Tell the UIManager directly to add a life and update the hearts
+            // Give extra life through UIManager
             if (UIManager.Instance != null)
             {
                 UIManager.Instance.AddLife();
+                Debug.Log("Extra life collected!");
+            }
+            else
+            {
+                Debug.Log("UIManager not found!");
             }
 
-            Destroy(gameObject); // Remove golden pearl after collecting
+            // Remove golden pearl after collecting
+            Destroy(gameObject);
         }
     }
 }
