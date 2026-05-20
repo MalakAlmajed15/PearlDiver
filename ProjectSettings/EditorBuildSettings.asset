@@ -26,5 +26,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TreasureCove.unity
     guid: 546f2da9a3b48c140b4eecdf5146bec6
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 3038fbce1e63c2b43a2223244e91edd2, type: 2}
   m_UseUCBPForAssetBundles: 0
