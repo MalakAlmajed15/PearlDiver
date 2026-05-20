@@ -328,7 +328,7 @@ MonoBehaviour:
   player: {fileID: 1810730232}
   pointA: {fileID: 0}
   pointB: {fileID: 0}
-  terrain: {fileID: 0}
+  terrain: {fileID: 1297054237}
   terrainOffset: 0.35
   waterSurfaceY: 0
   surfaceOffset: 1
@@ -748,7 +748,7 @@ MonoBehaviour:
   player: {fileID: 1810730232}
   audioSource: {fileID: 0}
   hitSfx: {fileID: 0}
-  terrain: {fileID: 0}
+  terrain: {fileID: 1297054237}
   terrainClearance: 2
   waterSurfaceY: 10
   surfaceOffset: 1.5
@@ -11221,7 +11221,7 @@ MonoBehaviour:
   player: {fileID: 1810730232}
   pointA: {fileID: 0}
   pointB: {fileID: 0}
-  terrain: {fileID: 0}
+  terrain: {fileID: 1297054237}
   terrainClearance: 2
   waterSurfaceY: 10
   surfaceOffset: 1.5
