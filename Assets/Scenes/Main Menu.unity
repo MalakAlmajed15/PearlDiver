@@ -802,12 +802,10 @@ MonoBehaviour:
 
     Fatema Hameed
 
-    Fatema Hasan
+    Zahra Almosawi
 
-    Zahra
-    Almosawi
-
-    Mohamed Hasan
+    Mohamed
+    Hasan
 
     S4 - G4'
   m_isRightToLeft: 0
@@ -4313,7 +4311,6 @@ MonoBehaviour:
   instructionsPopup: {fileID: 1231291364}
   creditsPopup: {fileID: 1925817376}
   settingsPopup: {fileID: 644781631}
-  levelSceneName: Shallow Reef
 --- !u!4 &2029099865
 Transform:
   m_ObjectHideFlags: 0
@@ -4545,7 +4542,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'THE MISSION
 
-    Dive deep into the coral reef and collect as many Shining
+    Dive deep into the ocean and collect as many Shining
     Pearls as possible before your oxygen runs out!
 
 

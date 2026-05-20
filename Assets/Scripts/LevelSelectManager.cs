@@ -41,7 +41,6 @@ public class LevelSelectManager : MonoBehaviour
     private string[] levelNames = {
         "Shallow Reef",
         "Coral Garden",
-        "Sunken Dhow",
         "Deep Cave",
         "Treasure Cove"
     };
