@@ -6,19 +6,10 @@ public class GoldenPearl : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Find AirMeterController and add a life
-            AirMeterController air = other.GetComponent<AirMeterController>();
-            if (air == null)
-                air = other.GetComponentInParent<AirMeterController>();
-
-            if (air != null)
+            // Tell the UIManager directly to add a life and update the hearts
+            if (UIManager.Instance != null)
             {
-                air.lives++;
-                Debug.Log("Extra life! Lives: " + air.lives);
-
-                // Tell UIManager to update hearts
-                if (UIManager.Instance != null)
-                    UIManager.Instance.AddLife();
+                UIManager.Instance.AddLife();
             }
 
             Destroy(gameObject); // Remove golden pearl after collecting
