@@ -20,7 +20,7 @@ public class EelAI : MonoBehaviour
     [SerializeField] private float terrainClearance = 2f;
 
     [Tooltip("Height of ocean surface.")]
-    [SerializeField] private float waterSurfaceY = 10f;
+    [SerializeField] private float waterSurfaceY = 7f;
 
     [Tooltip("Keeps eel below the surface.")]
     [SerializeField] private float surfaceOffset = 1.5f;
@@ -31,9 +31,9 @@ public class EelAI : MonoBehaviour
     [SerializeField] private AudioClip hitSfx;
 
     [Header("Movement")]
-    [SerializeField] private float patrolSpeed = 1.6f;
-    [SerializeField] private float chaseSpeed = 3.2f;
-    [SerializeField] private float returnSpeed = 2.2f;
+    [SerializeField] private float patrolSpeed = 0.8f;
+    [SerializeField] private float chaseSpeed = 1.5f;
+    [SerializeField] private float returnSpeed = 1.2f;
     [SerializeField] private float rotationSmoothSpeed = 4f;
 
     [Header("Steering")]
@@ -50,10 +50,10 @@ public class EelAI : MonoBehaviour
     [SerializeField] private float chaseVerticalLerpSpeed = 3.5f;
 
     [Header("Detection")]
-    [SerializeField] private float detectionRange = 6f;
-    [SerializeField] private float alertRange = 8f;
-    [SerializeField] private float loseRange = 9f;
-    [SerializeField] private float maxChaseDistanceFromHome = 10f;
+    [SerializeField] private float detectionRange = 3f;
+    [SerializeField] private float alertRange = 4f;
+    [SerializeField] private float loseRange = 5f;
+    [SerializeField] private float maxChaseDistanceFromHome = 5f;
 
     [Header("Damage")]
     [SerializeField] private int damage = 1;
@@ -85,6 +85,14 @@ public class EelAI : MonoBehaviour
         baseY = transform.position.y;
         targetY = transform.position.y;
 
+        // Clamp starting position below water surface
+        if (baseY > waterSurfaceY - surfaceOffset)
+        {
+            baseY = waterSurfaceY - surfaceOffset;
+            homePosition.y = baseY;
+            transform.position = homePosition;
+        }
+
         Vector3 startEuler = transform.rotation.eulerAngles;
         originalX = startEuler.x;
         originalZ = startEuler.z;
@@ -92,20 +100,16 @@ public class EelAI : MonoBehaviour
         if (player == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("Player");
-
-            if (p != null)
-                player = p.transform;
+            if (p != null) player = p.transform;
         }
 
         if (player != null)
         {
             playerHealth = player.GetComponent<PlayerHealth>();
-
             if (playerHealth == null)
                 playerHealth = player.GetComponentInParent<PlayerHealth>();
 
             playerHitFeedback = player.GetComponent<PlayerHitFeedback>();
-
             if (playerHitFeedback == null)
                 playerHitFeedback = player.GetComponentInParent<PlayerHitFeedback>();
         }
@@ -118,8 +122,7 @@ public class EelAI : MonoBehaviour
 
     private void Update()
     {
-        if (player == null)
-            return;
+        if (player == null) return;
 
         float distToPlayer = Vector3.Distance(transform.position, player.position);
         float distFromHome = Vector3.Distance(transform.position, homePosition);
@@ -192,9 +195,7 @@ public class EelAI : MonoBehaviour
         );
 
         if (horizontalDistanceToTarget < reachDistance)
-        {
             patrolTarget = GetRandomPoint();
-        }
 
         MoveSteering(patrolTarget, patrolSpeed, verticalLerpSpeed);
     }
@@ -215,10 +216,13 @@ public class EelAI : MonoBehaviour
         // Prevent spawning inside terrain
         if (terrain != null)
         {
-            float terrainHeight =
-                terrain.SampleHeight(basePos) + terrain.transform.position.y;
-
+            float terrainHeight = terrain.SampleHeight(basePos) + terrain.transform.position.y;
             randomY = Mathf.Max(randomY, terrainHeight + terrainClearance);
+        }
+        else
+        {
+            // No terrain — use fixed seabed Y
+            randomY = Mathf.Max(randomY, -8f + terrainClearance);
         }
 
         return new Vector3(
@@ -232,39 +236,25 @@ public class EelAI : MonoBehaviour
     {
         Vector3 currentXZ = new Vector3(transform.position.x, 0f, transform.position.z);
         Vector3 targetXZ = new Vector3(target.x, 0f, target.z);
-
         Vector3 toTargetXZ = targetXZ - currentXZ;
 
         Vector3 currentDirection;
-
         if (velocityXZ.sqrMagnitude > 0.0001f)
             currentDirection = velocityXZ.normalized;
         else
             currentDirection = new Vector3(transform.forward.x, 0f, transform.forward.z).normalized;
 
-        Vector3 desiredDirection =
-            toTargetXZ.sqrMagnitude > 0.0001f
+        Vector3 desiredDirection = toTargetXZ.sqrMagnitude > 0.0001f
             ? toTargetXZ.normalized
             : currentDirection;
 
-        float currentTurnSpeed =
-            currentState == EelState.Chase
-            ? turnSpeed * 2.2f
-            : turnSpeed;
+        float currentTurnSpeed = currentState == EelState.Chase ? turnSpeed * 2.2f : turnSpeed;
 
-        Vector3 newDirection = Vector3.Slerp(
-            currentDirection,
-            desiredDirection,
-            Time.deltaTime * currentTurnSpeed
-        ).normalized;
+        Vector3 newDirection = Vector3.Slerp(currentDirection, desiredDirection, Time.deltaTime * currentTurnSpeed).normalized;
 
         velocityXZ = newDirection * speed;
 
-        transform.position += new Vector3(
-            velocityXZ.x * Time.deltaTime,
-            0f,
-            velocityXZ.z * Time.deltaTime
-        );
+        transform.position += new Vector3(velocityXZ.x * Time.deltaTime, 0f, velocityXZ.z * Time.deltaTime);
 
         targetY = target.y;
 
@@ -280,7 +270,6 @@ public class EelAI : MonoBehaviour
     private void DriftForward(float speed, float yLerpSpeed)
     {
         Vector3 currentDirection;
-
         if (velocityXZ.sqrMagnitude > 0.0001f)
             currentDirection = velocityXZ.normalized;
         else
@@ -288,11 +277,7 @@ public class EelAI : MonoBehaviour
 
         velocityXZ = currentDirection * speed;
 
-        transform.position += new Vector3(
-            velocityXZ.x * Time.deltaTime,
-            0f,
-            velocityXZ.z * Time.deltaTime
-        );
+        transform.position += new Vector3(velocityXZ.x * Time.deltaTime, 0f, velocityXZ.z * Time.deltaTime);
 
         transform.position = new Vector3(
             transform.position.x,
@@ -301,27 +286,25 @@ public class EelAI : MonoBehaviour
         );
     }
 
-    // IMPORTANT PART
     private void ClampToWaterAndTerrain()
     {
         Vector3 pos = transform.position;
 
         // Keep eel below surface
         float maxY = waterSurfaceY - surfaceOffset;
-
-        if (pos.y > maxY)
-            pos.y = maxY;
+        if (pos.y > maxY) pos.y = maxY;
 
         // Keep eel above terrain
         if (terrain != null)
         {
-            float terrainHeight =
-                terrain.SampleHeight(pos) + terrain.transform.position.y;
-
+            float terrainHeight = terrain.SampleHeight(pos) + terrain.transform.position.y;
             float minY = terrainHeight + terrainClearance;
-
-            if (pos.y < minY)
-                pos.y = minY;
+            if (pos.y < minY) pos.y = minY;
+        }
+        else
+        {
+            // No terrain — use fixed seabed Y
+            if (pos.y < -8f) pos.y = -8f;
         }
 
         transform.position = pos;
@@ -329,71 +312,46 @@ public class EelAI : MonoBehaviour
 
     private void SmoothFaceDirection(Vector3 flatDirection)
     {
-        if (flatDirection.sqrMagnitude <= 0.0001f)
-            return;
+        if (flatDirection.sqrMagnitude <= 0.0001f) return;
 
-        float yaw =
-            Mathf.Atan2(flatDirection.x, flatDirection.z) *
-            Mathf.Rad2Deg +
-            modelYawOffset;
+        float yaw = Mathf.Atan2(flatDirection.x, flatDirection.z) * Mathf.Rad2Deg + modelYawOffset;
 
-        float rotSpeed =
-            currentState == EelState.Chase
-            ? rotationSmoothSpeed * 2f
-            : rotationSmoothSpeed;
+        float rotSpeed = currentState == EelState.Chase ? rotationSmoothSpeed * 2f : rotationSmoothSpeed;
 
         Quaternion targetRot = Quaternion.Euler(originalX, yaw, originalZ);
-
-        transform.rotation = Quaternion.Slerp(
-            transform.rotation,
-            targetRot,
-            Time.deltaTime * rotSpeed
-        );
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * rotSpeed);
     }
 
     private void FacePlayer()
     {
         Vector3 dir = player.position - transform.position;
         dir.y = 0f;
-
-        if (dir.sqrMagnitude < 0.001f)
-            return;
-
+        if (dir.sqrMagnitude < 0.001f) return;
         SmoothFaceDirection(dir.normalized);
     }
 
     private void TryDamagePlayerDistance()
     {
-        if (!canDamage || playerHealth == null || playerHealth.IsDead())
-            return;
+        if (!canDamage || playerHealth == null || playerHealth.IsDead()) return;
 
         float distance = Vector3.Distance(transform.position, player.position);
-
-        if (distance > damageRange)
-            return;
+        if (distance > damageRange) return;
 
         playerHealth.TakeDamage(damage);
-
         PlaySound(hitSfx);
 
         if (playerHitFeedback != null)
             playerHitFeedback.PlayHitFeedback();
 
         canDamage = false;
-
         Invoke(nameof(ResetDamage), damageCooldown);
     }
 
-    private void ResetDamage()
-    {
-        canDamage = true;
-    }
+    private void ResetDamage() { canDamage = true; }
 
     private void PlaySound(AudioClip clip)
     {
-        if (audioSource == null || clip == null)
-            return;
-
+        if (audioSource == null || clip == null) return;
         audioSource.PlayOneShot(clip);
     }
 
@@ -401,10 +359,8 @@ public class EelAI : MonoBehaviour
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
-
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, alertRange);
-
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, loseRange);
     }
