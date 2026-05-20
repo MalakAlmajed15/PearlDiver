@@ -14,6 +14,18 @@ public class JellyfishAI : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip hitSfx;
 
+    [Header("Terrain & Water")]
+    [SerializeField] private Terrain terrain;
+
+    [Tooltip("Keeps jellyfish above terrain.")]
+    [SerializeField] private float terrainClearance = 2f;
+
+    [Tooltip("Ocean surface height.")]
+    [SerializeField] private float waterSurfaceY = 10f;
+
+    [Tooltip("Keeps jellyfish below water surface.")]
+    [SerializeField] private float surfaceOffset = 1.5f;
+
     [Header("Idle Movement")]
     [SerializeField] private float floatSpeed = 1f;
     [SerializeField] private float floatHeight = 0.4f;
@@ -48,7 +60,9 @@ public class JellyfishAI : MonoBehaviour
 
     private Vector3 homePosition;
     private float baseY;
+
     private bool canDamage = true;
+
     private float floatTimer = 0f;
     private float returnTimer = 0f;
     private float returnHomeLockTimer = 0f;
@@ -70,6 +84,7 @@ public class JellyfishAI : MonoBehaviour
         if (player == null)
         {
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+
             if (playerObj != null)
             {
                 player = playerObj.transform;
@@ -79,6 +94,7 @@ public class JellyfishAI : MonoBehaviour
         if (player != null)
         {
             playerHealth = player.GetComponent<PlayerHealth>();
+
             if (playerHealth == null)
             {
                 playerHealth = player.GetComponentInParent<PlayerHealth>();
@@ -108,6 +124,7 @@ public class JellyfishAI : MonoBehaviour
             }
 
             HandleReturnHome();
+            ClampToWaterAndTerrain();
             ForceUprightRotation();
             return;
         }
@@ -115,6 +132,7 @@ public class JellyfishAI : MonoBehaviour
         if (player == null)
         {
             HandleIdle();
+            ClampToWaterAndTerrain();
             ForceUprightRotation();
             return;
         }
@@ -137,7 +155,8 @@ public class JellyfishAI : MonoBehaviour
                 HandleChase();
                 TryDealDamageByDistance();
 
-                if (distanceToPlayer > loseRange || distanceFromHome > maxChaseDistanceFromHome)
+                if (distanceToPlayer > loseRange ||
+                    distanceFromHome > maxChaseDistanceFromHome)
                 {
                     currentState = JellyfishState.ReturnHome;
                     returnTimer = 0f;
@@ -159,6 +178,7 @@ public class JellyfishAI : MonoBehaviour
                 break;
         }
 
+        ClampToWaterAndTerrain();
         ForceUprightRotation();
     }
 
@@ -166,20 +186,16 @@ public class JellyfishAI : MonoBehaviour
     {
         floatTimer += Time.deltaTime * floatSpeed;
 
-        float yOffset = 0f;
-        if (floatHeight > 0.001f)
-        {
-            yOffset = Mathf.Sin(floatTimer) * floatHeight;
-        }
+        float yOffset = Mathf.Sin(floatTimer) * floatHeight;
 
-        float xOffset = 0f;
-        float zOffset = 0f;
+        float xOffset =
+            Mathf.Sin(floatTimer * horizontalDriftSpeed) *
+            horizontalDriftRadius;
 
-        if (horizontalDriftRadius > 0.001f)
-        {
-            xOffset = Mathf.Sin(floatTimer * horizontalDriftSpeed) * horizontalDriftRadius;
-            zOffset = Mathf.Cos(floatTimer * horizontalDriftSpeed) * horizontalDriftRadius * 0.5f;
-        }
+        float zOffset =
+            Mathf.Cos(floatTimer * horizontalDriftSpeed) *
+            horizontalDriftRadius *
+            0.5f;
 
         Vector3 targetPos = new Vector3(
             homePosition.x + xOffset,
@@ -187,14 +203,21 @@ public class JellyfishAI : MonoBehaviour
             homePosition.z + zOffset
         );
 
-        transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * idleLerpSpeed);
+        transform.position = Vector3.Lerp(
+            transform.position,
+            targetPos,
+            Time.deltaTime * idleLerpSpeed
+        );
     }
 
     private void HandleChase()
     {
-        // Keep the jellyfish chasing on its own swim plane so it does not climb
-        // above the player's head while pursuing.
-        Vector3 targetPos = new Vector3(player.position.x, transform.position.y, player.position.z);
+        Vector3 targetPos = new Vector3(
+            player.position.x,
+            transform.position.y,
+            player.position.z
+        );
+
         Vector3 toTarget = targetPos - transform.position;
 
         if (toTarget.sqrMagnitude <= 0.0001f)
@@ -202,12 +225,15 @@ public class JellyfishAI : MonoBehaviour
 
         Vector3 direction = toTarget.normalized;
 
-        // Stop slightly before the player's center so the jellyfish feels like it
-        // collides/hits instead of pushing inside the player model.
         float distanceToTarget = toTarget.magnitude;
+
         if (distanceToTarget > stopDistance)
         {
-            float moveDistance = Mathf.Min(chaseSpeed * Time.deltaTime, distanceToTarget - stopDistance);
+            float moveDistance = Mathf.Min(
+                chaseSpeed * Time.deltaTime,
+                distanceToTarget - stopDistance
+            );
+
             transform.position += direction * moveDistance;
         }
 
@@ -218,7 +244,12 @@ public class JellyfishAI : MonoBehaviour
     {
         returnTimer += Time.deltaTime;
 
-        Vector3 target = new Vector3(homePosition.x, baseY, homePosition.z);
+        Vector3 target = new Vector3(
+            homePosition.x,
+            baseY,
+            homePosition.z
+        );
+
         Vector3 toTarget = target - transform.position;
 
         if (toTarget.sqrMagnitude > 0.0001f)
@@ -237,21 +268,59 @@ public class JellyfishAI : MonoBehaviour
         if (Vector3.Distance(transform.position, target) <= 0.2f)
         {
             currentState = JellyfishState.Idle;
+
             floatTimer = 0f;
             returnTimer = 0f;
             returnHomeLockTimer = 0f;
+
             transform.position = target;
             return;
         }
 
         if (returnTimer >= maxReturnTime)
         {
-            homePosition = new Vector3(transform.position.x, baseY, transform.position.z);
+            homePosition = new Vector3(
+                transform.position.x,
+                baseY,
+                transform.position.z
+            );
+
             currentState = JellyfishState.Idle;
+
             floatTimer = 0f;
             returnTimer = 0f;
             returnHomeLockTimer = 0f;
         }
+    }
+
+    // IMPORTANT PART
+    private void ClampToWaterAndTerrain()
+    {
+        Vector3 pos = transform.position;
+
+        // Keep below water surface
+        float maxY = waterSurfaceY - surfaceOffset;
+
+        if (pos.y > maxY)
+        {
+            pos.y = maxY;
+        }
+
+        // Keep above terrain
+        if (terrain != null)
+        {
+            float terrainHeight =
+                terrain.SampleHeight(pos) + terrain.transform.position.y;
+
+            float minY = terrainHeight + terrainClearance;
+
+            if (pos.y < minY)
+            {
+                pos.y = minY;
+            }
+        }
+
+        transform.position = pos;
     }
 
     private void SmoothFaceDirection(Vector3 direction)
@@ -260,15 +329,22 @@ public class JellyfishAI : MonoBehaviour
             return;
 
         direction.y = 0f;
+
         if (direction.sqrMagnitude <= 0.0001f)
             return;
 
         direction.Normalize();
 
-        float targetYaw = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+        float targetYaw =
+            Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+
         float finalYaw = targetYaw + modelYawOffset;
 
-        Quaternion targetRotation = Quaternion.Euler(originalX, finalYaw, originalZ);
+        Quaternion targetRotation = Quaternion.Euler(
+            originalX,
+            finalYaw,
+            originalZ
+        );
 
         transform.rotation = Quaternion.Slerp(
             transform.rotation,
@@ -283,7 +359,12 @@ public class JellyfishAI : MonoBehaviour
             return;
 
         Vector3 euler = transform.rotation.eulerAngles;
-        transform.rotation = Quaternion.Euler(originalX, euler.y, originalZ);
+
+        transform.rotation = Quaternion.Euler(
+            originalX,
+            euler.y,
+            originalZ
+        );
     }
 
     private void OnTriggerEnter(Collider other)
@@ -301,13 +382,17 @@ public class JellyfishAI : MonoBehaviour
         if (!canDamage)
             return;
 
-        PlayerHealth hitPlayerHealth = other.GetComponent<PlayerHealth>();
+        PlayerHealth hitPlayerHealth =
+            other.GetComponent<PlayerHealth>();
+
         if (hitPlayerHealth == null)
         {
-            hitPlayerHealth = other.GetComponentInParent<PlayerHealth>();
+            hitPlayerHealth =
+                other.GetComponentInParent<PlayerHealth>();
         }
 
-        if (hitPlayerHealth != null && !hitPlayerHealth.IsDead())
+        if (hitPlayerHealth != null &&
+            !hitPlayerHealth.IsDead())
         {
             DealDamage(hitPlayerHealth);
         }
@@ -315,10 +400,14 @@ public class JellyfishAI : MonoBehaviour
 
     private void TryDealDamageByDistance()
     {
-        if (!canDamage || playerHealth == null || playerHealth.IsDead())
+        if (!canDamage ||
+            playerHealth == null ||
+            playerHealth.IsDead())
             return;
 
-        float distance = Vector3.Distance(transform.position, player.position);
+        float distance =
+            Vector3.Distance(transform.position, player.position);
+
         if (distance <= damageRange)
         {
             DealDamage(playerHealth);
@@ -335,6 +424,7 @@ public class JellyfishAI : MonoBehaviour
         }
 
         canDamage = false;
+
         Invoke(nameof(ResetDamage), damageCooldown);
     }
 

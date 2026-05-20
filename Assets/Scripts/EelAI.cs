@@ -15,6 +15,16 @@ public class EelAI : MonoBehaviour
     [SerializeField] private Transform pointA;
     [SerializeField] private Transform pointB;
 
+    [Header("Terrain & Water")]
+    [SerializeField] private Terrain terrain;
+    [SerializeField] private float terrainClearance = 2f;
+
+    [Tooltip("Height of ocean surface.")]
+    [SerializeField] private float waterSurfaceY = 10f;
+
+    [Tooltip("Keeps eel below the surface.")]
+    [SerializeField] private float surfaceOffset = 1.5f;
+
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip detectSfx;
@@ -66,11 +76,7 @@ public class EelAI : MonoBehaviour
     private float originalX;
     private float originalZ;
 
-    // Horizontal movement is maintained separately so the eel never "stalls"
-    // just because its target height changes.
     private Vector3 velocityXZ;
-
-    // Persistent target height prevents sudden height snaps.
     private float targetY;
 
     private void Start()
@@ -86,6 +92,7 @@ public class EelAI : MonoBehaviour
         if (player == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("Player");
+
             if (p != null)
                 player = p.transform;
         }
@@ -93,10 +100,12 @@ public class EelAI : MonoBehaviour
         if (player != null)
         {
             playerHealth = player.GetComponent<PlayerHealth>();
+
             if (playerHealth == null)
                 playerHealth = player.GetComponentInParent<PlayerHealth>();
 
             playerHitFeedback = player.GetComponent<PlayerHitFeedback>();
+
             if (playerHitFeedback == null)
                 playerHitFeedback = player.GetComponentInParent<PlayerHitFeedback>();
         }
@@ -132,7 +141,6 @@ public class EelAI : MonoBehaviour
                 break;
 
             case EelState.Alert:
-                // Keep the eel alive during alert instead of freezing in place.
                 DriftForward(patrolSpeed * 0.75f, verticalLerpSpeed);
                 FacePlayer();
 
@@ -172,6 +180,8 @@ public class EelAI : MonoBehaviour
                 }
                 break;
         }
+
+        ClampToWaterAndTerrain();
     }
 
     private void HandlePatrol()
@@ -181,7 +191,6 @@ public class EelAI : MonoBehaviour
             new Vector2(patrolTarget.x, patrolTarget.z)
         );
 
-        // Retarget early so the eel never reaches a dead stop.
         if (horizontalDistanceToTarget < reachDistance)
         {
             patrolTarget = GetRandomPoint();
@@ -198,9 +207,23 @@ public class EelAI : MonoBehaviour
         float t = Random.Range(0f, 1f);
         Vector3 basePos = Vector3.Lerp(pointA.position, pointB.position, t);
 
+        float randomY = baseY + Random.Range(-verticalRange, verticalRange);
+
+        // Prevent spawning above water
+        randomY = Mathf.Min(randomY, waterSurfaceY - surfaceOffset);
+
+        // Prevent spawning inside terrain
+        if (terrain != null)
+        {
+            float terrainHeight =
+                terrain.SampleHeight(basePos) + terrain.transform.position.y;
+
+            randomY = Mathf.Max(randomY, terrainHeight + terrainClearance);
+        }
+
         return new Vector3(
             basePos.x + Random.Range(-roamRadius, roamRadius),
-            baseY + Random.Range(-verticalRange, verticalRange),
+            randomY,
             basePos.z + Random.Range(-roamRadius, roamRadius)
         );
     }
@@ -209,6 +232,7 @@ public class EelAI : MonoBehaviour
     {
         Vector3 currentXZ = new Vector3(transform.position.x, 0f, transform.position.z);
         Vector3 targetXZ = new Vector3(target.x, 0f, target.z);
+
         Vector3 toTargetXZ = targetXZ - currentXZ;
 
         Vector3 currentDirection;
@@ -218,13 +242,13 @@ public class EelAI : MonoBehaviour
         else
             currentDirection = new Vector3(transform.forward.x, 0f, transform.forward.z).normalized;
 
-        // If the eel is almost directly above/below its target, keep moving forward
-        // instead of allowing the horizontal speed to collapse.
-        Vector3 desiredDirection = toTargetXZ.sqrMagnitude > 0.0001f
+        Vector3 desiredDirection =
+            toTargetXZ.sqrMagnitude > 0.0001f
             ? toTargetXZ.normalized
             : currentDirection;
 
-        float currentTurnSpeed = currentState == EelState.Chase
+        float currentTurnSpeed =
+            currentState == EelState.Chase
             ? turnSpeed * 2.2f
             : turnSpeed;
 
@@ -243,6 +267,7 @@ public class EelAI : MonoBehaviour
         );
 
         targetY = target.y;
+
         transform.position = new Vector3(
             transform.position.x,
             Mathf.Lerp(transform.position.y, targetY, Time.deltaTime * yLerpSpeed),
@@ -276,14 +301,44 @@ public class EelAI : MonoBehaviour
         );
     }
 
+    // IMPORTANT PART
+    private void ClampToWaterAndTerrain()
+    {
+        Vector3 pos = transform.position;
+
+        // Keep eel below surface
+        float maxY = waterSurfaceY - surfaceOffset;
+
+        if (pos.y > maxY)
+            pos.y = maxY;
+
+        // Keep eel above terrain
+        if (terrain != null)
+        {
+            float terrainHeight =
+                terrain.SampleHeight(pos) + terrain.transform.position.y;
+
+            float minY = terrainHeight + terrainClearance;
+
+            if (pos.y < minY)
+                pos.y = minY;
+        }
+
+        transform.position = pos;
+    }
+
     private void SmoothFaceDirection(Vector3 flatDirection)
     {
         if (flatDirection.sqrMagnitude <= 0.0001f)
             return;
 
-        float yaw = Mathf.Atan2(flatDirection.x, flatDirection.z) * Mathf.Rad2Deg + modelYawOffset;
+        float yaw =
+            Mathf.Atan2(flatDirection.x, flatDirection.z) *
+            Mathf.Rad2Deg +
+            modelYawOffset;
 
-        float rotSpeed = currentState == EelState.Chase
+        float rotSpeed =
+            currentState == EelState.Chase
             ? rotationSmoothSpeed * 2f
             : rotationSmoothSpeed;
 
@@ -318,12 +373,14 @@ public class EelAI : MonoBehaviour
             return;
 
         playerHealth.TakeDamage(damage);
+
         PlaySound(hitSfx);
 
         if (playerHitFeedback != null)
             playerHitFeedback.PlayHitFeedback();
 
         canDamage = false;
+
         Invoke(nameof(ResetDamage), damageCooldown);
     }
 
