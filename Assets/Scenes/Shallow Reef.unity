@@ -10409,7 +10409,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1869760679}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d662ba15984b0344494afef14679bdea, type: 3}
   m_Name: 
@@ -10418,35 +10418,14 @@ MonoBehaviour:
   includeCameraPosition: 1
   cameraCheckRadius: 0.1
   adjustFog: 1
-  underwaterFogColor: {r: 0.1, g: 0.4, b: 0.6, a: 1}
-  underwaterFogDensity: 0.04
-  underwaterFogMode: 3
+  underwaterFogColor: {r: 0.23921569, g: 0.43137255, b: 0.47843137, a: 1}
+  underwaterFogMode: 1
+  underwaterFogStartDistance: 4
+  underwaterFogEndDistance: 38
   transitionSpeed: 2
   underwaterVolume: {fileID: 0}
   spawnBubbleBursts: 1
   bubbleParticleSystem: {fileID: 350536025}
-  bubbleMaterialOverride: {fileID: 2100000, guid: 22452165bcf850f49831fb0fdacffc77, type: 2}
-  bubbleMeshOverride: {fileID: 0}
-  bubbleSurfaceReference: {fileID: 0}
-  bubbleUseFixedSurfaceHeight: 1
-  bubbleFixedSurfaceHeight: 10
-  bubbleBurstInterval: {x: 0.5, y: 1.6}
-  bubbleBurstCountRange: {x: 2, y: 20}
-  bubbleSpawnRadius: 5
-  bubbleRiseSpeedRange: {x: 2, y: 4}
-  bubbleRiseTimeRange: {x: 3, y: 6}
-  bubbleLocalOffset: {x: 0, y: -10, z: 10}
-  bubbleActivationBlend: 0.2
-  bubbleRiseToSurface: 0
-  bubbleSurfaceOvershoot: 0
-  bubbleMinimumLifetime: 1
-  bubbleMaximumLifetime: 100
-  bubbleSizeRange: {x: 0.05, y: 0.16}
-  bubbleSmallSizeBias: 0.7
-  bubbleUseClusters: 1
-  bubbleClusterCountRange: {x: 1, y: 3}
-  bubbleClusterBubbleCountRange: {x: 6, y: 14}
-  bubbleClusterRadius: 0.18
 --- !u!114 &1869760681
 MonoBehaviour:
   m_ObjectHideFlags: 0
