@@ -317,6 +317,7 @@ GameObject:
   m_Component:
   - component: {fileID: 345639815}
   - component: {fileID: 345639816}
+  - component: {fileID: 345639817}
   m_Layer: 5
   m_Name: AirMeter
   m_TagString: Untagged
@@ -397,6 +398,24 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &345639817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345639814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66bc29f2477d4a34bb45ac38c619ba15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AirMeterController
+  maxAir: 100
+  airDepletionRate: 5
+  airRefillRate: 20
+  airSlider: {fileID: 345639816}
+  lives: 3
+  isDepleting: 1
 --- !u!1 &350536024
 GameObject:
   m_ObjectHideFlags: 0
@@ -5377,7 +5396,7 @@ GameObject:
   - component: {fileID: 419319347}
   m_Layer: 0
   m_Name: water_terrain
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -5452,6 +5471,111 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -35, y: -10, z: -15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &426130239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 426130241}
+  - component: {fileID: 426130240}
+  m_Layer: 0
+  m_Name: SpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &426130240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426130239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eff9c0e0e083b6d43a1112ab43db68bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
+  creaturePrefabs:
+  - {fileID: 813246751584668348, guid: d8ce4b1c89e7f3a4d97361f43851ed33, type: 3}
+  - {fileID: 3983046566720953969, guid: 86976c7844fee734898a2abd0ca314d2, type: 3}
+  - {fileID: 1891742659991760961, guid: 4e699c67df2ce0e4887a45535ed9817c, type: 3}
+  minSpawnTime: 2
+  maxSpawnTime: 5
+  minX: 195
+  maxX: 235
+  minY: -5
+  maxY: 5
+  spawnZ: 469
+--- !u!4 &426130241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426130239}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.90783, y: -7.47391, z: 20.30158}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &493206644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 493206646}
+  - component: {fileID: 493206645}
+  m_Layer: 0
+  m_Name: PearlSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &493206645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493206644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13888604a8a14654cb7e45e4bf9a956a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PearlSpawner
+  pearlPrefab: {fileID: 7738026679663632921, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
+  goldenPearlPrefab: {fileID: 984838177013609418, guid: f0796f802bb60d04fbf127cde475fefa, type: 3}
+  numberOfPearls: 4
+  rangeX: 20
+  rangeZ: 20
+  spawnYOffset: -3
+--- !u!4 &493206646
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493206644}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 264, y: 0, z: 478}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10735,6 +10859,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2714039080396267233, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1323970670}
+    - targetCorrespondingSourceObject: {fileID: 2714039080396267233, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1323970676}
+    - targetCorrespondingSourceObject: {fileID: 2714039080396267233, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1323970675}
   m_SourcePrefab: {fileID: 100100000, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
 --- !u!1 &1094722362
 GameObject:
@@ -11000,9 +11130,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AirMeterController
   maxAir: 100
   airDepletionRate: 5
+  airRefillRate: 20
   airSlider: {fileID: 345639816}
   lives: 3
   isDepleting: 1
+--- !u!114 &1323970675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323970663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fed6a54435d182a40b2217c043216174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 3
+  invincibilityDuration: 2
+  flashInterval: 0.1
+  modelObject: {fileID: 0}
+  renderersToFlash: []
+  scriptsToDisableOnDeath: []
+  collidersToDisableOnDeath: []
+  objectsToDisableOnDeath: []
+  gameOverUI: {fileID: 0}
+  disableRendererOnDeath: 0
+  renderersToDisableOnDeath: []
+  playerRigidbody: {fileID: 0}
+  knockbackForceMultiplier: 1
+  enableDebugDamageKey: 1
+  debugDamageKey: 107
+--- !u!114 &1323970676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323970663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff89669bc55ed00418ca0463a620de76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHitFeedback
+  playerRenderer: {fileID: 0}
+  hitColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.2
 --- !u!1001 &1330884468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11064,63 +11237,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 3150474306388093854, guid: 35f23bfd03e11fa4b9ce45069579e246, type: 3}
---- !u!1001 &1339206717
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6929121079770806435, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 121.2929
-      objectReference: {fileID: 0}
-    - target: {fileID: 6929121079770806435, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6929121079770806435, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 854.3806
-      objectReference: {fileID: 0}
-    - target: {fileID: 6929121079770806435, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6929121079770806435, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6929121079770806435, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6929121079770806435, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6929121079770806435, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6929121079770806435, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6929121079770806435, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7738026679663632921, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-      propertyPath: m_Name
-      value: pearl (1) Variant
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
 --- !u!1 &1356102824
 GameObject:
   m_ObjectHideFlags: 0
@@ -11554,57 +11670,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1792043698}
   m_CullTransparentMesh: 1
---- !u!1 &1843995183
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1843995185}
-  - component: {fileID: 1843995184}
-  m_Layer: 0
-  m_Name: PearlSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1843995184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1843995183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13888604a8a14654cb7e45e4bf9a956a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PearlSpawner
-  pearlPrefab: {fileID: 7738026679663632921, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-  numberOfPearls: 7
-  minX: 390
-  maxX: 540
-  minZ: 390
-  maxZ: 560
-  spawnY: -6
---- !u!4 &1843995185
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1843995183}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 264, y: 0, z: 478}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1869760679
 GameObject:
   m_ObjectHideFlags: 0
@@ -21718,7 +21783,6 @@ SceneRoots:
   - {fileID: 520521665}
   - {fileID: 1173317756}
   - {fileID: 749627933}
-  - {fileID: 1339206717}
   - {fileID: 1511417803}
   - {fileID: 1993997269}
   - {fileID: 530850870}
@@ -21732,4 +21796,5 @@ SceneRoots:
   - {fileID: 986149624}
   - {fileID: 2002144503}
   - {fileID: 1356102827}
-  - {fileID: 1843995185}
+  - {fileID: 426130241}
+  - {fileID: 493206646}

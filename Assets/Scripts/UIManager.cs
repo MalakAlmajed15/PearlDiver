@@ -68,10 +68,25 @@ public class UIManager : MonoBehaviour
         if (lives > 0)
         {
             lives--;
-            heartImages[lives].enabled = false; // Hides the heart
+            heartImages[lives].enabled = false;
         }
 
         if (lives <= 0) ShowGameOver();
+    }
+
+    public void AddLife()
+    {
+      
+        if (lives < heartImages.Length)
+        {
+            heartImages[lives].enabled = true;
+            lives++;
+            Debug.Log("Extra life! Lives: " + lives);
+        }
+        else
+        {
+            Debug.Log("Already at max lives!");
+        }
     }
 
     void ShowGameOver()
@@ -131,7 +146,7 @@ public class UIManager : MonoBehaviour
         int totalLevelScore = levelScore + timeBonus;
 
         // Update CUMULATIVE stats (only if winning)
-        if (pearls >= 10)
+        if (pearls >= totalPearlsInLevel && totalPearlsInLevel > 0)
         {
             totalScore += totalLevelScore;
             totalPearls += pearls;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GoldenPearl : MonoBehaviour
@@ -8,16 +6,13 @@ public class GoldenPearl : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Give the player an extra life
-            AirMeterController airMeter = other.GetComponent<AirMeterController>();
-            if (airMeter != null)
+            // Tell the UIManager directly to add a life and update the hearts
+            if (UIManager.Instance != null)
             {
-                airMeter.lives++;
-                Debug.Log("Extra life collected! Lives: " + airMeter.lives);
+                UIManager.Instance.AddLife();
             }
 
-            // Destroy the golden pearl after collection
-            Destroy(gameObject);
+            Destroy(gameObject); // Remove golden pearl after collecting
         }
     }
 }

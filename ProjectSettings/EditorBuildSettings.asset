@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CoralGarden.unity
     guid: 3899706219ddc5a489989b42b2041846
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ShipWreck.unity
     guid: e71aa3e217a5618498ecb5c9c07046dd
   - enabled: 1
