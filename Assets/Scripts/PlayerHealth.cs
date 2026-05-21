@@ -28,6 +28,15 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Rigidbody playerRigidbody;
     [SerializeField] private float knockbackForceMultiplier = 1f;
 
+    [Header("Hit Sound")]
+    [SerializeField] private AudioClip hitSound;
+    [SerializeField] private float hitSoundVolume = 1f;
+
+    [Header("Death Sound")]
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private float deathSoundVolume = 1f;
+    private AudioSource audioSource;
+
     [Header("Debug")]
     [SerializeField] private bool enableDebugDamageKey = true;
     [SerializeField] private KeyCode debugDamageKey = KeyCode.K;
@@ -39,7 +48,6 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        // Simple global access point for systems that need to check player health.
         Instance = this;
     }
 
@@ -53,7 +61,14 @@ public class PlayerHealth : MonoBehaviour
         if (playerRigidbody == null)
             playerRigidbody = GetComponent<Rigidbody>();
 
-        // Auto-fill renderers from the assigned model object if no custom list was provided.
+        // Set up audio source for hit sound
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 0f; // 2D sound
+
         if ((renderersToFlash == null || renderersToFlash.Length == 0) && modelObject != null)
             renderersToFlash = modelObject.GetComponentsInChildren<Renderer>();
 
@@ -62,7 +77,6 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        // Optional play-mode shortcut for quickly testing damage, UI updates, and death logic.
         if (enableDebugDamageKey && Input.GetKeyDown(debugDamageKey))
             TakeDamage(1);
     }
@@ -77,7 +91,6 @@ public class PlayerHealth : MonoBehaviour
         if (isDead)
             return;
 
-        // Invincibility frames prevent enemies from draining all health in one contact.
         if (isInvincible)
         {
             Debug.Log("TakeDamage ignored: player is invincible.");
@@ -86,6 +99,9 @@ public class PlayerHealth : MonoBehaviour
 
         currentHealth -= amount;
         Debug.Log("Player took " + amount + " damage. Current health: " + currentHealth);
+
+        // Play hit sound when diver gets hit
+        PlayHitSound();
 
         if (UIManager.Instance != null)
             UIManager.Instance.LoseLife();
@@ -97,11 +113,28 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
 
-        // Restarting the coroutine avoids overlapping flash/invincibility routines.
         if (invincibilityRoutine != null)
             StopCoroutine(invincibilityRoutine);
 
         invincibilityRoutine = StartCoroutine(InvincibilityCoroutine());
+    }
+
+    private void PlayHitSound()
+    {
+        if (audioSource != null && hitSound != null)
+        {
+            audioSource.PlayOneShot(hitSound, hitSoundVolume);
+            Debug.Log("Hit sound played!");
+        }
+    }
+
+    private void PlayDeathSound()
+    {
+        if (audioSource != null && deathSound != null)
+        {
+            audioSource.PlayOneShot(deathSound, deathSoundVolume);
+            Debug.Log("Death sound played!");
+        }
     }
 
     public void ApplyKnockback(Vector3 direction, float force)
@@ -122,7 +155,6 @@ public class PlayerHealth : MonoBehaviour
 
         float timer = 0f;
 
-        // Flash the visible model while the player is temporarily immune to damage.
         while (timer < invincibilityDuration)
         {
             ToggleFlashRenderers(false);
@@ -134,7 +166,6 @@ public class PlayerHealth : MonoBehaviour
             timer += flashInterval * 2f;
         }
 
-        // Always restore visibility, even if the final flash ended on an invisible frame.
         ToggleFlashRenderers(true);
         isInvincible = false;
         invincibilityRoutine = null;
@@ -162,13 +193,14 @@ public class PlayerHealth : MonoBehaviour
         isDead = true;
         Debug.Log("PLAYER DIED");
 
+        // Play death sound
+        PlayDeathSound();
+
         if (invincibilityRoutine != null)
             StopCoroutine(invincibilityRoutine);
 
-        // Ensure the model is not left hidden by the invincibility flash.
         ToggleFlashRenderers(true);
 
-        // Disable player control, camera control, or any other gameplay scripts assigned in the Inspector.
         if (scriptsToDisableOnDeath != null)
         {
             foreach (MonoBehaviour script in scriptsToDisableOnDeath)
@@ -181,7 +213,6 @@ public class PlayerHealth : MonoBehaviour
             }
         }
 
-        // Disable colliders so the dead player no longer receives enemy/contact interactions.
         if (collidersToDisableOnDeath != null)
         {
             foreach (Collider col in collidersToDisableOnDeath)
@@ -191,7 +222,6 @@ public class PlayerHealth : MonoBehaviour
             }
         }
 
-        // Optional object disabling for cameras, UI helpers, movement rigs, or visual elements.
         if (objectsToDisableOnDeath != null)
         {
             foreach (GameObject obj in objectsToDisableOnDeath)
@@ -204,7 +234,6 @@ public class PlayerHealth : MonoBehaviour
             }
         }
 
-        // Allows the death state to hide the character model if the project needs that behavior.
         if (disableRendererOnDeath && renderersToDisableOnDeath != null)
         {
             foreach (Renderer rend in renderersToDisableOnDeath)
@@ -220,22 +249,10 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("Game Over UI shown.");
         }
 
-        // This component no longer needs to process input or damage after death.
         enabled = false;
     }
 
-    public int GetCurrentHealth()
-    {
-        return currentHealth;
-    }
-
-    public bool IsDead()
-    {
-        return isDead;
-    }
-
-    public bool IsInvincible()
-    {
-        return isInvincible;
-    }
+    public int GetCurrentHealth() { return currentHealth; }
+    public bool IsDead() { return isDead; }
+    public bool IsInvincible() { return isInvincible; }
 }
