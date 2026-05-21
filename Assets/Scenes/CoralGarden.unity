@@ -11002,6 +11002,10 @@ MonoBehaviour:
   renderersToDisableOnDeath: []
   playerRigidbody: {fileID: 0}
   knockbackForceMultiplier: 1
+  hitSound: {fileID: 8300000, guid: 24eed1bb2c0755d45b39effd9865490d, type: 3}
+  hitSoundVolume: 1
+  deathSound: {fileID: 8300000, guid: 006a1adef152a854cb540ff5aaa13b9d, type: 3}
+  deathSoundVolume: 1
   enableDebugDamageKey: 1
   debugDamageKey: 107
 --- !u!114 &1786159202
