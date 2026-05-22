@@ -2,14 +2,7 @@ using UnityEngine;
 
 public class CrabAI : MonoBehaviour
 {
-    private enum CrabState
-    {
-        Patrol,
-        Chase,
-        AttackWindup,
-        Recover,
-        ReturnHome
-    }
+    private enum CrabState { Patrol, Chase, AttackWindup, Recover, ReturnHome }
 
     [Header("References")]
     [SerializeField] private Transform player;
@@ -49,7 +42,7 @@ public class CrabAI : MonoBehaviour
     [SerializeField] private float recoverTime = 0.4f;
 
     [Header("Damage")]
-    [SerializeField] private int damage = 0; // Crab does NO damage
+    [SerializeField] private int damage = 1;
     [SerializeField] private float damageCooldown = 1.5f;
 
     [Header("Patrol")]
@@ -94,13 +87,8 @@ public class CrabAI : MonoBehaviour
 
         if (player != null)
         {
-            playerHealth = player.GetComponent<PlayerHealth>();
-            if (playerHealth == null)
-                playerHealth = player.GetComponentInParent<PlayerHealth>();
-
-            playerHitFeedback = player.GetComponent<PlayerHitFeedback>();
-            if (playerHitFeedback == null)
-                playerHitFeedback = player.GetComponentInParent<PlayerHitFeedback>();
+            playerHealth = player.GetComponent<PlayerHealth>() ?? player.GetComponentInParent<PlayerHealth>();
+            playerHitFeedback = player.GetComponent<PlayerHitFeedback>() ?? player.GetComponentInParent<PlayerHitFeedback>();
         }
 
         currentPatrolTarget = pointB;
@@ -120,33 +108,18 @@ public class CrabAI : MonoBehaviour
         {
             case CrabState.Patrol:
                 HandlePatrol();
-                if (distanceToPlayer <= detectionRange)
-                    currentState = CrabState.Chase;
+                if (distanceToPlayer <= detectionRange) currentState = CrabState.Chase;
                 break;
-
             case CrabState.Chase:
                 HandleChase();
-                // Crab chases but does NOT damage
                 if (distanceToPlayer <= attackRange && attackCooldownTimer <= 0f)
-                {
-                    currentState = CrabState.AttackWindup;
-                    attackWindupTimer = attackWindupTime;
-                }
+                { currentState = CrabState.AttackWindup; attackWindupTimer = attackWindupTime; }
                 if (distanceToPlayer > loseRange || distanceFromHome > maxChaseDistanceFromHome)
                     currentState = CrabState.ReturnHome;
                 break;
-
-            case CrabState.AttackWindup:
-                HandleAttack();
-                break;
-
-            case CrabState.Recover:
-                HandleRecover();
-                break;
-
-            case CrabState.ReturnHome:
-                HandleReturnHome();
-                break;
+            case CrabState.AttackWindup: HandleAttack(); break;
+            case CrabState.Recover: HandleRecover(); break;
+            case CrabState.ReturnHome: HandleReturnHome(); break;
         }
 
         ForceUprightRotation();
@@ -155,15 +128,10 @@ public class CrabAI : MonoBehaviour
     private void HandlePatrol()
     {
         if (currentPatrolTarget == null || patrolPauseTimer > 0f) return;
-
         Vector3 target = currentPatrolTarget.position;
         target.y = GetTerrainHeight(target);
         MoveTowards(target, patrolSpeed);
-
-        float distance = Vector2.Distance(
-            new Vector2(transform.position.x, transform.position.z),
-            new Vector2(target.x, target.z));
-
+        float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.x, target.z));
         if (distance <= reachDistance)
         {
             currentPatrolTarget = currentPatrolTarget == pointA ? pointB : pointA;
@@ -182,15 +150,10 @@ public class CrabAI : MonoBehaviour
     {
         Transform nearestPoint = GetNearestPatrolPoint();
         if (nearestPoint == null) return;
-
         Vector3 target = nearestPoint.position;
         target.y = GetTerrainHeight(target);
         MoveTowards(target, returnHomeSpeed);
-
-        float distance = Vector2.Distance(
-            new Vector2(transform.position.x, transform.position.z),
-            new Vector2(target.x, target.z));
-
+        float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.x, target.z));
         if (distance <= reachDistance)
         {
             currentPatrolTarget = nearestPoint == pointA ? pointB : pointA;
@@ -219,16 +182,13 @@ public class CrabAI : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, lungeTarget, lungeSpeed * Time.deltaTime);
             ClampToTerrain();
-
             if (Vector3.Distance(transform.position, lungeTarget) <= 0.05f)
             {
-                // Crab does NOT call TryDamagePlayer — no damage!
+                TryDamagePlayer();
                 attackCooldownTimer = attackCooldown;
-
-                Vector3 backDir = transform.position - player.position;
+                Vector3 backDir = (transform.position - player.position);
                 backDir.y = 0f;
                 backDir.Normalize();
-
                 backstepTarget = transform.position + backDir * backstepDistance;
                 backstepTarget.y = GetTerrainHeight(backstepTarget);
                 recoverTimer = recoverTime;
@@ -242,16 +202,10 @@ public class CrabAI : MonoBehaviour
     private void HandleRecover()
     {
         if (!isRecovering) return;
-
         transform.position = Vector3.MoveTowards(transform.position, backstepTarget, backstepSpeed * Time.deltaTime);
         ClampToTerrain();
-
         recoverTimer -= Time.deltaTime;
-        if (recoverTimer <= 0f)
-        {
-            isRecovering = false;
-            currentState = CrabState.Chase;
-        }
+        if (recoverTimer <= 0f) { isRecovering = false; currentState = CrabState.Chase; }
     }
 
     private void MoveTowards(Vector3 target, float speed)
@@ -259,14 +213,11 @@ public class CrabAI : MonoBehaviour
         Vector3 direction = target - transform.position;
         direction.y = 0f;
         if (direction.sqrMagnitude <= 0.0001f) return;
-
         direction.Normalize();
         SmoothFaceDirection(direction);
-
         Vector3 newPosition = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
         newPosition.y = GetTerrainHeight(newPosition);
-        float maxY = waterSurfaceY - surfaceOffset;
-        newPosition.y = Mathf.Min(newPosition.y, maxY);
+        newPosition.y = Mathf.Min(newPosition.y, waterSurfaceY - surfaceOffset);
         transform.position = newPosition;
     }
 
@@ -274,16 +225,14 @@ public class CrabAI : MonoBehaviour
     {
         Vector3 pos = transform.position;
         pos.y = GetTerrainHeight(pos);
-        float maxY = waterSurfaceY - surfaceOffset;
-        pos.y = Mathf.Min(pos.y, maxY);
+        pos.y = Mathf.Min(pos.y, waterSurfaceY - surfaceOffset);
         transform.position = pos;
     }
 
     private float GetTerrainHeight(Vector3 worldPosition)
     {
         if (terrain == null) return -8f + terrainOffset;
-        float height = terrain.SampleHeight(worldPosition) + terrain.transform.position.y;
-        return height + terrainOffset;
+        return terrain.SampleHeight(worldPosition) + terrain.transform.position.y + terrainOffset;
     }
 
     private void SmoothFaceDirection(Vector3 direction)
@@ -299,6 +248,17 @@ public class CrabAI : MonoBehaviour
         if (!keepUpright) return;
         Vector3 euler = transform.rotation.eulerAngles;
         transform.rotation = Quaternion.Euler(originalX, euler.y, originalZ);
+    }
+
+    private void TryDamagePlayer()
+    {
+        if (!canDamage || playerHealth == null || playerHealth.IsDead()) return;
+        float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(player.position.x, player.position.z));
+        if (distance > attackRange + 0.25f) return;
+        playerHealth.TakeDamage(damage);
+        if (playerHitFeedback != null) playerHitFeedback.PlayHitFeedback();
+        canDamage = false;
+        Invoke(nameof(ResetDamage), damageCooldown);
     }
 
     private void ResetDamage() { canDamage = true; }
