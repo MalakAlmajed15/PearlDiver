@@ -6,52 +6,60 @@ public class PearlSpawner : MonoBehaviour
 {
     [Header("Pearl Settings")]
     public GameObject pearlPrefab;
-    public GameObject goldenPearlPrefab;
-    public int numberOfPearls = 10;
+    public int numberOfPearls = 7;
 
-    [Header("Spawn Area (relative to player)")]
-    public float rangeX = 20f;
-    public float rangeZ = 20f;
-    public float spawnYOffset = -3f;
+    [Header("Golden Pearl")]
+    public GameObject goldenPearlPrefab;
+
+    [Header("Pearl Sound")]
+    public AudioClip collectSound;
+
+    [Header("Spawn Area")]
+    public float minX = 400f;
+    public float maxX = 530f;
+    public float minZ = 400f;
+    public float maxZ = 550f;
+    public float spawnY = -6f;
 
     void Start()
     {
         SpawnPearls();
+        SpawnGoldenPearl();
     }
 
     void SpawnPearls()
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player == null)
+        for (int i = 0; i < numberOfPearls; i++)
         {
-            Debug.LogWarning("No Player found! Tag your diver as Player.");
+            float randomX = Random.Range(minX, maxX);
+            float randomZ = Random.Range(minZ, maxZ);
+            Vector3 spawnPosition = new Vector3(randomX, spawnY, randomZ);
+
+            GameObject pearl = Instantiate(pearlPrefab, spawnPosition, Quaternion.identity);
+
+            // Assign collect sound to each spawned pearl
+            PearlManager pm = pearl.GetComponent<PearlManager>();
+            if (pm != null && collectSound != null)
+            {
+                pm.collectSound = collectSound;
+            }
+        }
+        Debug.Log("Spawned " + numberOfPearls + " pearls!");
+    }
+
+    void SpawnGoldenPearl()
+    {
+        if (goldenPearlPrefab == null)
+        {
+            Debug.Log("No golden pearl prefab assigned!");
             return;
         }
 
-        Vector3 playerPos = player.transform.position;
+        float randomX = Random.Range(minX, maxX);
+        float randomZ = Random.Range(minZ, maxZ);
+        Vector3 spawnPosition = new Vector3(randomX, spawnY, randomZ);
 
-        // Pick one random index for the golden pearl
-        int goldenIndex = Random.Range(0, numberOfPearls);
-
-        for (int i = 0; i < numberOfPearls; i++)
-        {
-            float randomX = playerPos.x + Random.Range(-rangeX, rangeX);
-            float randomZ = playerPos.z + Random.Range(-rangeZ, rangeZ);
-            float spawnY = playerPos.y + spawnYOffset;
-
-            Vector3 spawnPosition = new Vector3(randomX, spawnY, randomZ);
-
-            if (i == goldenIndex && goldenPearlPrefab != null)
-            {
-                Instantiate(goldenPearlPrefab, spawnPosition, Quaternion.identity);
-                Debug.Log("Golden pearl spawned!");
-            }
-            else
-            {
-                Instantiate(pearlPrefab, spawnPosition, Quaternion.identity);
-            }
-        }
-
-        Debug.Log("Spawned " + numberOfPearls + " pearls!");
+        Instantiate(goldenPearlPrefab, spawnPosition, Quaternion.identity);
+        Debug.Log("Golden pearl spawned at: " + spawnPosition);
     }
 }

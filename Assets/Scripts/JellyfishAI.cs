@@ -16,14 +16,8 @@ public class JellyfishAI : MonoBehaviour
 
     [Header("Terrain & Water")]
     [SerializeField] private Terrain terrain;
-
-    [Tooltip("Keeps jellyfish above terrain.")]
     [SerializeField] private float terrainClearance = 2f;
-
-    [Tooltip("Ocean surface height.")]
     [SerializeField] private float waterSurfaceY = 7f;
-
-    [Tooltip("Keeps jellyfish below water surface.")]
     [SerializeField] private float surfaceOffset = 1.5f;
 
     [Header("Idle Movement")]
@@ -50,25 +44,20 @@ public class JellyfishAI : MonoBehaviour
     [SerializeField] private float rotationSmoothSpeed = 6f;
 
     [Header("Damage")]
-    [SerializeField] private int damage = 1;
+    [SerializeField] private int damage = 0; // Jellyfish does NO damage
     [SerializeField] private float damageCooldown = 1.5f;
 
     [Header("Return Home Failsafe")]
     [SerializeField] private float maxReturnTime = 3f;
 
     private JellyfishState currentState = JellyfishState.Idle;
-
     private Vector3 homePosition;
     private float baseY;
-
     private bool canDamage = true;
-
     private float floatTimer = 0f;
     private float returnTimer = 0f;
     private float returnHomeLockTimer = 0f;
-
     private PlayerHealth playerHealth;
-
     private float originalX;
     private float originalZ;
 
@@ -77,7 +66,6 @@ public class JellyfishAI : MonoBehaviour
         homePosition = transform.position;
         baseY = transform.position.y;
 
-        // Clamp home position below water surface
         if (baseY > waterSurfaceY - surfaceOffset)
         {
             baseY = waterSurfaceY - surfaceOffset;
@@ -92,8 +80,7 @@ public class JellyfishAI : MonoBehaviour
         if (player == null)
         {
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-                player = playerObj.transform;
+            if (playerObj != null) player = playerObj.transform;
         }
 
         if (player != null)
@@ -109,8 +96,7 @@ public class JellyfishAI : MonoBehaviour
 
     private void Update()
     {
-        if (returnHomeLockTimer > 0f)
-            returnHomeLockTimer -= Time.deltaTime;
+        if (returnHomeLockTimer > 0f) returnHomeLockTimer -= Time.deltaTime;
 
         if (playerHealth != null && playerHealth.IsDead())
         {
@@ -147,7 +133,7 @@ public class JellyfishAI : MonoBehaviour
 
             case JellyfishState.Chase:
                 HandleChase();
-                TryDealDamageByDistance();
+                // Jellyfish chases but does NOT damage
 
                 if (distanceToPlayer > loseRange || distanceFromHome > maxChaseDistanceFromHome)
                 {
@@ -159,7 +145,6 @@ public class JellyfishAI : MonoBehaviour
 
             case JellyfishState.ReturnHome:
                 HandleReturnHome();
-
                 if (returnHomeLockTimer <= 0f &&
                     playerHealth != null &&
                     !playerHealth.IsDead() &&
@@ -178,17 +163,11 @@ public class JellyfishAI : MonoBehaviour
     private void HandleIdle()
     {
         floatTimer += Time.deltaTime * floatSpeed;
-
         float yOffset = Mathf.Sin(floatTimer) * floatHeight;
         float xOffset = Mathf.Sin(floatTimer * horizontalDriftSpeed) * horizontalDriftRadius;
         float zOffset = Mathf.Cos(floatTimer * horizontalDriftSpeed) * horizontalDriftRadius * 0.5f;
 
-        Vector3 targetPos = new Vector3(
-            homePosition.x + xOffset,
-            baseY + yOffset,
-            homePosition.z + zOffset
-        );
-
+        Vector3 targetPos = new Vector3(homePosition.x + xOffset, baseY + yOffset, homePosition.z + zOffset);
         transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * idleLerpSpeed);
     }
 
@@ -196,7 +175,6 @@ public class JellyfishAI : MonoBehaviour
     {
         Vector3 targetPos = new Vector3(player.position.x, transform.position.y, player.position.z);
         Vector3 toTarget = targetPos - transform.position;
-
         if (toTarget.sqrMagnitude <= 0.0001f) return;
 
         Vector3 direction = toTarget.normalized;
@@ -214,7 +192,6 @@ public class JellyfishAI : MonoBehaviour
     private void HandleReturnHome()
     {
         returnTimer += Time.deltaTime;
-
         Vector3 target = new Vector3(homePosition.x, baseY, homePosition.z);
         Vector3 toTarget = target - transform.position;
 
@@ -248,12 +225,9 @@ public class JellyfishAI : MonoBehaviour
     private void ClampToWaterAndTerrain()
     {
         Vector3 pos = transform.position;
-
-        // Keep below water surface
         float maxY = waterSurfaceY - surfaceOffset;
         if (pos.y > maxY) pos.y = maxY;
 
-        // Keep above terrain
         if (terrain != null)
         {
             float terrainHeight = terrain.SampleHeight(pos) + terrain.transform.position.y;
@@ -262,7 +236,6 @@ public class JellyfishAI : MonoBehaviour
         }
         else
         {
-            // No terrain assigned — use fixed seabed Y
             if (pos.y < -8f) pos.y = -8f;
         }
 
@@ -272,15 +245,12 @@ public class JellyfishAI : MonoBehaviour
     private void SmoothFaceDirection(Vector3 direction)
     {
         if (direction.sqrMagnitude <= 0.0001f) return;
-
         direction.y = 0f;
         if (direction.sqrMagnitude <= 0.0001f) return;
         direction.Normalize();
 
         float targetYaw = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-        float finalYaw = targetYaw + modelYawOffset;
-
-        Quaternion targetRotation = Quaternion.Euler(originalX, finalYaw, originalZ);
+        Quaternion targetRotation = Quaternion.Euler(originalX, targetYaw + modelYawOffset, originalZ);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSmoothSpeed);
     }
 
@@ -291,40 +261,8 @@ public class JellyfishAI : MonoBehaviour
         transform.rotation = Quaternion.Euler(originalX, euler.y, originalZ);
     }
 
-    private void OnTriggerEnter(Collider other) { TryDealDamage(other); }
-    private void OnTriggerStay(Collider other) { TryDealDamage(other); }
-
-    private void TryDealDamage(Collider other)
-    {
-        if (!canDamage) return;
-
-        PlayerHealth hitPlayerHealth = other.GetComponent<PlayerHealth>();
-        if (hitPlayerHealth == null)
-            hitPlayerHealth = other.GetComponentInParent<PlayerHealth>();
-
-        if (hitPlayerHealth != null && !hitPlayerHealth.IsDead())
-            DealDamage(hitPlayerHealth);
-    }
-
-    private void TryDealDamageByDistance()
-    {
-        if (!canDamage || playerHealth == null || playerHealth.IsDead()) return;
-
-        float distance = Vector3.Distance(transform.position, player.position);
-        if (distance <= damageRange)
-            DealDamage(playerHealth);
-    }
-
-    private void DealDamage(PlayerHealth targetHealth)
-    {
-        targetHealth.TakeDamage(damage);
-
-        if (audioSource != null && hitSfx != null)
-            audioSource.PlayOneShot(hitSfx);
-
-        canDamage = false;
-        Invoke(nameof(ResetDamage), damageCooldown);
-    }
-
+    // Jellyfish does NOT damage — trigger methods kept for collision detection only
+    private void OnTriggerEnter(Collider other) { }
+    private void OnTriggerStay(Collider other) { }
     private void ResetDamage() { canDamage = true; }
 }
