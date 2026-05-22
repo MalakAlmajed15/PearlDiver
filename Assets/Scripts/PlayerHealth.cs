@@ -35,7 +35,14 @@ public class PlayerHealth : MonoBehaviour
     [Header("Death Sound")]
     [SerializeField] private AudioClip deathSound;
     [SerializeField] private float deathSoundVolume = 1f;
+
+    [Header("Victory Sound")]
+    [SerializeField] private AudioClip victorySound;
+    [SerializeField] private float victorySoundVolume = 1f;
+
+    // Two audio sources so sounds dont cut each other off
     private AudioSource audioSource;
+    private AudioSource victorySoundSource;
 
     [Header("Debug")]
     [SerializeField] private bool enableDebugDamageKey = true;
@@ -61,13 +68,25 @@ public class PlayerHealth : MonoBehaviour
         if (playerRigidbody == null)
             playerRigidbody = GetComponent<Rigidbody>();
 
-        // Set up audio source for hit sound
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
+        // Main audio source for hit and death sounds
+        AudioSource[] sources = GetComponents<AudioSource>();
+
+        if (sources.Length >= 1)
+            audioSource = sources[0];
+        else
             audioSource = gameObject.AddComponent<AudioSource>();
 
         audioSource.playOnAwake = false;
-        audioSource.spatialBlend = 0f; // 2D sound
+        audioSource.spatialBlend = 0f;
+
+        // Separate audio source for victory so it does not get cut off
+        if (sources.Length >= 2)
+            victorySoundSource = sources[1];
+        else
+            victorySoundSource = gameObject.AddComponent<AudioSource>();
+
+        victorySoundSource.playOnAwake = false;
+        victorySoundSource.spatialBlend = 0f;
 
         if ((renderersToFlash == null || renderersToFlash.Length == 0) && modelObject != null)
             renderersToFlash = modelObject.GetComponentsInChildren<Renderer>();
@@ -100,7 +119,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= amount;
         Debug.Log("Player took " + amount + " damage. Current health: " + currentHealth);
 
-        // Play hit sound when diver gets hit
+        // Play hit sound
         PlayHitSound();
 
         if (UIManager.Instance != null)
@@ -119,12 +138,31 @@ public class PlayerHealth : MonoBehaviour
         invincibilityRoutine = StartCoroutine(InvincibilityCoroutine());
     }
 
+    // Call this from your level completion script when all pearls are collected
+    public void PlayVictorySound()
+    {
+        if (victorySoundSource != null && victorySound != null)
+        {
+            victorySoundSource.PlayOneShot(victorySound, victorySoundVolume);
+            Debug.Log("Victory sound played!");
+        }
+        else
+        {
+            Debug.Log("Victory sound not assigned!");
+        }
+    }
+
     private void PlayHitSound()
     {
         if (audioSource != null && hitSound != null)
         {
+            audioSource.Stop();
             audioSource.PlayOneShot(hitSound, hitSoundVolume);
             Debug.Log("Hit sound played!");
+        }
+        else
+        {
+            Debug.Log("Hit sound not assigned or AudioSource missing!");
         }
     }
 
@@ -132,6 +170,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (audioSource != null && deathSound != null)
         {
+            audioSource.Stop();
             audioSource.PlayOneShot(deathSound, deathSoundVolume);
             Debug.Log("Death sound played!");
         }
@@ -193,7 +232,6 @@ public class PlayerHealth : MonoBehaviour
         isDead = true;
         Debug.Log("PLAYER DIED");
 
-        // Play death sound
         PlayDeathSound();
 
         if (invincibilityRoutine != null)

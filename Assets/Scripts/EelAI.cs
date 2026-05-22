@@ -18,11 +18,7 @@ public class EelAI : MonoBehaviour
     [Header("Terrain & Water")]
     [SerializeField] private Terrain terrain;
     [SerializeField] private float terrainClearance = 2f;
-
-    [Tooltip("Height of ocean surface.")]
     [SerializeField] private float waterSurfaceY = 7f;
-
-    [Tooltip("Keeps eel below the surface.")]
     [SerializeField] private float surfaceOffset = 1.5f;
 
     [Header("Audio")]
@@ -32,8 +28,8 @@ public class EelAI : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float patrolSpeed = 0.8f;
-    [SerializeField] private float chaseSpeed = 1.5f;
-    [SerializeField] private float returnSpeed = 1.2f;
+    [SerializeField] private float chaseSpeed = 1.2f;   // Slow chase speed
+    [SerializeField] private float returnSpeed = 1.0f;
     [SerializeField] private float rotationSmoothSpeed = 4f;
 
     [Header("Steering")]
@@ -49,33 +45,28 @@ public class EelAI : MonoBehaviour
     [SerializeField] private float verticalLerpSpeed = 2.5f;
     [SerializeField] private float chaseVerticalLerpSpeed = 3.5f;
 
-    [Header("Detection")]
-    [SerializeField] private float detectionRange = 3f;
-    [SerializeField] private float alertRange = 4f;
-    [SerializeField] private float loseRange = 5f;
-    [SerializeField] private float maxChaseDistanceFromHome = 5f;
+    [Header("Detection — Eel shows little")]
+    [SerializeField] private float detectionRange = 2f;    // Only detects when very close
+    [SerializeField] private float alertRange = 3f;
+    [SerializeField] private float loseRange = 3.5f;       // Gives up quickly
+    [SerializeField] private float maxChaseDistanceFromHome = 3f; // Does not go far
 
-    [Header("Damage")]
-    [SerializeField] private int damage = 1;
-    [SerializeField] private float damageCooldown = 1.5f;
+    [Header("Damage — Only eel damages")]
+    [SerializeField] private int damage = 1;               // Eel does damage
+    [SerializeField] private float damageCooldown = 2f;    // Hits once every 2 seconds
     [SerializeField] private float damageRange = 1.3f;
 
     [Header("Model Fix")]
     [SerializeField] private float modelYawOffset = 0f;
 
     private EelState currentState = EelState.Patrol;
-
     private PlayerHealth playerHealth;
     private PlayerHitFeedback playerHitFeedback;
-
     private Vector3 homePosition;
     private Vector3 patrolTarget;
-
     private bool canDamage = true;
-
     private float originalX;
     private float originalZ;
-
     private Vector3 velocityXZ;
     private float targetY;
 
@@ -85,7 +76,6 @@ public class EelAI : MonoBehaviour
         baseY = transform.position.y;
         targetY = transform.position.y;
 
-        // Clamp starting position below water surface
         if (baseY > waterSurfaceY - surfaceOffset)
         {
             baseY = waterSurfaceY - surfaceOffset;
@@ -131,7 +121,6 @@ public class EelAI : MonoBehaviour
         {
             case EelState.Patrol:
                 HandlePatrol();
-
                 if (distToPlayer <= detectionRange)
                 {
                     PlaySound(detectSfx);
@@ -146,7 +135,6 @@ public class EelAI : MonoBehaviour
             case EelState.Alert:
                 DriftForward(patrolSpeed * 0.75f, verticalLerpSpeed);
                 FacePlayer();
-
                 if (distToPlayer <= detectionRange)
                 {
                     PlaySound(detectSfx);
@@ -160,7 +148,7 @@ public class EelAI : MonoBehaviour
 
             case EelState.Chase:
                 MoveSteering(player.position, chaseSpeed, chaseVerticalLerpSpeed);
-                TryDamagePlayerDistance();
+                TryDamagePlayerDistance(); // Only eel damages!
 
                 if (distToPlayer > loseRange || distFromHome > maxChaseDistanceFromHome)
                     currentState = EelState.ReturnHome;
@@ -207,13 +195,9 @@ public class EelAI : MonoBehaviour
 
         float t = Random.Range(0f, 1f);
         Vector3 basePos = Vector3.Lerp(pointA.position, pointB.position, t);
-
         float randomY = baseY + Random.Range(-verticalRange, verticalRange);
-
-        // Prevent spawning above water
         randomY = Mathf.Min(randomY, waterSurfaceY - surfaceOffset);
 
-        // Prevent spawning inside terrain
         if (terrain != null)
         {
             float terrainHeight = terrain.SampleHeight(basePos) + terrain.transform.position.y;
@@ -221,7 +205,6 @@ public class EelAI : MonoBehaviour
         }
         else
         {
-            // No terrain — use fixed seabed Y
             randomY = Mathf.Max(randomY, -8f + terrainClearance);
         }
 
@@ -238,26 +221,21 @@ public class EelAI : MonoBehaviour
         Vector3 targetXZ = new Vector3(target.x, 0f, target.z);
         Vector3 toTargetXZ = targetXZ - currentXZ;
 
-        Vector3 currentDirection;
-        if (velocityXZ.sqrMagnitude > 0.0001f)
-            currentDirection = velocityXZ.normalized;
-        else
-            currentDirection = new Vector3(transform.forward.x, 0f, transform.forward.z).normalized;
+        Vector3 currentDirection = velocityXZ.sqrMagnitude > 0.0001f
+            ? velocityXZ.normalized
+            : new Vector3(transform.forward.x, 0f, transform.forward.z).normalized;
 
         Vector3 desiredDirection = toTargetXZ.sqrMagnitude > 0.0001f
             ? toTargetXZ.normalized
             : currentDirection;
 
         float currentTurnSpeed = currentState == EelState.Chase ? turnSpeed * 2.2f : turnSpeed;
-
         Vector3 newDirection = Vector3.Slerp(currentDirection, desiredDirection, Time.deltaTime * currentTurnSpeed).normalized;
 
         velocityXZ = newDirection * speed;
-
         transform.position += new Vector3(velocityXZ.x * Time.deltaTime, 0f, velocityXZ.z * Time.deltaTime);
 
         targetY = target.y;
-
         transform.position = new Vector3(
             transform.position.x,
             Mathf.Lerp(transform.position.y, targetY, Time.deltaTime * yLerpSpeed),
@@ -269,16 +247,12 @@ public class EelAI : MonoBehaviour
 
     private void DriftForward(float speed, float yLerpSpeed)
     {
-        Vector3 currentDirection;
-        if (velocityXZ.sqrMagnitude > 0.0001f)
-            currentDirection = velocityXZ.normalized;
-        else
-            currentDirection = new Vector3(transform.forward.x, 0f, transform.forward.z).normalized;
+        Vector3 currentDirection = velocityXZ.sqrMagnitude > 0.0001f
+            ? velocityXZ.normalized
+            : new Vector3(transform.forward.x, 0f, transform.forward.z).normalized;
 
         velocityXZ = currentDirection * speed;
-
         transform.position += new Vector3(velocityXZ.x * Time.deltaTime, 0f, velocityXZ.z * Time.deltaTime);
-
         transform.position = new Vector3(
             transform.position.x,
             Mathf.Lerp(transform.position.y, targetY, Time.deltaTime * yLerpSpeed),
@@ -289,12 +263,9 @@ public class EelAI : MonoBehaviour
     private void ClampToWaterAndTerrain()
     {
         Vector3 pos = transform.position;
-
-        // Keep eel below surface
         float maxY = waterSurfaceY - surfaceOffset;
         if (pos.y > maxY) pos.y = maxY;
 
-        // Keep eel above terrain
         if (terrain != null)
         {
             float terrainHeight = terrain.SampleHeight(pos) + terrain.transform.position.y;
@@ -303,7 +274,6 @@ public class EelAI : MonoBehaviour
         }
         else
         {
-            // No terrain — use fixed seabed Y
             if (pos.y < -8f) pos.y = -8f;
         }
 
@@ -313,11 +283,8 @@ public class EelAI : MonoBehaviour
     private void SmoothFaceDirection(Vector3 flatDirection)
     {
         if (flatDirection.sqrMagnitude <= 0.0001f) return;
-
         float yaw = Mathf.Atan2(flatDirection.x, flatDirection.z) * Mathf.Rad2Deg + modelYawOffset;
-
         float rotSpeed = currentState == EelState.Chase ? rotationSmoothSpeed * 2f : rotationSmoothSpeed;
-
         Quaternion targetRot = Quaternion.Euler(originalX, yaw, originalZ);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * rotSpeed);
     }

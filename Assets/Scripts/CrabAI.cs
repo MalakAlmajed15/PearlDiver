@@ -49,7 +49,7 @@ public class CrabAI : MonoBehaviour
     [SerializeField] private float recoverTime = 0.4f;
 
     [Header("Damage")]
-    [SerializeField] private int damage = 1;
+    [SerializeField] private int damage = 0; // Crab does NO damage
     [SerializeField] private float damageCooldown = 1.5f;
 
     [Header("Patrol")]
@@ -60,13 +60,10 @@ public class CrabAI : MonoBehaviour
     [SerializeField] private bool keepUpright = true;
 
     private CrabState currentState = CrabState.Patrol;
-
     private PlayerHealth playerHealth;
     private PlayerHitFeedback playerHitFeedback;
-
     private Transform currentPatrolTarget;
     private Vector3 homePosition;
-
     private bool canDamage = true;
     private bool isLunging = false;
     private Vector3 lungeTarget;
@@ -76,15 +73,12 @@ public class CrabAI : MonoBehaviour
     private float patrolPauseTimer;
     private float attackCooldownTimer;
     private float attackWindupTimer;
-
     private float originalX;
     private float originalZ;
 
     private void Start()
     {
         homePosition = transform.position;
-
-        // Snap crab to terrain at start
         homePosition.y = GetTerrainHeight(homePosition);
         transform.position = homePosition;
 
@@ -132,6 +126,7 @@ public class CrabAI : MonoBehaviour
 
             case CrabState.Chase:
                 HandleChase();
+                // Crab chases but does NOT damage
                 if (distanceToPlayer <= attackRange && attackCooldownTimer <= 0f)
                 {
                     currentState = CrabState.AttackWindup;
@@ -163,7 +158,6 @@ public class CrabAI : MonoBehaviour
 
         Vector3 target = currentPatrolTarget.position;
         target.y = GetTerrainHeight(target);
-
         MoveTowards(target, patrolSpeed);
 
         float distance = Vector2.Distance(
@@ -209,7 +203,6 @@ public class CrabAI : MonoBehaviour
         Vector3 direction = player.position - transform.position;
         direction.y = 0f;
         direction.Normalize();
-
         SmoothFaceDirection(direction);
 
         if (!isLunging)
@@ -229,7 +222,7 @@ public class CrabAI : MonoBehaviour
 
             if (Vector3.Distance(transform.position, lungeTarget) <= 0.05f)
             {
-                TryDamagePlayer();
+                // Crab does NOT call TryDamagePlayer — no damage!
                 attackCooldownTimer = attackCooldown;
 
                 Vector3 backDir = transform.position - player.position;
@@ -238,7 +231,6 @@ public class CrabAI : MonoBehaviour
 
                 backstepTarget = transform.position + backDir * backstepDistance;
                 backstepTarget.y = GetTerrainHeight(backstepTarget);
-
                 recoverTimer = recoverTime;
                 isRecovering = true;
                 isLunging = false;
@@ -266,7 +258,6 @@ public class CrabAI : MonoBehaviour
     {
         Vector3 direction = target - transform.position;
         direction.y = 0f;
-
         if (direction.sqrMagnitude <= 0.0001f) return;
 
         direction.Normalize();
@@ -274,11 +265,8 @@ public class CrabAI : MonoBehaviour
 
         Vector3 newPosition = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
         newPosition.y = GetTerrainHeight(newPosition);
-
-        // Prevent crab from going above water
         float maxY = waterSurfaceY - surfaceOffset;
         newPosition.y = Mathf.Min(newPosition.y, maxY);
-
         transform.position = newPosition;
     }
 
@@ -293,12 +281,7 @@ public class CrabAI : MonoBehaviour
 
     private float GetTerrainHeight(Vector3 worldPosition)
     {
-        if (terrain == null)
-        {
-            // No terrain assigned — use fixed seabed Y
-            return -8f + terrainOffset;
-        }
-
+        if (terrain == null) return -8f + terrainOffset;
         float height = terrain.SampleHeight(worldPosition) + terrain.transform.position.y;
         return height + terrainOffset;
     }
@@ -306,11 +289,8 @@ public class CrabAI : MonoBehaviour
     private void SmoothFaceDirection(Vector3 direction)
     {
         if (direction.sqrMagnitude <= 0.0001f) return;
-
         float targetYaw = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-        float finalYaw = targetYaw + modelYawOffset;
-
-        Quaternion targetRotation = Quaternion.Euler(originalX, finalYaw, originalZ);
+        Quaternion targetRotation = Quaternion.Euler(originalX, targetYaw + modelYawOffset, originalZ);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSmoothSpeed);
     }
 
@@ -319,25 +299,6 @@ public class CrabAI : MonoBehaviour
         if (!keepUpright) return;
         Vector3 euler = transform.rotation.eulerAngles;
         transform.rotation = Quaternion.Euler(originalX, euler.y, originalZ);
-    }
-
-    private void TryDamagePlayer()
-    {
-        if (!canDamage || playerHealth == null || playerHealth.IsDead()) return;
-
-        float distance = Vector2.Distance(
-            new Vector2(transform.position.x, transform.position.z),
-            new Vector2(player.position.x, player.position.z));
-
-        if (distance > attackRange + 0.25f) return;
-
-        playerHealth.TakeDamage(damage);
-
-        if (playerHitFeedback != null)
-            playerHitFeedback.PlayHitFeedback();
-
-        canDamage = false;
-        Invoke(nameof(ResetDamage), damageCooldown);
     }
 
     private void ResetDamage() { canDamage = true; }
@@ -357,7 +318,5 @@ public class CrabAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, loseRange);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, maxChaseDistanceFromHome);
     }
 }
