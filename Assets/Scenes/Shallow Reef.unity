@@ -10266,6 +10266,7 @@ MonoBehaviour:
   airDepletionRate: 5
   airRefillRate: 20
   airSlider: {fileID: 0}
+  underwaterAmbientSound: {fileID: 0}
   isDepleting: 1
 --- !u!114 &1323970675
 MonoBehaviour:
@@ -10292,6 +10293,10 @@ MonoBehaviour:
   renderersToDisableOnDeath: []
   playerRigidbody: {fileID: 0}
   knockbackForceMultiplier: 1
+  hitSound: {fileID: 0}
+  hitSoundVolume: 1
+  deathSound: {fileID: 0}
+  deathSoundVolume: 1
   enableDebugDamageKey: 1
   debugDamageKey: 107
 --- !u!114 &1323970676
