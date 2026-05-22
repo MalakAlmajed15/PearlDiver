@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
     [Header("Buttons")]
     public GameObject nextButton;
     public GameObject mainMenuButton;
+    public GameObject backToLevelSelect;
     public GameObject nextContainer;
 
     private bool isPaused = false;
@@ -252,6 +253,13 @@ public class UIManager : MonoBehaviour
         totalScore = 0;
         totalPearls = 0;
         SceneManager.LoadScene(0); // Load scene at index 0 (Main Menu)
+    }
+
+
+    public void ReturnToLevelSelect()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(1);
     }
 
     // HELPER FUNCTIONS
