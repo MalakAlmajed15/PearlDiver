@@ -9,34 +9,45 @@ public class AirMeterController : MonoBehaviour
     [Header("Air Settings")]
     public float maxAir = 100f;
     public float airDepletionRate = 5f;
-    public float airRefillRate = 20f; // How fast air refills at surface
+    public float airRefillRate = 20f;
 
     [Header("UI")]
     public Slider airSlider;
 
-    // removed the 'lives' variable from here
-    // The UIManager is now in complete control of tracking lives.
+    [Header("Underwater Sound")]
+    public AudioClip underwaterAmbientSound;
+    private AudioSource audioSource;
 
     private float currentAir;
     public bool isDepleting = false;
-
-    // NEW: A lock to stop the script from taking 60 lives a second
     private bool isRecovering = false;
 
     void Start()
     {
         currentAir = maxAir;
-        //airSlider.maxValue = maxAir;
-        //airSlider.value = maxAir;
+
+        // Set up audio source
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        if (underwaterAmbientSound != null)
+        {
+            audioSource.clip = underwaterAmbientSound;
+            audioSource.loop = true;
+            audioSource.playOnAwake = false;
+            audioSource.volume = 0.5f;
+            audioSource.spatialBlend = 0f; // 2D sound
+        }
     }
 
     void Update()
     {
-        // search for it using the Tag
         if (airSlider == null)
         {
             GameObject sliderObj = GameObject.FindWithTag("AirMeterUI");
-
             if (sliderObj != null)
             {
                 airSlider = sliderObj.GetComponent<Slider>();
@@ -45,17 +56,22 @@ public class AirMeterController : MonoBehaviour
             }
             else
             {
-                // Wait safely until the UI Scene is fully loaded
                 return;
             }
         }
 
-        // NEW: If the diver is choking/recovering, freeze the air math!
         if (isRecovering) return;
 
+        // Above water surface
         if (transform.position.y >= 8f)
         {
             isDepleting = false;
+
+            // Stop underwater sound at surface
+            if (audioSource != null && audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
 
             if (currentAir < maxAir)
             {
@@ -66,9 +82,15 @@ public class AirMeterController : MonoBehaviour
             return;
         }
 
+        // Underwater — play sound
+        if (audioSource != null &&
+            underwaterAmbientSound != null &&
+            !audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
 
         isDepleting = true;
-
         currentAir -= airDepletionRate * Time.deltaTime;
         currentAir = Mathf.Clamp(currentAir, 0, maxAir);
         airSlider.value = currentAir;
@@ -92,21 +114,22 @@ public class AirMeterController : MonoBehaviour
 
     void LoseLife()
     {
-        // it tells the UIManager to handle the actual life loss
         if (UIManager.Instance != null)
         {
             UIManager.Instance.LoseLife();
 
-            // it checks the UIManager's lives to see if it's Game Over
             if (UIManager.Instance.lives <= 0)
             {
                 Debug.Log("Game Over triggered by Air!");
-                // REMOVED the SceneManager.LoadScene from here. 
-                // The UIManager will now show the Game Over panel and wait for the player to press restart
+
+                // Stop sound on game over
+                if (audioSource != null && audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
             }
             else
             {
-                // If we still have lives, flash red and refill the air
                 StartCoroutine(FlashRed());
                 Invoke("RefillAir", 0.5f);
             }
