@@ -23,9 +23,9 @@ You play as a traditional Bahraini pearl diver exploring five distinct underwate
 | Name | Student ID | Level | Role |
 |------|-----------|-------|------|
 | Malak Almajed | 202300641 | Level 1 – Shallow Reef | 🗺️ Level Designer & Lead Developer |
-| Fatema Ahmed | 202200688 | Level 2 – Coral Garden | 🎭 Character, Sound Developer & Animation Developer |
-| Zahra Almosawi | 202305120 | Level 4 – Deep Cave | 🖥️ UI, Camera, Reward Systems & HUD Developer |
-| Mohamed Hasan | 202201470 | Level 5 – Treasure Cove | 🤖 Game Systems, AI & Publishing |
+| Fatema Ahmed | 202200688 | Level 2 – Coral Garden | 🎭 Character, Sound & Animation Developer |
+| Zahra Almosawi | 202305120 | Level 3 – Deep Cave | 🖥️ UI, Camera, Reward Systems & HUD Developer |
+| Mohamed Hasan | 202201470 | Level 4 – Treasure Cove | 🤖 Game Systems, AI & Publishing |
 
 ---
 
@@ -52,12 +52,12 @@ You play as a traditional Bahraini pearl diver exploring five distinct underwate
 
 ## 🗺️ Levels
 
-| # | Level | Vibe | Difficulty | Enemies | Est. Time |
-|---|-------|------|-----------|---------|-----------|
-| 1 | 🏝️ **Shallow Reef** | Bright, open, turquoise | ⭐ Very Easy | Jellyfish | 3–5 min |
-| 2 | 🌸 **Coral Garden** | Dense, vibrant, colourful | ⭐⭐ Easy–Medium | Jellyfish, Crabs | 4–6 min |
-| 4 | 🕳️ **Deep Cave** | Dark, claustrophobic, tense | ⭐⭐⭐⭐ Hard | All types | 6–8 min |
-| 5 | 💛 **Treasure Cove** | Golden, epic, unforgiving | ⭐⭐⭐⭐⭐ Very Hard | All types | 7–10 min |
+| # | Level | Vibe | Difficulty | Est. Time |
+|---|-------|------|-----------|-----------|
+| 1 | 🏝️ **Shallow Reef** | Bright, open, turquoise | ⭐ Very Easy | 3–5 min |
+| 2 | 🌸 **Coral Garden** | Dense, vibrant, colourful | ⭐⭐ Easy–Medium | 4–6 min |
+| 3 | 🕳️ **Deep Cave** | Dark, claustrophobic, tense | ⭐⭐⭐ Hard | 6–8 min |
+| 4 | 💛 **Treasure Cove** | Golden, epic, unforgiving | ⭐⭐⭐⭐ Very Hard | 7–10 min |
 
 > 🕐 **Total playtime:** ~20–35 minutes for a full run
 
@@ -103,11 +103,11 @@ You play as a traditional Bahraini pearl diver exploring five distinct underwate
 
 ## 🦈 Enemies
 
-| Enemy | Behaviour | Threat |
-|-------|-----------|--------|
-| 🪼 **Jellyfish** | Slow vertical drift — deceptively peaceful
-| 🦀 **Crab** | Side-to-side scuttle, reverses at terrain 
-| ⚡ **Electric Eel** | Slow curving movement, glows blue in the dark 
+| Enemy | Behaviour |
+|-------|-----------|
+| 🪼 **Jellyfish** | Slow vertical drift — deceptively peaceful |
+| 🦀 **Crab** | Side-to-side scuttle, reverses at terrain |
+| ⚡ **Electric Eel** | Slow curving movement, glows blue in the dark |
 
 ---
 
@@ -141,3 +141,9 @@ You play as a traditional Bahraini pearl diver exploring five distinct underwate
 - 🐠 **Subnautica** — Audio/visual depth cues and ocean exploration as core gameplay
 - 🏛️ **Bahrain's Pearling Path (UNESCO)** — Cultural backbone: narrative, character, and environments
 - 🎮 **Crash Bandicoot** — Collectathon format, lives system, and score-chasing replayability
+
+---
+
+<p align="center">
+  Made with 🤿 in Bahrain &nbsp;•&nbsp; IT8101 Games Development &nbsp;•&nbsp; Section S4 – Group 4
+</p>
