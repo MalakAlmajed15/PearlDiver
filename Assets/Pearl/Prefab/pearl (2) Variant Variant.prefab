@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 6833312259232044063, guid: e92ce75be73fcdc469d3efd25c13260a, type: 3}
       propertyPath: collectSound
       value: 
-      objectReference: {fileID: 8300000, guid: eac95c1682e1b8149b7b5788675f59ee, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 8156478073084778152, guid: e92ce75be73fcdc469d3efd25c13260a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 88.68374
