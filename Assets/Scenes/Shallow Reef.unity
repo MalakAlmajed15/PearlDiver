@@ -5190,17 +5190,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff9c0e0e083b6d43a1112ab43db68bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
-  creaturePrefabs:
-  - {fileID: 813246751584668348, guid: d8ce4b1c89e7f3a4d97361f43851ed33, type: 3}
-  - {fileID: 3983046566720953969, guid: 86976c7844fee734898a2abd0ca314d2, type: 3}
-  - {fileID: 1891742659991760961, guid: 4e699c67df2ce0e4887a45535ed9817c, type: 3}
+  jellyfishPrefab: {fileID: 1891742659991760961, guid: 4e699c67df2ce0e4887a45535ed9817c, type: 3}
+  crabPrefab: {fileID: 813246751584668348, guid: d8ce4b1c89e7f3a4d97361f43851ed33, type: 3}
+  electricEelPrefab: {fileID: 3983046566720953969, guid: 86976c7844fee734898a2abd0ca314d2, type: 3}
+  jellyfishScale: 1
+  crabScale: 1
+  eelScale: 1
   minSpawnTime: 2
   maxSpawnTime: 5
-  minX: 195
-  maxX: 235
-  minY: -5
-  maxY: 5
-  spawnZ: 469
+  worldMinX: -35
+  worldMaxX: 35
+  worldMinY: -10
+  worldMaxY: -2
+  worldMinZ: -15
+  worldMaxZ: 25
+  minSpawnDist: 8
+  maxSpawnDist: 20
+  currentLevel: 1
 --- !u!4 &426130241
 Transform:
   m_ObjectHideFlags: 0
@@ -10232,7 +10238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 469
+      value: 142
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10360,7 +10366,7 @@ MonoBehaviour:
   hitSoundVolume: 1
   deathSound: {fileID: 8300000, guid: 006a1adef152a854cb540ff5aaa13b9d, type: 3}
   deathSoundVolume: 1
-  victorySound: {fileID: 0}
+  victorySound: {fileID: 8300000, guid: 5c8a53e85ccfb5c428fd50a5fb654524, type: 3}
   victorySoundVolume: 1
   enableDebugDamageKey: 1
   debugDamageKey: 107
