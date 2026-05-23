@@ -2,14 +2,7 @@ using UnityEngine;
 
 public class CrabAI : MonoBehaviour
 {
-    private enum CrabState
-    {
-        Patrol,
-        Chase,
-        AttackWindup,
-        Recover,
-        ReturnHome
-    }
+    private enum CrabState { Patrol, Chase, AttackWindup, Recover, ReturnHome }
 
     [Header("References")]
     [SerializeField] private Transform player;
@@ -60,13 +53,10 @@ public class CrabAI : MonoBehaviour
     [SerializeField] private bool keepUpright = true;
 
     private CrabState currentState = CrabState.Patrol;
-
     private PlayerHealth playerHealth;
     private PlayerHitFeedback playerHitFeedback;
-
     private Transform currentPatrolTarget;
     private Vector3 homePosition;
-
     private bool canDamage = true;
     private bool isLunging = false;
     private Vector3 lungeTarget;
@@ -76,15 +66,12 @@ public class CrabAI : MonoBehaviour
     private float patrolPauseTimer;
     private float attackCooldownTimer;
     private float attackWindupTimer;
-
     private float originalX;
     private float originalZ;
 
     private void Start()
     {
         homePosition = transform.position;
-
-        // Snap crab to terrain at start
         homePosition.y = GetTerrainHeight(homePosition);
         transform.position = homePosition;
 
@@ -100,13 +87,8 @@ public class CrabAI : MonoBehaviour
 
         if (player != null)
         {
-            playerHealth = player.GetComponent<PlayerHealth>();
-            if (playerHealth == null)
-                playerHealth = player.GetComponentInParent<PlayerHealth>();
-
-            playerHitFeedback = player.GetComponent<PlayerHitFeedback>();
-            if (playerHitFeedback == null)
-                playerHitFeedback = player.GetComponentInParent<PlayerHitFeedback>();
+            playerHealth = player.GetComponent<PlayerHealth>() ?? player.GetComponentInParent<PlayerHealth>();
+            playerHitFeedback = player.GetComponent<PlayerHitFeedback>() ?? player.GetComponentInParent<PlayerHitFeedback>();
         }
 
         currentPatrolTarget = pointB;
@@ -126,32 +108,18 @@ public class CrabAI : MonoBehaviour
         {
             case CrabState.Patrol:
                 HandlePatrol();
-                if (distanceToPlayer <= detectionRange)
-                    currentState = CrabState.Chase;
+                if (distanceToPlayer <= detectionRange) currentState = CrabState.Chase;
                 break;
-
             case CrabState.Chase:
                 HandleChase();
                 if (distanceToPlayer <= attackRange && attackCooldownTimer <= 0f)
-                {
-                    currentState = CrabState.AttackWindup;
-                    attackWindupTimer = attackWindupTime;
-                }
+                { currentState = CrabState.AttackWindup; attackWindupTimer = attackWindupTime; }
                 if (distanceToPlayer > loseRange || distanceFromHome > maxChaseDistanceFromHome)
                     currentState = CrabState.ReturnHome;
                 break;
-
-            case CrabState.AttackWindup:
-                HandleAttack();
-                break;
-
-            case CrabState.Recover:
-                HandleRecover();
-                break;
-
-            case CrabState.ReturnHome:
-                HandleReturnHome();
-                break;
+            case CrabState.AttackWindup: HandleAttack(); break;
+            case CrabState.Recover: HandleRecover(); break;
+            case CrabState.ReturnHome: HandleReturnHome(); break;
         }
 
         ForceUprightRotation();
@@ -160,16 +128,10 @@ public class CrabAI : MonoBehaviour
     private void HandlePatrol()
     {
         if (currentPatrolTarget == null || patrolPauseTimer > 0f) return;
-
         Vector3 target = currentPatrolTarget.position;
         target.y = GetTerrainHeight(target);
-
         MoveTowards(target, patrolSpeed);
-
-        float distance = Vector2.Distance(
-            new Vector2(transform.position.x, transform.position.z),
-            new Vector2(target.x, target.z));
-
+        float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.x, target.z));
         if (distance <= reachDistance)
         {
             currentPatrolTarget = currentPatrolTarget == pointA ? pointB : pointA;
@@ -188,15 +150,10 @@ public class CrabAI : MonoBehaviour
     {
         Transform nearestPoint = GetNearestPatrolPoint();
         if (nearestPoint == null) return;
-
         Vector3 target = nearestPoint.position;
         target.y = GetTerrainHeight(target);
         MoveTowards(target, returnHomeSpeed);
-
-        float distance = Vector2.Distance(
-            new Vector2(transform.position.x, transform.position.z),
-            new Vector2(target.x, target.z));
-
+        float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.x, target.z));
         if (distance <= reachDistance)
         {
             currentPatrolTarget = nearestPoint == pointA ? pointB : pointA;
@@ -209,7 +166,6 @@ public class CrabAI : MonoBehaviour
         Vector3 direction = player.position - transform.position;
         direction.y = 0f;
         direction.Normalize();
-
         SmoothFaceDirection(direction);
 
         if (!isLunging)
@@ -226,19 +182,15 @@ public class CrabAI : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, lungeTarget, lungeSpeed * Time.deltaTime);
             ClampToTerrain();
-
             if (Vector3.Distance(transform.position, lungeTarget) <= 0.05f)
             {
                 TryDamagePlayer();
                 attackCooldownTimer = attackCooldown;
-
-                Vector3 backDir = transform.position - player.position;
+                Vector3 backDir = (transform.position - player.position);
                 backDir.y = 0f;
                 backDir.Normalize();
-
                 backstepTarget = transform.position + backDir * backstepDistance;
                 backstepTarget.y = GetTerrainHeight(backstepTarget);
-
                 recoverTimer = recoverTime;
                 isRecovering = true;
                 isLunging = false;
@@ -250,35 +202,22 @@ public class CrabAI : MonoBehaviour
     private void HandleRecover()
     {
         if (!isRecovering) return;
-
         transform.position = Vector3.MoveTowards(transform.position, backstepTarget, backstepSpeed * Time.deltaTime);
         ClampToTerrain();
-
         recoverTimer -= Time.deltaTime;
-        if (recoverTimer <= 0f)
-        {
-            isRecovering = false;
-            currentState = CrabState.Chase;
-        }
+        if (recoverTimer <= 0f) { isRecovering = false; currentState = CrabState.Chase; }
     }
 
     private void MoveTowards(Vector3 target, float speed)
     {
         Vector3 direction = target - transform.position;
         direction.y = 0f;
-
         if (direction.sqrMagnitude <= 0.0001f) return;
-
         direction.Normalize();
         SmoothFaceDirection(direction);
-
         Vector3 newPosition = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
         newPosition.y = GetTerrainHeight(newPosition);
-
-        // Prevent crab from going above water
-        float maxY = waterSurfaceY - surfaceOffset;
-        newPosition.y = Mathf.Min(newPosition.y, maxY);
-
+        newPosition.y = Mathf.Min(newPosition.y, waterSurfaceY - surfaceOffset);
         transform.position = newPosition;
     }
 
@@ -286,31 +225,21 @@ public class CrabAI : MonoBehaviour
     {
         Vector3 pos = transform.position;
         pos.y = GetTerrainHeight(pos);
-        float maxY = waterSurfaceY - surfaceOffset;
-        pos.y = Mathf.Min(pos.y, maxY);
+        pos.y = Mathf.Min(pos.y, waterSurfaceY - surfaceOffset);
         transform.position = pos;
     }
 
     private float GetTerrainHeight(Vector3 worldPosition)
     {
-        if (terrain == null)
-        {
-            // No terrain assigned — use fixed seabed Y
-            return -8f + terrainOffset;
-        }
-
-        float height = terrain.SampleHeight(worldPosition) + terrain.transform.position.y;
-        return height + terrainOffset;
+        if (terrain == null) return -8f + terrainOffset;
+        return terrain.SampleHeight(worldPosition) + terrain.transform.position.y + terrainOffset;
     }
 
     private void SmoothFaceDirection(Vector3 direction)
     {
         if (direction.sqrMagnitude <= 0.0001f) return;
-
         float targetYaw = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-        float finalYaw = targetYaw + modelYawOffset;
-
-        Quaternion targetRotation = Quaternion.Euler(originalX, finalYaw, originalZ);
+        Quaternion targetRotation = Quaternion.Euler(originalX, targetYaw + modelYawOffset, originalZ);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSmoothSpeed);
     }
 
@@ -324,18 +253,10 @@ public class CrabAI : MonoBehaviour
     private void TryDamagePlayer()
     {
         if (!canDamage || playerHealth == null || playerHealth.IsDead()) return;
-
-        float distance = Vector2.Distance(
-            new Vector2(transform.position.x, transform.position.z),
-            new Vector2(player.position.x, player.position.z));
-
+        float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(player.position.x, player.position.z));
         if (distance > attackRange + 0.25f) return;
-
         playerHealth.TakeDamage(damage);
-
-        if (playerHitFeedback != null)
-            playerHitFeedback.PlayHitFeedback();
-
+        if (playerHitFeedback != null) playerHitFeedback.PlayHitFeedback();
         canDamage = false;
         Invoke(nameof(ResetDamage), damageCooldown);
     }
@@ -357,7 +278,5 @@ public class CrabAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, loseRange);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, maxChaseDistanceFromHome);
     }
 }

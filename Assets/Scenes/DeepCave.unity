@@ -810,6 +810,12 @@ MonoBehaviour:
   renderersToDisableOnDeath: []
   playerRigidbody: {fileID: 0}
   knockbackForceMultiplier: 1
+  hitSound: {fileID: 0}
+  hitSoundVolume: 1
+  deathSound: {fileID: 0}
+  deathSoundVolume: 1
+  victorySound: {fileID: 0}
+  victorySoundVolume: 1
   enableDebugDamageKey: 1
   debugDamageKey: 107
 --- !u!114 &2003196584
@@ -845,6 +851,7 @@ MonoBehaviour:
   airDepletionRate: 5
   airRefillRate: 20
   airSlider: {fileID: 0}
+  underwaterAmbientSound: {fileID: 0}
   isDepleting: 0
 --- !u!1001 &8303237583592048831
 PrefabInstance:
@@ -928,7 +935,7 @@ PrefabInstance:
       addedObject: {fileID: 2003196584}
     - targetCorrespondingSourceObject: {fileID: 2714039080396267233, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2003196585}
+      addedObject: {fileID: 2003196590}
   m_SourcePrefab: {fileID: 100100000, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -11,25 +11,38 @@ public class UIManager : MonoBehaviour
     public int lives = 3;
     private float timer = 0f;
     private bool gameActive = true;
-    public int totalScore = 0; 
+    public int totalScore = 0;
     public int totalPearls = 0;
+    public int totalPearlsInLevel = 0;
 
-    public TextMeshProUGUI pearlText;
-    public Image[] heartImages;
+    [Header("UI Panels")]
+    public GameObject hudPanel;
     public GameObject gameOverPanel;
     public GameObject victoryPanel;
-    public GameObject hudPanel;
+    public GameObject pausePanel; 
+
+    [Header("Text & Images")]
+    public TextMeshProUGUI pearlText;
+    public Image[] heartImages;
     public TextMeshProUGUI finalScoreText;
     public TextMeshProUGUI victoryTimeText;
+
+    [Header("Buttons")]
     public GameObject nextButton;
     public GameObject mainMenuButton;
+    public GameObject backToLevelSelect;
     public GameObject nextContainer;
+
+    private bool isPaused = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         gameOverPanel.SetActive(false);
         victoryPanel.SetActive(false);
         hudPanel.SetActive(true);
+        pausePanel.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame
@@ -43,8 +56,44 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P)) AddPearl();
         if (Input.GetKeyDown(KeyCode.L)) LoseLife();
 
+        if (Input.GetKeyDown(KeyCode.Escape) && gameActive)
+        {
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
+
     }
-    public int totalPearlsInLevel = 0;
+
+    public void PauseGame()
+    {
+        isPaused = true;
+        pausePanel.SetActive(true);
+        hudPanel.SetActive(false); 
+        Time.timeScale = 0f; // Freezes the game world and timer
+        DisablePlayerControls();
+    }
+
+    public void ResumeGame()
+    {
+        isPaused = false;
+        pausePanel.SetActive(false);
+        hudPanel.SetActive(true); 
+        Time.timeScale = 1f; // Unfreezes the game world
+        EnablePlayerControls();
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("Quitting Game");
+        Application.Quit();
+    }
+
     public void AddPearl()
     {
         pearls++;
@@ -92,17 +141,21 @@ public class UIManager : MonoBehaviour
     void ShowGameOver()
     {
         gameActive = false;
+        Time.timeScale = 0f;
         hudPanel.SetActive(false);
         gameOverPanel.SetActive(true);
+        DisablePlayerControls();
         CalculateScore();
     }
 
     void ShowVictory()
     {
         gameActive = false;
+        Time.timeScale = 0f;
         hudPanel.SetActive(false);
         victoryPanel.SetActive(true);
-        
+        DisablePlayerControls();
+
         // Calculate time for dispaly
         int minutes = Mathf.FloorToInt(timer / 60);
         int seconds = Mathf.FloorToInt(timer % 60);
@@ -178,6 +231,8 @@ public class UIManager : MonoBehaviour
     // Helper to clean up stats when moving between levels or restarting
     void ResetUI()
     {
+        EnablePlayerControls();
+        Time.timeScale = 1f;
         pearls = 0;
         lives = 3;
         timer = 0;
@@ -187,14 +242,52 @@ public class UIManager : MonoBehaviour
 
         gameOverPanel.SetActive(false);
         victoryPanel.SetActive(false);
+        pausePanel.SetActive(false);
         hudPanel.SetActive(true);
     }
 
     public void ReturnToMainMenu()
     {
         // Reset everything before leaving
+        Time.timeScale = 1f;
         totalScore = 0;
         totalPearls = 0;
         SceneManager.LoadScene(0); // Load scene at index 0 (Main Menu)
+    }
+
+
+    public void ReturnToLevelSelect()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(1);
+    }
+
+    // HELPER FUNCTIONS
+    private void DisablePlayerControls()
+    {
+        // 1. Freeze the player and animations
+        UnderwaterSwimController player = Object.FindFirstObjectByType<UnderwaterSwimController>();
+        if (player != null)
+        {
+            player.enabled = false;
+            Animator anim = player.GetComponentInChildren<Animator>();
+            if (anim != null) anim.speed = 0f;
+        }
+
+        // 2. Force the cursor to appear and unlock so we can click UI buttons
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void EnablePlayerControls()
+    {
+        // Unfreeze the player and animations
+        UnderwaterSwimController player = Object.FindFirstObjectByType<UnderwaterSwimController>();
+        if (player != null)
+        {
+            player.enabled = true;
+            Animator anim = player.GetComponentInChildren<Animator>();
+            if (anim != null) anim.speed = 1f;
+        }
     }
 }

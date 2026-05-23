@@ -5332,6 +5332,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 3150474306388093854, guid: 35f23bfd03e11fa4b9ce45069579e246, type: 3}
+--- !u!1 &616067749 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8979592024465774055, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
+  m_PrefabInstance: {fileID: 241730065}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &616067752 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2265358462668109998, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
+  m_PrefabInstance: {fileID: 241730065}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &764021416
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10839,11 +10849,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PearlSpawner
   pearlPrefab: {fileID: 7738026679663632921, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-  goldenPearlPrefab: {fileID: 984838177013609418, guid: f0796f802bb60d04fbf127cde475fefa, type: 3}
   numberOfPearls: 7
-  rangeX: 20
-  rangeZ: 20
-  spawnYOffset: -3
+  goldenPearlPrefab: {fileID: 984838177013609418, guid: f0796f802bb60d04fbf127cde475fefa, type: 3}
+  collectSound: {fileID: 8300000, guid: eac95c1682e1b8149b7b5788675f59ee, type: 3}
+  minX: 400
+  maxX: 530
+  minZ: 400
+  maxZ: 550
+  spawnY: -6
 --- !u!4 &1468788633
 Transform:
   m_ObjectHideFlags: 0
@@ -10992,7 +11005,7 @@ MonoBehaviour:
   maxHealth: 3
   invincibilityDuration: 2
   flashInterval: 0.1
-  modelObject: {fileID: 0}
+  modelObject: {fileID: 616067749}
   renderersToFlash: []
   scriptsToDisableOnDeath: []
   collidersToDisableOnDeath: []
@@ -11006,6 +11019,8 @@ MonoBehaviour:
   hitSoundVolume: 1
   deathSound: {fileID: 8300000, guid: 006a1adef152a854cb540ff5aaa13b9d, type: 3}
   deathSoundVolume: 1
+  victorySound: {fileID: 8300000, guid: 5c8a53e85ccfb5c428fd50a5fb654524, type: 3}
+  victorySoundVolume: 1
   enableDebugDamageKey: 1
   debugDamageKey: 107
 --- !u!114 &1786159202
@@ -11020,7 +11035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff89669bc55ed00418ca0463a620de76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHitFeedback
-  playerRenderer: {fileID: 0}
+  playerRenderer: {fileID: 616067752}
   hitColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2
 --- !u!114 &1786159203

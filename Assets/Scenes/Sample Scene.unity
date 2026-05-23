@@ -203,7 +203,7 @@ Transform:
   m_GameObject: {fileID: 698034052}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 62, y: 72, z: 70.8}
+  m_LocalPosition: {x: 62, y: 10, z: 70.8}
   m_LocalScale: {x: 200, y: 31.52, z: 200}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10008,6 +10008,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1629013071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1355556336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1355556338}
+  - component: {fileID: 1355556337}
+  m_Layer: 0
+  m_Name: Caustic Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1355556337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355556336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.DecalProjector
+  m_Material: {fileID: 2100000, guid: 5c982d81fb485a64aab1e8372c9ac28f, type: 2}
+  m_DrawDistance: 1000
+  m_FadeScale: 0.9
+  m_StartAngleFade: 180
+  m_EndAngleFade: 180
+  m_UVScale: {x: 1, y: 1}
+  m_UVBias: {x: 0, y: 0}
+  m_RenderingLayerMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ScaleMode: 0
+  m_Offset: {x: 0, y: 0, z: 0.5}
+  m_Size: {x: 15.64, y: 19.59, z: 1}
+  m_FadeFactor: 1
+  version: 1
+  m_DecalLayerMask: 1
+--- !u!4 &1355556338
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355556336}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 99.59, y: -7.12, z: 451.79}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &1565314339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10123,34 +10183,13 @@ MonoBehaviour:
   cameraCheckRadius: 0.1
   adjustFog: 1
   underwaterFogColor: {r: 0.1, g: 0.4, b: 0.6, a: 1}
-  underwaterFogDensity: 0.08
   underwaterFogMode: 3
+  underwaterFogStartDistance: 6
+  underwaterFogEndDistance: 35
   transitionSpeed: 2
   underwaterVolume: {fileID: 0}
   spawnBubbleBursts: 1
   bubbleParticleSystem: {fileID: 1131520694}
-  bubbleMaterialOverride: {fileID: 2100000, guid: 22452165bcf850f49831fb0fdacffc77, type: 2}
-  bubbleMeshOverride: {fileID: 0}
-  bubbleSurfaceReference: {fileID: 0}
-  bubbleUseFixedSurfaceHeight: 1
-  bubbleFixedSurfaceHeight: 10
-  bubbleBurstInterval: {x: 0.5, y: 1.6}
-  bubbleBurstCountRange: {x: 2, y: 20}
-  bubbleSpawnRadius: 5
-  bubbleRiseSpeedRange: {x: 2, y: 4}
-  bubbleRiseTimeRange: {x: 3, y: 6}
-  bubbleLocalOffset: {x: 0, y: -10, z: 10}
-  bubbleActivationBlend: 0.2
-  bubbleRiseToSurface: 0
-  bubbleSurfaceOvershoot: 0
-  bubbleMinimumLifetime: 1
-  bubbleMaximumLifetime: 100
-  bubbleSizeRange: {x: 0.05, y: 0.16}
-  bubbleSmallSizeBias: 0.7
-  bubbleUseClusters: 1
-  bubbleClusterCountRange: {x: 1, y: 3}
-  bubbleClusterBubbleCountRange: {x: 6, y: 14}
-  bubbleClusterRadius: 0.18
 --- !u!114 &1629013067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10468,3 +10507,4 @@ SceneRoots:
   - {fileID: 2133947920}
   - {fileID: 698034055}
   - {fileID: 2013632396}
+  - {fileID: 1355556338}

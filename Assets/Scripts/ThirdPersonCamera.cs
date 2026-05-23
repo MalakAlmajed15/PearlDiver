@@ -27,6 +27,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
     void LateUpdate()
     {
+        if (Time.timeScale == 0f) return;
         if (!target) return;
 
         bool isRotating = !holdToRotate || Input.GetMouseButton(mouseButton);
