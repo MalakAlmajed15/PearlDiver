@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &222477139
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5173,7 +5173,7 @@ GameObject:
   - component: {fileID: 426130240}
   m_Layer: 0
   m_Name: SpawnManager
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5204,8 +5204,8 @@ MonoBehaviour:
   worldMaxY: -2
   worldMinZ: -15
   worldMaxZ: 25
-  minSpawnDist: 8
-  maxSpawnDist: 20
+  minSpawnDist: 0
+  maxSpawnDist: 5
   currentLevel: 1
 --- !u!4 &426130241
 Transform:
@@ -5234,7 +5234,7 @@ GameObject:
   - component: {fileID: 493206645}
   m_Layer: 0
   m_Name: PearlSpawner
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10274,7 +10274,7 @@ PrefabInstance:
       objectReference: {fileID: 419319348}
     - target: {fileID: 7219905094295064076, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: maxWorldHeight
-      value: 10
+      value: 8.7
       objectReference: {fileID: 0}
     - target: {fileID: 7219905094295064076, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: cameraTransform
