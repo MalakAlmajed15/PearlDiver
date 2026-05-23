@@ -5246,11 +5246,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PearlSpawner
   pearlPrefab: {fileID: 7738026679663632921, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-  goldenPearlPrefab: {fileID: 984838177013609418, guid: f0796f802bb60d04fbf127cde475fefa, type: 3}
   numberOfPearls: 4
-  rangeX: 20
-  rangeZ: 20
-  spawnYOffset: -3
+  goldenPearlPrefab: {fileID: 984838177013609418, guid: f0796f802bb60d04fbf127cde475fefa, type: 3}
+  collectSound: {fileID: 8300000, guid: eac95c1682e1b8149b7b5788675f59ee, type: 3}
+  minX: 400
+  maxX: 530
+  minZ: 400
+  maxZ: 550
+  spawnY: -6
 --- !u!4 &493206646
 Transform:
   m_ObjectHideFlags: 0
@@ -10147,6 +10150,66 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &678459605
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 678459607}
+  - component: {fileID: 678459606}
+  m_Layer: 0
+  m_Name: Caustic Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &678459606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678459605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.DecalProjector
+  m_Material: {fileID: 2100000, guid: 5c982d81fb485a64aab1e8372c9ac28f, type: 2}
+  m_DrawDistance: 1000
+  m_FadeScale: 0.9
+  m_StartAngleFade: 180
+  m_EndAngleFade: 180
+  m_UVScale: {x: 1, y: 1}
+  m_UVBias: {x: 0, y: 0}
+  m_RenderingLayerMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ScaleMode: 0
+  m_Offset: {x: 0, y: 0, z: 10}
+  m_Size: {x: 34.05, y: 71.4, z: 20}
+  m_FadeFactor: 1
+  version: 1
+  m_DecalLayerMask: 1
+--- !u!4 &678459607
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678459605}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 229.9, y: 7, z: 466.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &986149624
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10297,6 +10360,8 @@ MonoBehaviour:
   hitSoundVolume: 1
   deathSound: {fileID: 8300000, guid: 006a1adef152a854cb540ff5aaa13b9d, type: 3}
   deathSoundVolume: 1
+  victorySound: {fileID: 0}
+  victorySoundVolume: 1
   enableDebugDamageKey: 1
   debugDamageKey: 107
 --- !u!114 &1323970676
@@ -10726,3 +10791,4 @@ SceneRoots:
   - {fileID: 426130241}
   - {fileID: 493206646}
   - {fileID: 222477142}
+  - {fileID: 678459607}
