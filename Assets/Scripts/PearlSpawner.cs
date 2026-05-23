@@ -35,7 +35,6 @@ public class PearlSpawner : MonoBehaviour
             float randomZ = Random.Range(minZ, maxZ);
             Vector3 spawnPosition = new Vector3(randomX, spawnY, randomZ);
 
-            GameObject pearl = Instantiate(pearlPrefab, spawnPosition, Quaternion.identity);
 
             // Assign collect sound to each spawned pearl
             PearlManager pm = pearl.GetComponent<PearlManager>();
