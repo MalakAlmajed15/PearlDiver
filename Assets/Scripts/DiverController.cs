@@ -14,6 +14,10 @@ public class DiverController : MonoBehaviour
     public float minZ = 370f;
     public float maxZ = 580f;
 
+    [Header("Coral Collision")]
+    public float coralCheckRadius = 0.5f;
+    public LayerMask coralLayer;
+
     private Rigidbody rb;
 
     void Start()
@@ -44,10 +48,24 @@ public class DiverController : MonoBehaviour
         float v = Input.GetAxis("Vertical");
         Vector3 move = (transform.right * h +
                         transform.forward * v) * swimSpeed;
+
         if (Input.GetKey(KeyCode.Space))
             move.y = verticalSpeed;
         else if (Input.GetKey(KeyCode.LeftShift))
             move.y = -verticalSpeed;
-        rb.linearVelocity = move;
+
+        // Calculate new position
+        Vector3 newPosition = transform.position + move * Time.fixedDeltaTime;
+
+        // Check if new position overlaps with coral
+        if (!Physics.CheckSphere(newPosition, coralCheckRadius, coralLayer))
+        {
+            rb.linearVelocity = move;
+        }
+        else
+        {
+            // Stop diver when hitting coral
+            rb.linearVelocity = Vector3.zero;
+        }
     }
 }
