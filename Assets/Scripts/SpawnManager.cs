@@ -58,6 +58,7 @@ public class SpawnManager : MonoBehaviour
     // =========================================
     void Start()
     {
+        Debug.Log("SpawnManager Start() called");
         BuildPool();
         ScheduleNextSpawn();
     }
@@ -136,7 +137,7 @@ public class SpawnManager : MonoBehaviour
         // Instantiate and apply the correct scale
         GameObject enemy = Instantiate(prefab, spawnPos, Quaternion.identity);
         ApplyScale(enemy, prefab);
-
+        Debug.Log($"Spawned {enemy.name} at {spawnPos}", enemy);
         ScheduleNextSpawn();
     }
 
