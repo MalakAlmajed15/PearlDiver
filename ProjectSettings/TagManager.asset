@@ -10,6 +10,7 @@ TagManager:
   - Water
   - FxTemporaire
   - AirMeterUI
+  - Coral
   layers:
   - Default
   - TransparentFX
