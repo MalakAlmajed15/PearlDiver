@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PearlSpawner : MonoBehaviour
@@ -14,52 +12,105 @@ public class PearlSpawner : MonoBehaviour
     [Header("Pearl Sound")]
     public AudioClip collectSound;
 
-    [Header("Spawn Area")]
-    public float minX = 400f;
-    public float maxX = 530f;
-    public float minZ = 400f;
-    public float maxZ = 550f;
-    public float spawnY = -6f;
+    [Header("Spawn Area (relative to player)")]
+    public float spawnRadius = 15f;      // how far from player pearls can spawn
+    public float minSpawnDist = 3f;      // minimum distance so they're not inside the player
+    public float spawnY = -6f;           // fixed Y depth, or see below
+
+    [Header("World Bounds (safety clamp)")]
+    public float worldMinX = -35f;
+    public float worldMaxX = 465f;
+    public float worldMinZ = -15f;
+    public float worldMaxZ = 485f;
 
     void Awake()
     {
-        SpawnPearls();
-        SpawnGoldenPearl();
-    }
-
-    void SpawnPearls()
-    {
-        for (int i = 0; i < numberOfPearls; i++)
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player == null)
         {
-            float randomX = Random.Range(minX, maxX);
-            float randomZ = Random.Range(minZ, maxZ);
-            Vector3 spawnPosition = new Vector3(randomX, spawnY, randomZ);
-
-            GameObject pearl = Instantiate(pearlPrefab, spawnPosition, pearlPrefab.transform.rotation);
-
-            // Assign collect sound to each spawned pearl
-            PearlManager pm = pearl.GetComponent<PearlManager>();
-            if (pm != null && collectSound != null)
-            {
-                pm.collectSound = collectSound;
-            }
-        }
-        Debug.Log("Spawned " + numberOfPearls + " pearls!");
-    }
-
-    void SpawnGoldenPearl()
-    {
-        if (goldenPearlPrefab == null)
-        {
-            Debug.Log("No golden pearl prefab assigned!");
+            Debug.LogError("PearlSpawner: no GameObject tagged 'Player' found.");
             return;
         }
 
-        float randomX = Random.Range(minX, maxX);
-        float randomZ = Random.Range(minZ, maxZ);
-        Vector3 spawnPosition = new Vector3(randomX, spawnY, randomZ);
+        Vector3 playerPos = player.transform.position;
 
-        Instantiate(goldenPearlPrefab, spawnPosition, Quaternion.identity);
-        Debug.Log("Golden pearl spawned at: " + spawnPosition);
+        SpawnPearls(playerPos);
+        SpawnGoldenPearl(playerPos);
+    }
+
+    void SpawnPearls(Vector3 playerPos)
+    {
+        if (pearlPrefab == null)
+        {
+            Debug.LogError("PearlSpawner: pearlPrefab not assigned.");
+            return;
+        }
+
+        for (int i = 0; i < numberOfPearls; i++)
+        {
+            Vector3 spawnPos = GetRandomNearbyPosition(playerPos);
+
+            GameObject pearl = Instantiate(pearlPrefab, spawnPos, pearlPrefab.transform.rotation);
+
+            PearlManager pm = pearl.GetComponent<PearlManager>();
+            if (pm != null && collectSound != null)
+                pm.collectSound = collectSound;
+        }
+
+        Debug.Log($"PearlSpawner: spawned {numberOfPearls} pearls near player.");
+    }
+
+    void SpawnGoldenPearl(Vector3 playerPos)
+    {
+        if (goldenPearlPrefab == null)
+        {
+            Debug.LogWarning("PearlSpawner: no golden pearl prefab assigned.");
+            return;
+        }
+
+        Vector3 spawnPos = GetRandomNearbyPosition(playerPos);
+        Instantiate(goldenPearlPrefab, spawnPos, Quaternion.identity);
+        Debug.Log($"PearlSpawner: golden pearl spawned at {spawnPos}");
+    }
+
+    Vector3 GetRandomNearbyPosition(Vector3 playerPos)
+    {
+        // Try up to 10 times to find a valid spot
+        for (int i = 0; i < 10; i++)
+        {
+            Vector2 randomCircle = Random.insideUnitCircle * spawnRadius;
+
+            float x = playerPos.x + randomCircle.x;
+            float z = playerPos.z + randomCircle.y;
+
+            // Clamp inside terrain
+            x = Mathf.Clamp(x, worldMinX, worldMaxX);
+            z = Mathf.Clamp(z, worldMinZ, worldMaxZ);
+
+            Vector3 candidate = new Vector3(x, spawnY, z);
+
+            // Make sure it's not too close to the player
+            float dist = Vector2.Distance(
+                new Vector2(candidate.x, candidate.z),
+                new Vector2(playerPos.x, playerPos.z));
+
+            if (dist >= minSpawnDist)
+                return candidate;
+        }
+
+        // Fallback directly beside player
+        return new Vector3(
+            Mathf.Clamp(playerPos.x + minSpawnDist, worldMinX, worldMaxX),
+            spawnY,
+            Mathf.Clamp(playerPos.z, worldMinZ, worldMaxZ));
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // Show spawn radius in scene view
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, spawnRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, minSpawnDist);
     }
 }
