@@ -31,12 +31,12 @@ public class SpawnManager : MonoBehaviour
     //  these limits or below the floor.
     // ─────────────────────────────────────────
     [Header("World Bounds")]
-    public float worldMinX = -35f;   // terrain left edge
-    public float worldMaxX = 965f;   // terrain right edge
+    public float worldMinX = -35f;   // terrain left edge  (-35)
+    public float worldMaxX = 465f;   // terrain right edge (-35 + 500)
     public float worldMinY = -10f;   // terrain floor
-    public float worldMaxY = 10f;   // OceanSurface Y ← enemies won't breach the surface
-    public float worldMinZ = -15f;   // terrain front edge
-    public float worldMaxZ = 985f;   // terrain back edge
+    public float worldMaxY = 10f;   // OceanSurface Y
+    public float worldMinZ = -15f;   // terrain front edge (-15)
+    public float worldMaxZ = 485f;   // terrain back edge  (-15 + 500)
 
     // How close to the player we can spawn (avoids instant hits)
     [Header("Spawn Radius Around Player")]
