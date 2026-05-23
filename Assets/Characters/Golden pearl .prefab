@@ -84,9 +84,6 @@ PrefabInstance:
       addedObject: {fileID: 1756428592409376408}
     - targetCorrespondingSourceObject: {fileID: 5487593953015599232, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1683310802744854657}
-    - targetCorrespondingSourceObject: {fileID: 5487593953015599232, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3775248583741571639}
   m_SourcePrefab: {fileID: 100100000, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
 --- !u!1 &984838177013609418 stripped
@@ -142,22 +139,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.009502427
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1683310802744854657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984838177013609418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3de04273589cdc498869fb8e0a026ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PearlManager
-  rotationSpeed: 50
-  collectSound: {fileID: 0}
-  floatAmplitude: 0.1
-  floatFrequency: 1
 --- !u!114 &3775248583741571639
 MonoBehaviour:
   m_ObjectHideFlags: 0
