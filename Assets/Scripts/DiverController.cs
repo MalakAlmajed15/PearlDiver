@@ -30,7 +30,6 @@ public class DiverController : MonoBehaviour
         if (cam != null)
             transform.rotation = Quaternion.Euler(0, cam.yaw, 0);
 
-        // Keep diver inside boundaries
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
@@ -44,10 +43,12 @@ public class DiverController : MonoBehaviour
         float v = Input.GetAxis("Vertical");
         Vector3 move = (transform.right * h +
                         transform.forward * v) * swimSpeed;
+
         if (Input.GetKey(KeyCode.Space))
             move.y = verticalSpeed;
         else if (Input.GetKey(KeyCode.LeftShift))
             move.y = -verticalSpeed;
+
         rb.linearVelocity = move;
     }
 }
