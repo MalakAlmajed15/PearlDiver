@@ -21,7 +21,7 @@ public class PearlSpawner : MonoBehaviour
     public float maxZ = 550f;
     public float spawnY = -6f;
 
-    void Start()
+    void Awake()
     {
         SpawnPearls();
         SpawnGoldenPearl();
