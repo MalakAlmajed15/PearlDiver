@@ -5519,7 +5519,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &622453497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11291,7 +11291,7 @@ MonoBehaviour:
   spawnRadius: 5
   minSpawnDist: 1
   spawnY: -3
-  minPearlSpacing: 1
+  minPearlSpacing: 2.5
   worldMinX: -35
   worldMaxX: 465
   worldMinZ: -15
