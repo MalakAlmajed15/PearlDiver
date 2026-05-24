@@ -146,6 +146,9 @@ public class UIManager : MonoBehaviour
         gameOverPanel.SetActive(true);
         DisablePlayerControls();
         CalculateScore();
+
+        int levelIndex = SceneManager.GetActiveScene().buildIndex - 1;
+        GameData.SaveLevelResult(levelIndex, timer, pearls, totalPearlsInLevel);
     }
 
     void ShowVictory()
@@ -162,6 +165,8 @@ public class UIManager : MonoBehaviour
         victoryTimeText.text = string.Format("Duration: {0:00}:{1:00}", minutes, seconds);
         
         CalculateScore();
+        int levelIndex = SceneManager.GetActiveScene().buildIndex - 1;
+        GameData.SaveLevelResult(levelIndex, timer, pearls, totalPearlsInLevel);
 
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         // Check if this is the final level
