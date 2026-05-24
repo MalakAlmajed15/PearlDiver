@@ -9,7 +9,7 @@ public static class GameData
 
         // Unlock this level and the next
         PlayerPrefs.SetInt(prefix + "_Unlocked", 1);
-        if (levelIndex < 5)
+        if (levelIndex < 4)
             PlayerPrefs.SetInt("Level" + (levelIndex + 1) + "_Unlocked", 1);
 
         // Save best time (lower is better)
@@ -47,22 +47,20 @@ public static class GameData
         return PlayerPrefs.GetInt("Level" + levelIndex + "_TotalPearls", 0);
     }
 
-    // Medal based on time thresholds (per your GDD level durations)
-    // Gold / Silver / Bronze time limits in seconds per level
     public static int GetMedal(int levelIndex)
     {
         float best = GetBestTime(levelIndex);
-        if (best < 0) return 0; // No medal yet
+        if (best < 0) return 0; // No run recorded yet
 
-        float[] gold = { 120f, 150f, 180f, 210f, 240f };
-        float[] silver = { 180f, 220f, 270f, 310f, 360f };
-        float[] bronze = { 240f, 300f, 360f, 420f, 480f };
+        float[] gold = { 30f, 35f, 40f, 45f };
+        float[] silver = { 45f, 50f, 55f, 60f };
+        float[] bronze = { 60f, 70f, 80f, 90f };
 
         int i = levelIndex - 1;
         if (best <= gold[i]) return 3; // Gold
         if (best <= silver[i]) return 2; // Silver
         if (best <= bronze[i]) return 1; // Bronze
-        return 0;
+        return 0;                        // No medal
     }
 
     public static string FormatTime(float seconds)
