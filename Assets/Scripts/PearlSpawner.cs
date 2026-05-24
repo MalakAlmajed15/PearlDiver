@@ -27,6 +27,12 @@ public class PearlSpawner : MonoBehaviour
     public float worldMinZ = -15f;
     public float worldMaxZ = 485f;
 
+    // new !!!!!!!!!!!!!!!!!!!!!!!!!!
+    [Header("Terrain Surface Detection")]
+    public float raycastStartHeight = 350f;
+    public float pearlSurfaceOffset = 0.8f;
+    public LayerMask terrainLayerMask = ~0;
+
     private List<Vector3> spawnedPositions = new List<Vector3>();
 
     void Awake()
@@ -80,6 +86,22 @@ public class PearlSpawner : MonoBehaviour
         Debug.Log($"PearlSpawner: golden pearl spawned at {spawnPos}");
     }
 
+    // new !!!!!!!!!!!!!!!!!!!!!!!!!!!
+    float GetSurfaceY(float x, float z)
+    {
+        Vector3 rayOrigin = new Vector3(x, raycastStartHeight, z);
+
+        if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit,
+                            raycastStartHeight * 2f, terrainLayerMask))
+        {
+            return hit.point.y + pearlSurfaceOffset;
+        }
+
+        // fallback if no terrain hit
+        return spawnY + pearlSurfaceOffset;
+    }
+
+
     Vector3 GetValidPosition(Vector3 playerPos, int pearlIndex)
     {
         // Pass 1: strict spacing — 50 attempts
@@ -109,15 +131,32 @@ public class PearlSpawner : MonoBehaviour
         float fz = Mathf.Clamp(playerPos.z + Mathf.Sin(rad) * fallbackDist, worldMinZ, worldMaxZ);
 
         Debug.LogWarning($"PearlSpawner: used fallback position for pearl {pearlIndex}");
-        return new Vector3(fx, spawnY, fz);
+        //return new Vector3(fx, spawnY, fz);
+        
+        // new replace !!!!!!!!!!!!!1
+        float fy = GetSurfaceY(fx, fz);
+        return new Vector3(fx, fy, fz);
     }
 
+    //Vector3 RandomCandidate(Vector3 playerPos)
+    //{
+    //    Vector2 randomCircle = Random.insideUnitCircle * spawnRadius;
+    //    float x = Mathf.Clamp(playerPos.x + randomCircle.x, worldMinX, worldMaxX);
+    //    float z = Mathf.Clamp(playerPos.z + randomCircle.y, worldMinZ, worldMaxZ);
+    //    return new Vector3(x, spawnY, z);
+    //}
+
+    // new replace !!!!!!!!!!!!!!!1
     Vector3 RandomCandidate(Vector3 playerPos)
     {
         Vector2 randomCircle = Random.insideUnitCircle * spawnRadius;
+
         float x = Mathf.Clamp(playerPos.x + randomCircle.x, worldMinX, worldMaxX);
         float z = Mathf.Clamp(playerPos.z + randomCircle.y, worldMinZ, worldMaxZ);
-        return new Vector3(x, spawnY, z);
+
+        float y = GetSurfaceY(x, z);
+
+        return new Vector3(x, y, z);
     }
 
     bool IsValidPosition(Vector3 candidate, Vector3 playerPos, float spacing)

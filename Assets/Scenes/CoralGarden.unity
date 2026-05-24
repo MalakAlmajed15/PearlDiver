@@ -11011,9 +11011,9 @@ GameObject:
   - component: {fileID: 1349172941}
   - component: {fileID: 1349172940}
   - component: {fileID: 1349172939}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: water_terrain (1)
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -11265,7 +11265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1468788633}
   - component: {fileID: 1468788632}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PearlSpawner (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11288,14 +11288,19 @@ MonoBehaviour:
   numberOfPearls: 7
   goldenPearlPrefab: {fileID: 984838177013609418, guid: f0796f802bb60d04fbf127cde475fefa, type: 3}
   collectSound: {fileID: 8300000, guid: eac95c1682e1b8149b7b5788675f59ee, type: 3}
-  spawnRadius: 5
-  minSpawnDist: 1
+  spawnRadius: 15
+  minSpawnDist: 5
   spawnY: -3
-  minPearlSpacing: 2.5
+  minPearlSpacing: 4
   worldMinX: -35
   worldMaxX: 465
   worldMinZ: -15
   worldMaxZ: 485
+  raycastStartHeight: 350
+  pearlSurfaceOffset: 0.8
+  terrainLayerMask:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!4 &1468788633
 Transform:
   m_ObjectHideFlags: 0
