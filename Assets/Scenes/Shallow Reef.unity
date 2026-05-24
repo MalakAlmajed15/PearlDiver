@@ -10378,7 +10378,7 @@ MonoBehaviour:
   spawnRadius: 5
   minSpawnDist: 1
   spawnY: -3
-  minPearlSpacing: 2.5
+  minPearlSpacing: 1
   worldMinX: -35
   worldMaxX: 465
   worldMinZ: -15
