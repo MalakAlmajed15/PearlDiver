@@ -16,7 +16,7 @@ public class LevelSelectManager : MonoBehaviour
         public Button playButton;
     }
 
-    [Header("Level Cards (assign all 5 in order)")]
+    [Header("Level Cards (assign all 4 in order)")]
     public LevelCard[] levelCards;
 
     [Header("Medal Sprites")]
@@ -35,10 +35,10 @@ public class LevelSelectManager : MonoBehaviour
     public Color lockedButtonColor = new Color(0.5f, 0.5f, 0.5f, 1f);
     public Color buttonTextColor = Color.white;
 
-    
-    //public Color playButtonColor = new Color(0.514f, 0.608f, 0.816f, 1f);
-
-    private string[] levelNames = {
+    // Level 1 is always unlocked; subsequent levels unlock when the previous is completed.
+    // "Completed" means GameData.IsUnlocked(nextLevelIndex), which your GameData should
+    // set to true when the player finishes a level.
+    private readonly string[] levelNames = {
         "Shallow Reef",
         "Coral Garden",
         "Deep Cave",
@@ -50,30 +50,39 @@ public class LevelSelectManager : MonoBehaviour
         backButton.onClick.AddListener(() =>
             SceneManager.LoadScene(mainMenuSceneName));
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 4; i++)
         {
-            int levelIndex = i + 1;
+            int levelIndex = i + 1;       // 1-based level index
             LevelCard card = levelCards[i];
-            bool unlocked = GameData.IsUnlocked(levelIndex);
+
+            // Level 1 is always unlocked.
+            // Level N is unlocked only if level N-1 has been completed.
+            // GameData.IsUnlocked(levelIndex) should return true once that level is unlocked.
+            bool unlocked = (levelIndex == 1) || GameData.IsUnlocked(levelIndex);
+
+            // Set the level name on the card
+            if (card.levelNameText != null)
+                card.levelNameText.text = levelNames[i];
 
             card.playButton.interactable = unlocked;
-
-          
             StyleButton(card.playButton, unlocked);
 
             if (unlocked)
             {
+                // --- Best Time ---
                 float best = GameData.GetBestTime(levelIndex);
                 card.bestTimeText.text = best >= 0
                     ? "Best: " + GameData.FormatTime(best)
                     : "Best: --:--";
 
+                // --- Pearl Count ---
                 int pearls = GameData.GetPearls(levelIndex);
                 int total = GameData.GetTotalPearls(levelIndex);
                 card.pearlCountText.text = total > 0
                     ? "Pearls: " + pearls + "/" + total
                     : "Pearls: -/-";
 
+                // --- Medal ---
                 int medal = GameData.GetMedal(levelIndex);
                 if (medal == 0)
                 {
@@ -90,13 +99,16 @@ public class LevelSelectManager : MonoBehaviour
                     };
                 }
 
+                // --- Play Button ---
+                // Capture local variable for the closure
                 string sceneToLoad = levelSceneNames[i];
                 card.playButton.onClick.AddListener(() =>
                     SceneManager.LoadScene(sceneToLoad));
             }
             else
             {
-                card.bestTimeText.text = "Play levels to unlock";
+                // Locked state display
+                card.bestTimeText.text = "Complete previous level to unlock";
                 card.pearlCountText.text = "";
                 card.medalImage.gameObject.SetActive(false);
             }
@@ -105,16 +117,14 @@ public class LevelSelectManager : MonoBehaviour
 
     private void StyleButton(Button btn, bool unlocked)
     {
-   
         btn.transition = Selectable.Transition.None;
 
-        //Image img = btn.GetComponent<Image>();
-        //if (img != null)
-        //{
-        //    img.color = unlocked ? playButtonColor : lockedButtonColor;
-        //}
+        // Tint the button image to show locked/unlocked state
+        Image img = btn.GetComponent<Image>();
+        if (img != null)
+            img.color = unlocked ? Color.white : lockedButtonColor;
 
-       
+        // Keep button label text white in both states
         TextMeshProUGUI tmp = btn.GetComponentInChildren<TextMeshProUGUI>(true);
         if (tmp != null)
             tmp.color = buttonTextColor;
