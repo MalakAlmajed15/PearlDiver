@@ -35,9 +35,6 @@ public class LevelSelectManager : MonoBehaviour
     public Color lockedButtonColor = new Color(0.5f, 0.5f, 0.5f, 1f);
     public Color buttonTextColor = Color.white;
 
-    // Level 1 is always unlocked; subsequent levels unlock when the previous is completed.
-    // "Completed" means GameData.IsUnlocked(nextLevelIndex), which your GameData should
-    // set to true when the player finishes a level.
     private readonly string[] levelNames = {
         "Shallow Reef",
         "Coral Garden",
@@ -55,9 +52,7 @@ public class LevelSelectManager : MonoBehaviour
             int levelIndex = i + 1;       // 1-based level index
             LevelCard card = levelCards[i];
 
-            // Level 1 is always unlocked.
-            // Level N is unlocked only if level N-1 has been completed.
-            // GameData.IsUnlocked(levelIndex) should return true once that level is unlocked.
+
             bool unlocked = (levelIndex == 1) || GameData.IsUnlocked(levelIndex);
 
             // Set the level name on the card
@@ -68,13 +63,11 @@ public class LevelSelectManager : MonoBehaviour
             StyleButton(card.playButton, unlocked);
 
             if (unlocked)
-            {
-                // --- Best Time ---
+            {// --- Best Time ---
                 float best = GameData.GetBestTime(levelIndex);
                 card.bestTimeText.text = best >= 0
-                    ? "Best: " + GameData.FormatTime(best)
+                    ? "Best: " + string.Format("{0:00}:{1:00}", Mathf.FloorToInt(best / 60), Mathf.FloorToInt(best % 60))
                     : "Best: --:--";
-
                 // --- Pearl Count ---
                 int pearls = GameData.GetPearls(levelIndex);
                 int total = GameData.GetTotalPearls(levelIndex);
