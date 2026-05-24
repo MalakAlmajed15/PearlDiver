@@ -2419,19 +2419,12 @@ MonoBehaviour:
     pearlCountText: {fileID: 1976732259}
     medalImage: {fileID: 373271643}
     playButton: {fileID: 419020398}
-  - cardRoot: {fileID: 0}
-    levelNameText: {fileID: 0}
-    bestTimeText: {fileID: 0}
-    pearlCountText: {fileID: 0}
-    medalImage: {fileID: 0}
-    playButton: {fileID: 0}
   bronzeMedal: {fileID: 21300000, guid: c518cafa68793944cbd2107517048c70, type: 3}
   silverMedal: {fileID: 21300000, guid: f0bfb52712df9844e8777e1a7900d8f7, type: 3}
   goldMedal: {fileID: 21300000, guid: d35c1d2587d8e0944bf6a5cc0e8dc5a8, type: 3}
   levelSceneNames:
   - Shallow Reef
   - CoralGarden
-  - Sunken Dhow
   - DeepCave
   - Treasure Cove
   backButton: {fileID: 1345985650}
@@ -3420,11 +3413,20 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: 3da23cdf512599b42881988944f3918c, type: 2}
+    - target: {fileID: 11489712, guid: 6488b6e6bbe8a9c4585b531a71d8211c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6488b6e6bbe8a9c4585b531a71d8211c, type: 3}
+--- !u!4 &1514928121 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 440718, guid: 6488b6e6bbe8a9c4585b531a71d8211c, type: 3}
+  m_PrefabInstance: {fileID: 1514928120}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1601561017
 GameObject:
   m_ObjectHideFlags: 0
@@ -4438,9 +4440,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2535954103604261516, guid: 838c0bef810bfe94d8e33947c3cba7c6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2535954103604261516, guid: 838c0bef810bfe94d8e33947c3cba7c6, type: 3}
       propertyPath: reflectionPlane
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1514928121}
     - target: {fileID: 2535954103604261519, guid: 838c0bef810bfe94d8e33947c3cba7c6, type: 3}
       propertyPath: m_Name
       value: WaterReflectionCamera

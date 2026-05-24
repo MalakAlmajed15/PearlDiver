@@ -10,30 +10,34 @@ public class CustomCoralBlocker : MonoBehaviour
 
     private void Start()
     {
-        // Find the player automatically in the scene
         playerController = Object.FindAnyObjectByType<UnderwaterSwimController>();
         if (playerController != null)
-        {
             playerTransform = playerController.transform;
-        }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        if (playerTransform == null) return;
+        if (playerTransform == null || playerController == null)
+        {
+            Debug.LogError($"{gameObject.name}: missing player reference!");
+            return;
+        }
 
-        // Calculate horizontal distance between the diver and this specific coral
-        Vector3 playerPos = playerTransform.position;
-        Vector3 coralPos = transform.position;
-
-        Vector3 pushDir = new Vector3(playerPos.x - coralPos.x, 0f, playerPos.z - coralPos.z);
+        Vector3 pushDir = playerTransform.position - transform.position;
         float currentDistance = pushDir.magnitude;
 
-        // If the player penetrates our radius, calculate the step-back and push them out
+        Debug.Log($"{gameObject.name}: player distance = {currentDistance:F2}, blockRadius = {blockRadius}");
+
         if (currentDistance < blockRadius)
         {
+            if (currentDistance < 0.001f)
+                pushDir = Vector3.up;
+
             float penetration = blockRadius - currentDistance;
-            playerTransform.position += pushDir.normalized * (penetration + 0.05f);
+            Vector3 pushVector = pushDir.normalized * (penetration + 0.05f);
+
+            Debug.Log($"{gameObject.name}: PUSHING player by {pushVector}");
+            playerController.PushOut(pushVector);
         }
     }
 
@@ -42,4 +46,5 @@ public class CustomCoralBlocker : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, blockRadius);
     }
+
 }

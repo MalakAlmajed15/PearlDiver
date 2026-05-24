@@ -33,6 +33,7 @@ public class WaterReflection : MonoBehaviour
 
     private void Update()
     {
+        if (reflectionPlane == null) return;
         if (isReady)
             RenderReflection();
     }
