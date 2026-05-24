@@ -5079,7 +5079,7 @@ GameObject:
   - component: {fileID: 419319349}
   - component: {fileID: 419319348}
   - component: {fileID: 419319347}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: water_terrain
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -10383,6 +10383,11 @@ MonoBehaviour:
   worldMaxX: 465
   worldMinZ: -15
   worldMaxZ: 485
+  raycastStartHeight: 350
+  pearlSurfaceOffset: 0.8
+  terrainLayerMask:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!4 &1771759965
 Transform:
   m_ObjectHideFlags: 0
