@@ -10535,7 +10535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449cb9e75f841de4f9683529cd35054f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThirdPersonCamera
-  target: {fileID: 0}
+  target: {fileID: 1577577450}
   distance: 6
   height: 2
   sensitivityX: 3
@@ -11459,7 +11459,7 @@ PrefabInstance:
       objectReference: {fileID: 1349172940}
     - target: {fileID: 7219905094295064076, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: maxWorldHeight
-      value: 10
+      value: 8.7
       objectReference: {fileID: 0}
     - target: {fileID: 7219905094295064076, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: cameraTransform
@@ -11554,6 +11554,11 @@ MonoBehaviour:
   airSlider: {fileID: 0}
   underwaterAmbientSound: {fileID: 8300000, guid: a41631c827d243c4ebd597153d060726, type: 3}
   isDepleting: 1
+--- !u!4 &1577577450 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
+  m_PrefabInstance: {fileID: 1566709338}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1712863148
 PrefabInstance:
   m_ObjectHideFlags: 0
