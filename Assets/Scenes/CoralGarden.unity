@@ -10511,7 +10511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d662ba15984b0344494afef14679bdea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnderwaterVisuals
-  playerController: {fileID: 0}
+  playerController: {fileID: 1577577447}
   includeCameraPosition: 1
   cameraCheckRadius: 0.1
   adjustFog: 1
@@ -11288,10 +11288,10 @@ MonoBehaviour:
   numberOfPearls: 7
   goldenPearlPrefab: {fileID: 984838177013609418, guid: f0796f802bb60d04fbf127cde475fefa, type: 3}
   collectSound: {fileID: 8300000, guid: eac95c1682e1b8149b7b5788675f59ee, type: 3}
-  spawnRadius: 15
-  minSpawnDist: 3
-  spawnY: -6
-  minPearlSpacing: 2.5
+  spawnRadius: 5
+  minSpawnDist: 1
+  spawnY: -3
+  minPearlSpacing: 1
   worldMinX: -35
   worldMaxX: 465
   worldMinZ: -15
@@ -11554,6 +11554,17 @@ MonoBehaviour:
   airSlider: {fileID: 0}
   underwaterAmbientSound: {fileID: 8300000, guid: a41631c827d243c4ebd597153d060726, type: 3}
   isDepleting: 1
+--- !u!114 &1577577447 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7219905094295064076, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
+  m_PrefabInstance: {fileID: 1566709338}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577577441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfd997346ebaa3e4b8ce1d25b9b3586e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnderwaterSwimController.Runtime::UnderwaterSwimController
 --- !u!4 &1577577450 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
