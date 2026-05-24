@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &222477139
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5161,120 +5161,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &426130239
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 426130241}
-  - component: {fileID: 426130240}
-  m_Layer: 0
-  m_Name: SpawnManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &426130240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 426130239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eff9c0e0e083b6d43a1112ab43db68bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
-  jellyfishPrefab: {fileID: 1891742659991760961, guid: 4e699c67df2ce0e4887a45535ed9817c, type: 3}
-  crabPrefab: {fileID: 813246751584668348, guid: d8ce4b1c89e7f3a4d97361f43851ed33, type: 3}
-  electricEelPrefab: {fileID: 3983046566720953969, guid: 86976c7844fee734898a2abd0ca314d2, type: 3}
-  jellyfishScale: 1
-  crabScale: 1
-  eelScale: 1
-  minSpawnTime: 2
-  maxSpawnTime: 5
-  worldMinX: -35
-  worldMaxX: 35
-  worldMinY: -10
-  worldMaxY: -2
-  worldMinZ: -15
-  worldMaxZ: 25
-  minSpawnDist: 8
-  maxSpawnDist: 20
-  currentLevel: 1
---- !u!4 &426130241
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 426130239}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.90783, y: -7.47391, z: 20.30158}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &493206644
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 493206646}
-  - component: {fileID: 493206645}
-  m_Layer: 0
-  m_Name: PearlSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &493206645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 493206644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13888604a8a14654cb7e45e4bf9a956a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PearlSpawner
-  pearlPrefab: {fileID: 7738026679663632921, guid: d7ea45fb39836be488387d4b0fd91e62, type: 3}
-  numberOfPearls: 4
-  goldenPearlPrefab: {fileID: 984838177013609418, guid: f0796f802bb60d04fbf127cde475fefa, type: 3}
-  collectSound: {fileID: 8300000, guid: eac95c1682e1b8149b7b5788675f59ee, type: 3}
-  minX: 400
-  maxX: 530
-  minZ: 400
-  maxZ: 550
-  spawnY: -6
---- !u!4 &493206646
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 493206644}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 264, y: 0, z: 478}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &530850868
 GameObject:
   m_ObjectHideFlags: 0
@@ -10274,7 +10160,7 @@ PrefabInstance:
       objectReference: {fileID: 419319348}
     - target: {fileID: 7219905094295064076, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: maxWorldHeight
-      value: 10
+      value: 8.7
       objectReference: {fileID: 0}
     - target: {fileID: 7219905094295064076, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: cameraTransform
@@ -10451,6 +10337,123 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1771759963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1771759965}
+  - component: {fileID: 1771759964}
+  m_Layer: 0
+  m_Name: PearlSpawner (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1771759964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771759963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13888604a8a14654cb7e45e4bf9a956a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PearlSpawner
+  pearlPrefab: {fileID: 8825490918787992594, guid: e92ce75be73fcdc469d3efd25c13260a, type: 3}
+  numberOfPearls: 3
+  goldenPearlPrefab: {fileID: 984838177013609418, guid: f0796f802bb60d04fbf127cde475fefa, type: 3}
+  collectSound: {fileID: 8300000, guid: eac95c1682e1b8149b7b5788675f59ee, type: 3}
+  spawnRadius: 5
+  minSpawnDist: 1
+  spawnY: -3
+  minPearlSpacing: 1
+  worldMinX: -35
+  worldMaxX: 465
+  worldMinZ: -15
+  worldMaxZ: 485
+--- !u!4 &1771759965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771759963}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 264, y: 0, z: 478}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1774265646
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1774265648}
+  - component: {fileID: 1774265647}
+  m_Layer: 0
+  m_Name: SpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1774265647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774265646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eff9c0e0e083b6d43a1112ab43db68bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
+  jellyfishPrefab: {fileID: 1891742659991760961, guid: 4e699c67df2ce0e4887a45535ed9817c, type: 3}
+  crabPrefab: {fileID: 813246751584668348, guid: d8ce4b1c89e7f3a4d97361f43851ed33, type: 3}
+  electricEelPrefab: {fileID: 3983046566720953969, guid: 86976c7844fee734898a2abd0ca314d2, type: 3}
+  jellyfishScale: 0.63
+  crabScale: 1
+  eelScale: 1
+  minSpawnTime: 2
+  maxSpawnTime: 5
+  worldMinX: -35
+  worldMaxX: 965
+  worldMinY: -10
+  worldMaxY: 10
+  worldMinZ: -15
+  worldMaxZ: 985
+  minSpawnDist: 8
+  maxSpawnDist: 20
+  currentLevel: 1
+--- !u!4 &1774265648
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774265646}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.90783, y: -7.47391, z: 20.30158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10794,7 +10797,7 @@ SceneRoots:
   - {fileID: 1869760685}
   - {fileID: 986149624}
   - {fileID: 2002144503}
-  - {fileID: 426130241}
-  - {fileID: 493206646}
   - {fileID: 222477142}
   - {fileID: 678459607}
+  - {fileID: 1771759965}
+  - {fileID: 1774265648}

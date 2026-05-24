@@ -31,12 +31,12 @@ public class SpawnManager : MonoBehaviour
     //  these limits or below the floor.
     // ─────────────────────────────────────────
     [Header("World Bounds")]
-    public float worldMinX = -35f;   // terrain left edge  (-35)
-    public float worldMaxX = 465f;   // terrain right edge (-35 + 500)
-    public float worldMinY = -10f;   // terrain floor
-    public float worldMaxY = 10f;   // OceanSurface Y
-    public float worldMinZ = -15f;   // terrain front edge (-15)
-    public float worldMaxZ = 485f;   // terrain back edge  (-15 + 500)
+    public float worldMinX = -35f;
+    public float worldMaxX = 465f;   // -35 + 500
+    public float worldMinY = -10f;
+    public float worldMaxY = 10f;
+    public float worldMinZ = -15f;
+    public float worldMaxZ = 485f;   // -15 + 500
 
     // How close to the player we can spawn (avoids instant hits)
     [Header("Spawn Radius Around Player")]
@@ -58,6 +58,7 @@ public class SpawnManager : MonoBehaviour
     // =========================================
     void Start()
     {
+        Debug.Log("SpawnManager Start() called");
         BuildPool();
         ScheduleNextSpawn();
     }
@@ -136,7 +137,7 @@ public class SpawnManager : MonoBehaviour
         // Instantiate and apply the correct scale
         GameObject enemy = Instantiate(prefab, spawnPos, Quaternion.identity);
         ApplyScale(enemy, prefab);
-
+        Debug.Log($"Spawned {enemy.name} at {spawnPos}", enemy);
         ScheduleNextSpawn();
     }
 
