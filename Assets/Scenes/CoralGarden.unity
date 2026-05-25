@@ -281,6 +281,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomCoralBlocker
   pushStrength: 50
+--- !u!1 &322331800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 322331802}
+  - component: {fileID: 322331801}
+  m_Layer: 0
+  m_Name: SeaweedSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &322331801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322331800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c55c52c7c03ac84082ba3cae7a19003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SeaweedSpawner
+  seaweedPrefab: {fileID: -6689036041284674117, guid: 5a28c5bbb2aaae34282474e92446631f, type: 3}
+  numberOfSeaweed: 50
+  rangeX: 40
+  rangeZ: 40
+  spawnY: -7
+  minScale: 0.5
+  maxScale: 1.5
+  baseRotation: {x: 90, y: 0, z: 0}
+--- !u!4 &322331802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322331800}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 177.39558, y: -2.39635, z: 346.90836}
+  m_LocalScale: {x: 5, y: 1, z: 5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &366677071
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11901,3 +11953,4 @@ SceneRoots:
   - {fileID: 1712863148}
   - {fileID: 52755124}
   - {fileID: 650924226}
+  - {fileID: 322331802}
