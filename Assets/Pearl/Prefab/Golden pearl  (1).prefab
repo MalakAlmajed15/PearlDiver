@@ -248,6 +248,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab5f9b6fdeb3f874db27b845fcd1e081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoldenPearl
+  collectSound: {fileID: 8300000, guid: 82c46495b1019c742b3da43c75606d2a, type: 3}
+  volume: 1
 --- !u!4 &7720827018975155911 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5146498424201529914, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
