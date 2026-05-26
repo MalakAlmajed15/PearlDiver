@@ -10375,6 +10375,7 @@ MonoBehaviour:
   numberOfPearls: 3
   goldenPearlPrefab: {fileID: 984838177013609418, guid: f0796f802bb60d04fbf127cde475fefa, type: 3}
   collectSound: {fileID: 8300000, guid: eac95c1682e1b8149b7b5788675f59ee, type: 3}
+  goldenCollectSound: {fileID: 8300000, guid: 82c46495b1019c742b3da43c75606d2a, type: 3}
   spawnRadius: 5
   minSpawnDist: 1
   spawnY: -3
