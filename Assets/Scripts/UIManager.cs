@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     public GameObject hudPanel;
     public GameObject gameOverPanel;
     public GameObject victoryPanel;
-    public GameObject pausePanel; 
+    public GameObject pausePanel;
 
     [Header("Text & Images")]
     public TextMeshProUGUI pearlText;
@@ -33,9 +33,30 @@ public class UIManager : MonoBehaviour
     public GameObject backToLevelSelect;
     public GameObject nextContainer;
 
+    [Header("Victory Sound")]
+    public AudioClip victorySound;
+    public float victorySoundVolume = 1f;
+
+    [Header("Death Sound")]
+    public AudioClip deathSound;
+    public float deathSoundVolume = 1f;
+
+    private AudioSource audioSource;
     private bool isPaused = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
+    {
+        Instance = this;
+
+        // Set up audio source
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 0f;
+    }
+
     void Start()
     {
         gameOverPanel.SetActive(false);
@@ -45,37 +66,27 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (gameActive)
-        {
-            timer += Time.deltaTime; // Track elapsed time
-        }
-        // DEBUG: until the level is built
+            timer += Time.deltaTime;
+
         if (Input.GetKeyDown(KeyCode.P)) AddPearl();
         if (Input.GetKeyDown(KeyCode.L)) LoseLife();
 
         if (Input.GetKeyDown(KeyCode.Escape) && gameActive)
         {
-            if (isPaused)
-            {
-                ResumeGame();
-            }
-            else
-            {
-                PauseGame();
-            }
+            if (isPaused) ResumeGame();
+            else PauseGame();
         }
-
     }
 
     public void PauseGame()
     {
         isPaused = true;
         pausePanel.SetActive(true);
-        hudPanel.SetActive(false); 
-        Time.timeScale = 0f; // Freezes the game world and timer
+        hudPanel.SetActive(false);
+        Time.timeScale = 0f;
         DisablePlayerControls();
     }
 
@@ -83,8 +94,8 @@ public class UIManager : MonoBehaviour
     {
         isPaused = false;
         pausePanel.SetActive(false);
-        hudPanel.SetActive(true); 
-        Time.timeScale = 1f; // Unfreezes the game world
+        hudPanel.SetActive(true);
+        Time.timeScale = 1f;
         EnablePlayerControls();
     }
 
@@ -99,16 +110,12 @@ public class UIManager : MonoBehaviour
         pearls++;
         UpdatePearlUI();
 
-        // Victory is now based on the actual number of pearls in the scene
         if (pearls >= totalPearlsInLevel && totalPearlsInLevel > 0)
-        {
             ShowVictory();
-        }
     }
 
     public void UpdatePearlUI()
     {
-        // Now it shows "1/5", "2/12", etc., based on the level
         pearlText.text = pearls + "/" + totalPearlsInLevel;
     }
 
@@ -125,7 +132,6 @@ public class UIManager : MonoBehaviour
 
     public void AddLife()
     {
-      
         if (lives < heartImages.Length)
         {
             heartImages[lives].enabled = true;
@@ -145,8 +151,15 @@ public class UIManager : MonoBehaviour
         hudPanel.SetActive(false);
         gameOverPanel.SetActive(true);
         DisablePlayerControls();
-        CalculateScore();
 
+        // Play death sound when game over
+        if (audioSource != null && deathSound != null)
+        {
+            audioSource.PlayOneShot(deathSound, deathSoundVolume);
+            Debug.Log("Death sound played!");
+        }
+
+        CalculateScore();
         int levelIndex = SceneManager.GetActiveScene().buildIndex - 1;
         GameData.SaveLevelResult(levelIndex, timer, pearls, totalPearlsInLevel);
     }
@@ -159,73 +172,65 @@ public class UIManager : MonoBehaviour
         victoryPanel.SetActive(true);
         DisablePlayerControls();
 
-        // Calculate time for dispaly
+        // Play victory sound
+        if (audioSource != null && victorySound != null)
+        {
+            audioSource.PlayOneShot(victorySound, victorySoundVolume);
+            Debug.Log("Victory sound played!");
+        }
+
         int minutes = Mathf.FloorToInt(timer / 60);
         int seconds = Mathf.FloorToInt(timer % 60);
         victoryTimeText.text = string.Format("Duration: {0:00}:{1:00}", minutes, seconds);
-        
+
         CalculateScore();
         int levelIndex = SceneManager.GetActiveScene().buildIndex - 1;
         GameData.SaveLevelResult(levelIndex, timer, pearls, totalPearlsInLevel);
 
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        // Check if this is the final level
-        if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings - 1) 
+        if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings - 1)
         {
             nextContainer.SetActive(false);
             mainMenuButton.SetActive(true);
-            finalScoreText.text = "Grand Total: " + totalScore ;
+            finalScoreText.text = "Grand Total: " + totalScore;
         }
         else
         {
             nextButton.SetActive(true);
             mainMenuButton.SetActive(true);
         }
-
-
     }
 
     public void RestartLevel()
     {
         ResetUI();
-
-        // Reload the game scene
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);
     }
 
-
     void CalculateScore()
     {
-        // 100 points per pearl + bonus for staying alive + time bonus (500 points minus the seconds elapsed)
-        // Calculate one level score
         int levelScore = (pearls * 100) + (lives * 50);
         int timeBonus = Mathf.Max(0, 500 - Mathf.FloorToInt(timer));
         int totalLevelScore = levelScore + timeBonus;
 
-        // Update CUMULATIVE stats (only if winning)
         if (pearls >= totalPearlsInLevel && totalPearlsInLevel > 0)
         {
             totalScore += totalLevelScore;
             totalPearls += pearls;
         }
 
-        // Dispaly
         finalScoreText.text = "Level Score: " + totalLevelScore;
     }
 
-    // Add this for the "Next" button
     public void LoadNextLevel()
     {
-        // Get the index of the current level and add 1
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
-
-        // Check if the next scene actually exists in Build Settings
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings - 1)
         {
             SceneManager.LoadScene(nextSceneIndex);
-            ResetUI(); // Reset stats for the new level
+            ResetUI();
         }
         else
         {
@@ -233,7 +238,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // Helper to clean up stats when moving between levels or restarting
     void ResetUI()
     {
         EnablePlayerControls();
@@ -253,13 +257,11 @@ public class UIManager : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
-        // Reset everything before leaving
         Time.timeScale = 1f;
         totalScore = 0;
         totalPearls = 0;
-        SceneManager.LoadScene(0); // Load scene at index 0 (Main Menu)
+        SceneManager.LoadScene(0);
     }
-
 
     public void ReturnToLevelSelect()
     {
@@ -267,10 +269,8 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    // HELPER FUNCTIONS
     private void DisablePlayerControls()
     {
-        // 1. Freeze the player and animations
         UnderwaterSwimController player = Object.FindFirstObjectByType<UnderwaterSwimController>();
         if (player != null)
         {
@@ -279,14 +279,12 @@ public class UIManager : MonoBehaviour
             if (anim != null) anim.speed = 0f;
         }
 
-        // 2. Force the cursor to appear and unlock so we can click UI buttons
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
 
     private void EnablePlayerControls()
     {
-        // Unfreeze the player and animations
         UnderwaterSwimController player = Object.FindFirstObjectByType<UnderwaterSwimController>();
         if (player != null)
         {
