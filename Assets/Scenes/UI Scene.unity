@@ -3007,8 +3007,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0/10
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3a2c05fa3c33592408a0061096d24d47, type: 2}
-  m_sharedMaterial: {fileID: 8826611070676969021, guid: 3a2c05fa3c33592408a0061096d24d47, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4961,6 +4961,10 @@ MonoBehaviour:
   mainMenuButton: {fileID: 171408740}
   backToLevelSelect: {fileID: 1489436449}
   nextContainer: {fileID: 227352046}
+  victorySound: {fileID: 8300000, guid: 5c8a53e85ccfb5c428fd50a5fb654524, type: 3}
+  victorySoundVolume: 1
+  deathSound: {fileID: 8300000, guid: 006a1adef152a854cb540ff5aaa13b9d, type: 3}
+  deathSoundVolume: 1
 --- !u!4 &2135073358
 Transform:
   m_ObjectHideFlags: 0

@@ -13,6 +13,9 @@ public class PearlSpawner : MonoBehaviour
     [Header("Pearl Sound")]
     public AudioClip collectSound;
 
+    [Header("Golden Pearl Sound")]
+    public AudioClip goldenCollectSound;
+
     [Header("Spawn Area (relative to player)")]
     public float spawnRadius = 15f;
     public float minSpawnDist = 3f;
@@ -26,6 +29,11 @@ public class PearlSpawner : MonoBehaviour
     public float worldMaxX = 465f;
     public float worldMinZ = -15f;
     public float worldMaxZ = 485f;
+
+    [Header("Terrain Surface Detection")]
+    public float raycastStartHeight = 350f;
+    public float pearlSurfaceOffset = 0.8f;
+    public LayerMask terrainLayerMask = ~0;
 
     private List<Vector3> spawnedPositions = new List<Vector3>();
 
@@ -58,6 +66,7 @@ public class PearlSpawner : MonoBehaviour
 
             GameObject pearl = Instantiate(pearlPrefab, spawnPos, pearlPrefab.transform.rotation);
 
+            // Assign regular pearl collect sound
             PearlManager pm = pearl.GetComponent<PearlManager>();
             if (pm != null && collectSound != null)
                 pm.collectSound = collectSound;
@@ -76,13 +85,32 @@ public class PearlSpawner : MonoBehaviour
 
         Vector3 spawnPos = GetValidPosition(playerPos, numberOfPearls);
         spawnedPositions.Add(spawnPos);
-        Instantiate(goldenPearlPrefab, spawnPos, Quaternion.identity);
+
+        GameObject golden = Instantiate(goldenPearlPrefab, spawnPos, Quaternion.identity);
+
+        // Assign golden pearl collect sound
+        GoldenPearl gp = golden.GetComponent<GoldenPearl>();
+        if (gp != null && goldenCollectSound != null)
+            gp.collectSound = goldenCollectSound;
+
         Debug.Log($"PearlSpawner: golden pearl spawned at {spawnPos}");
+    }
+
+    float GetSurfaceY(float x, float z)
+    {
+        Vector3 rayOrigin = new Vector3(x, raycastStartHeight, z);
+
+        if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit,
+                            raycastStartHeight * 2f, terrainLayerMask))
+        {
+            return hit.point.y + pearlSurfaceOffset;
+        }
+
+        return spawnY + pearlSurfaceOffset;
     }
 
     Vector3 GetValidPosition(Vector3 playerPos, int pearlIndex)
     {
-        // Pass 1: strict spacing — 50 attempts
         for (int i = 0; i < 50; i++)
         {
             Vector3 candidate = RandomCandidate(playerPos);
@@ -90,7 +118,6 @@ public class PearlSpawner : MonoBehaviour
                 return candidate;
         }
 
-        // Pass 2: relaxed spacing (half) — 50 more attempts
         float relaxedSpacing = minPearlSpacing * 0.5f;
         for (int i = 0; i < 50; i++)
         {
@@ -99,8 +126,6 @@ public class PearlSpawner : MonoBehaviour
                 return candidate;
         }
 
-        // Pass 3: guaranteed unique fallback using index-based angle
-        // Places pearls evenly around a circle so they never overlap
         float angle = (360f / (numberOfPearls + 1)) * pearlIndex;
         float rad = angle * Mathf.Deg2Rad;
         float fallbackDist = Mathf.Max(minSpawnDist, minPearlSpacing) + 0.5f;
@@ -109,7 +134,9 @@ public class PearlSpawner : MonoBehaviour
         float fz = Mathf.Clamp(playerPos.z + Mathf.Sin(rad) * fallbackDist, worldMinZ, worldMaxZ);
 
         Debug.LogWarning($"PearlSpawner: used fallback position for pearl {pearlIndex}");
-        return new Vector3(fx, spawnY, fz);
+
+        float fy = GetSurfaceY(fx, fz);
+        return new Vector3(fx, fy, fz);
     }
 
     Vector3 RandomCandidate(Vector3 playerPos)
@@ -117,19 +144,18 @@ public class PearlSpawner : MonoBehaviour
         Vector2 randomCircle = Random.insideUnitCircle * spawnRadius;
         float x = Mathf.Clamp(playerPos.x + randomCircle.x, worldMinX, worldMaxX);
         float z = Mathf.Clamp(playerPos.z + randomCircle.y, worldMinZ, worldMaxZ);
-        return new Vector3(x, spawnY, z);
+        float y = GetSurfaceY(x, z);
+        return new Vector3(x, y, z);
     }
 
     bool IsValidPosition(Vector3 candidate, Vector3 playerPos, float spacing)
     {
-        // Must be far enough from player
         float distFromPlayer = Vector2.Distance(
             new Vector2(candidate.x, candidate.z),
             new Vector2(playerPos.x, playerPos.z));
 
         if (distFromPlayer < minSpawnDist) return false;
 
-        // Must be far enough from every existing pearl
         foreach (Vector3 existing in spawnedPositions)
         {
             float distFromPearl = Vector2.Distance(
