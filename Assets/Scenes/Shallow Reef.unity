@@ -10116,7 +10116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 215
+      value: 66.9
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10124,7 +10124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 142
+      value: 117.2
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10221,6 +10221,7 @@ MonoBehaviour:
   airDepletionRate: 5
   airRefillRate: 20
   airSlider: {fileID: 0}
+  lowAirPercentage: 0.25
   underwaterAmbientSound: {fileID: 8300000, guid: a41631c827d243c4ebd597153d060726, type: 3}
   isDepleting: 1
 --- !u!114 &1323970675

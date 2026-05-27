@@ -10,6 +10,7 @@ public class SeaweedSpawner : MonoBehaviour
     public float rangeX = 40f;
     public float rangeZ = 40f;
     public float spawnY = -7f;
+    public float yOffset = 0f;
 
     [Header("Random Size")]
     public float minScale = 3f;
@@ -44,9 +45,10 @@ public class SeaweedSpawner : MonoBehaviour
         {
             float randomX = center.x + Random.Range(-rangeX, rangeX);
             float randomZ = center.z + Random.Range(-rangeZ, rangeZ);
-            Vector3 spawnPos = new Vector3(randomX, spawnY, randomZ);
 
-            // Random Y rotation so each seaweed faces a different direction
+            // spawnY + yOffset controls up and down
+            Vector3 spawnPos = new Vector3(randomX, spawnY + yOffset, randomZ);
+
             Quaternion rotation = Quaternion.Euler(
                 baseRotation.x,
                 baseRotation.y + Random.Range(0f, 360f),
@@ -55,7 +57,6 @@ public class SeaweedSpawner : MonoBehaviour
 
             GameObject seaweed = Instantiate(seaweedPrefab, spawnPos, rotation);
 
-            // Random scale so they all look different
             float randomScale = Random.Range(minScale, maxScale);
             seaweed.transform.localScale = Vector3.one * randomScale;
         }
