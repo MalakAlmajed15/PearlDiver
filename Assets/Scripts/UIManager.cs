@@ -15,6 +15,9 @@ public class UIManager : MonoBehaviour
     public int totalPearls = 0;
     public int totalPearlsInLevel = 0;
 
+    [Header("Air Warning Effect")]
+    public GameObject vignetteWarning;
+
     [Header("UI Panels")]
     public GameObject hudPanel;
     public GameObject gameOverPanel;
@@ -291,6 +294,14 @@ public class UIManager : MonoBehaviour
             player.enabled = true;
             Animator anim = player.GetComponentInChildren<Animator>();
             if (anim != null) anim.speed = 1f;
+        }
+    }
+
+    public void ToggleLowAirWarning(bool showWarning)
+    {
+        if (vignetteWarning != null)
+        {
+            vignetteWarning.SetActive(showWarning);
         }
     }
 }

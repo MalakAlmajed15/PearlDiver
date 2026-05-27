@@ -10780,11 +10780,20 @@ MonoBehaviour:
   numberOfPearls: 5
   goldenPearlPrefab: {fileID: 6948548349908798589, guid: 8e13a81c36a38ee45ba8b8dc5245ffef, type: 3}
   collectSound: {fileID: 8300000, guid: eac95c1682e1b8149b7b5788675f59ee, type: 3}
-  minX: 100
-  maxX: 150
-  minZ: 100
-  maxZ: 150
+  goldenCollectSound: {fileID: 0}
+  spawnRadius: 15
+  minSpawnDist: 3
   spawnY: 0
+  minPearlSpacing: 2.5
+  worldMinX: -35
+  worldMaxX: 465
+  worldMinZ: -15
+  worldMaxZ: 485
+  raycastStartHeight: 350
+  pearlSurfaceOffset: 0.8
+  terrainLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!4 &1811441598
 Transform:
   m_ObjectHideFlags: 0
@@ -10808,6 +10817,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 725937718091492075, guid: 5cc7dcfb5edd77846a25d8018c4d6f4b, type: 3}
+      propertyPath: vignetteWarning
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 725937718091492075, guid: 5cc7dcfb5edd77846a25d8018c4d6f4b, type: 3}
+      propertyPath: underwaterAmbientSound
+      value: 
+      objectReference: {fileID: 8300000, guid: a41631c827d243c4ebd597153d060726, type: 3}
     - target: {fileID: 1909407381530223058, guid: 5cc7dcfb5edd77846a25d8018c4d6f4b, type: 3}
       propertyPath: m_Camera
       value: 
