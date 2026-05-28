@@ -38,11 +38,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2774220344278030320, guid: 1bf0a7aac5269ca449f0522d5f6212a6, type: 3}
       propertyPath: m_LocalRotation.y
@@ -146,53 +146,28 @@ MonoBehaviour:
   player: {fileID: 0}
   pointA: {fileID: 0}
   pointB: {fileID: 0}
-  audioSource: {fileID: 0}
-  detectSfx: {fileID: 0}
-  attackWindupSfx: {fileID: 0}
-  hitSfx: {fileID: 0}
+  terrain: {fileID: 0}
+  terrainOffset: 0.35
+  waterSurfaceY: 0
+  surfaceOffset: 1
   patrolSpeed: 1.5
   chaseSpeed: 2.2
+  returnHomeSpeed: 1.2
   rotationSmoothSpeed: 8
   reachDistance: 0.2
-  groundY: 0
-  useMovementStartDelay: 1
-  movementStartDelay: 0.08
-  movementDelayTurnThreshold: 30
-  randomizeMovementStats: 1
-  useManualMovementMultipliers: 0
-  patrolSpeedMultiplier: 1
-  chaseSpeedMultiplier: 1
-  patrolSpeedVariance: 0.15
-  chaseSpeedVariance: 0.2
-  returnHomeSpeedMultiplier: 0.85
   detectionRange: 4
-  alertRange: 5.2
   loseRange: 5.5
   maxChaseDistanceFromHome: 6
-  returnHomeReengageDelay: 0.75
-  attackRange: 1.2
+  attackRange: 2
   attackWindupTime: 0.4
   attackCooldown: 1
   lungeDistance: 0.6
   lungeSpeed: 6
-  randomizeAttackStats: 1
-  useManualAttackMultipliers: 0
-  attackWindupMultiplier: 1
-  lungeDistanceMultiplier: 1
-  attackWindupVariance: 0.08
-  lungeDistanceVariance: 0.08
   backstepDistance: 0.5
   backstepSpeed: 4
   recoverTime: 0.4
-  startRecoverIfPlayerWithinRange: 1
-  cancelRecoverIfPlayerBeyondRange: 1.6
   damage: 1
   damageCooldown: 1.5
   patrolPauseTime: 0.5
-  turnBeforePatrolMove: 1
-  patrolTurnThreshold: 10
-  randomizeAudioPitch: 1
-  minAudioPitch: 0.96
-  maxAudioPitch: 1.04
   modelYawOffset: 0
   keepUpright: 1
