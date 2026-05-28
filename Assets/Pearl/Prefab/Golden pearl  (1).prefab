@@ -141,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5487593953015599232, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
       propertyPath: m_TagString
-      value: Collectible
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6280029780804645205, guid: 520ff104212e3474593e03fea5f0494a, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
