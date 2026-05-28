@@ -4562,7 +4562,11 @@ MonoBehaviour:
     CONTROLS
 
     WASD / Arrow
-    Keys: Swim and Navigate.'
+    Keys: Swim and Navigate.
+
+    Up : Space
+
+    Down : Shift'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a53d16d139e65b4c9e64aa422266890, type: 2}
   m_sharedMaterial: {fileID: -156203149770732042, guid: 8a53d16d139e65b4c9e64aa422266890, type: 2}
