@@ -149,11 +149,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SeaweedSpawner
   seaweedPrefab: {fileID: -6689036041284674117, guid: 5a28c5bbb2aaae34282474e92446631f, type: 3}
-  numberOfSeaweed: 50
+  numberOfSeaweed: 100
   rangeX: 40
   rangeZ: 40
-  spawnY: -7
-  yOffset: -1
+  fixedSpawnY: -9
   minScale: 0.5
   maxScale: 1.5
   baseRotation: {x: -90, y: 0, z: 0}
@@ -10706,7 +10705,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 48
+      value: 81
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10951,8 +10950,7 @@ MonoBehaviour:
   numberOfCorals: 15
   rangeX: 40
   rangeZ: 40
-  spawnY: -8
-  yOffset: -1
+  fixedSpawnY: -10
   minScale: 5
   maxScale: 5
   colliderSize: {x: 0, y: 0, z: 0}
