@@ -14,6 +14,9 @@ public class AirMeterController : MonoBehaviour
     [Header("UI")]
     public Slider airSlider;
 
+    [Header("Low Air Warning Effect")]
+    public float lowAirPercentage = 0.25f; // Triggers at 25% air
+
     [Header("Underwater Sound")]
     public AudioClip underwaterAmbientSound;
     private AudioSource audioSource;
@@ -41,6 +44,8 @@ public class AirMeterController : MonoBehaviour
             audioSource.volume = 0.5f;
             audioSource.spatialBlend = 0f; // 2D sound
         }
+
+        
     }
 
     void Update()
@@ -79,7 +84,12 @@ public class AirMeterController : MonoBehaviour
                 currentAir = Mathf.Clamp(currentAir, 0, maxAir);
                 airSlider.value = currentAir;
             }
+
+            // Turn off warning because it is refilling air at the surface
+            if (UIManager.Instance != null) UIManager.Instance.ToggleLowAirWarning(false);
+
             return;
+            
         }
 
         // Underwater — play sound
@@ -95,13 +105,31 @@ public class AirMeterController : MonoBehaviour
         currentAir = Mathf.Clamp(currentAir, 0, maxAir);
         airSlider.value = currentAir;
 
+        // Turn the vignette on if air is low, otherwise turn it off
+        if (UIManager.Instance != null)
+        {
+            if (currentAir <= (maxAir * lowAirPercentage))
+            {
+                UIManager.Instance.ToggleLowAirWarning(true);
+            }
+            else
+            {
+                UIManager.Instance.ToggleLowAirWarning(false);
+            }
+        }
+
         if (currentAir <= 0)
         {
             isDepleting = false;
             isRecovering = true;
+            // Turn off the vignette right as they die so it doesn't overlap Game Over
+            if (UIManager.Instance != null) UIManager.Instance.ToggleLowAirWarning(false);
             LoseLife();
         }
-    }
+
+         
+
+}
 
     public void RefillAir()
     {
@@ -109,6 +137,8 @@ public class AirMeterController : MonoBehaviour
         if (airSlider != null) airSlider.value = maxAir;
         isDepleting = true;
         isRecovering = false;
+        // Ensure vignette turns off upon refill
+        if (UIManager.Instance != null) UIManager.Instance.ToggleLowAirWarning(false);
         Debug.Log("Air refilled!");
     }
 
