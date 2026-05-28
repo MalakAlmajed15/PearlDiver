@@ -10284,7 +10284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 122.2
+      value: 61.3
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10547,7 +10547,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1771759965}
   - component: {fileID: 1771759964}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PearlSpawner (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10571,10 +10571,10 @@ MonoBehaviour:
   goldenPearlPrefab: {fileID: 6948548349908798589, guid: 8e13a81c36a38ee45ba8b8dc5245ffef, type: 3}
   collectSound: {fileID: 8300000, guid: c53ceb8e1ef1b31478f297a0a755e14c, type: 3}
   goldenCollectSound: {fileID: 8300000, guid: 82c46495b1019c742b3da43c75606d2a, type: 3}
-  spawnRadius: 5
-  minSpawnDist: 1
+  spawnRadius: 15
+  minSpawnDist: 7
   spawnY: -3
-  minPearlSpacing: 1
+  minPearlSpacing: 5
   worldMinX: -35
   worldMaxX: 465
   worldMinZ: -15
