@@ -10014,10 +10014,10 @@ MonoBehaviour:
   includeCameraPosition: 1
   cameraCheckRadius: 0.1
   adjustFog: 1
-  underwaterFogColor: {r: 0.23921569, g: 0.43137255, b: 0.47843137, a: 1}
-  underwaterFogMode: 1
-  underwaterFogStartDistance: 4
-  underwaterFogEndDistance: 38
+  underwaterFogColor: {r: 0.23921569, g: 0.27058825, b: 0.47843137, a: 1}
+  underwaterFogMode: 3
+  underwaterFogStartDistance: 3
+  underwaterFogEndDistance: 15
   transitionSpeed: 2
   underwaterVolume: {fileID: 0}
   spawnBubbleBursts: 1
