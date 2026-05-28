@@ -4,21 +4,37 @@ using UnityEngine.Audio;
 
 public class SettingsManager : MonoBehaviour
 {
+    public static SettingsManager Instance;
+
     public AudioMixer mainMixer;
     public Slider volumeSlider;
     public Slider brightnessSlider;
     public GameObject settingsPanel;
 
     [Header("Brightness Overlay")]
-    public Image brightnessOverlay; 
+    public Image brightnessOverlay;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
 
     void Start()
     {
         float savedVolume = PlayerPrefs.GetFloat("volume", 1f);
         float savedBrightness = PlayerPrefs.GetFloat("brightness", 0.5f);
 
-        volumeSlider.value = savedVolume;
-        brightnessSlider.value = savedBrightness;
+        if (volumeSlider != null) volumeSlider.value = savedVolume;
+        if (brightnessSlider != null) brightnessSlider.value = savedBrightness;
 
         SetVolume(savedVolume);
         SetBrightness(savedBrightness);
@@ -27,7 +43,6 @@ public class SettingsManager : MonoBehaviour
     public void OnSettingsOpen()
     {
         settingsPanel.SetActive(true);
-
         float currentVol;
         mainMixer.GetFloat("MyExposedVolume", out currentVol);
         volumeSlider.value = Mathf.Pow(10, currentVol / 20);
@@ -43,12 +58,10 @@ public class SettingsManager : MonoBehaviour
 
     public void SetBrightness(float sliderValue)
     {
-
+        if (brightnessOverlay == null) return;
         float overlayAlpha = (1f - sliderValue) * 0.8f;
-
         Color c = brightnessOverlay.color;
         brightnessOverlay.color = new Color(c.r, c.g, c.b, overlayAlpha);
-
         PlayerPrefs.SetFloat("brightness", sliderValue);
     }
 }
