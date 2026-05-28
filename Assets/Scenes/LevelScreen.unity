@@ -2521,7 +2521,7 @@ MonoBehaviour:
   silverMedal: {fileID: 21300000, guid: f0bfb52712df9844e8777e1a7900d8f7, type: 3}
   goldMedal: {fileID: 21300000, guid: d35c1d2587d8e0944bf6a5cc0e8dc5a8, type: 3}
   levelSceneNames:
-  - Shallow Reef
+  - Shallow Reef 1
   - CoralGarden
   - DeepCave
   - TreasureCove
