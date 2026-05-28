@@ -2524,7 +2524,7 @@ MonoBehaviour:
   - Shallow Reef
   - CoralGarden
   - DeepCave
-  - Treasure Cove
+  - TreasureCove
   backButton: {fileID: 1345985650}
   mainMenuSceneName: Main Menu
   lockedButtonColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
