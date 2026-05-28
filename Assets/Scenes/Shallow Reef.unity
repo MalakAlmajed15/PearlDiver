@@ -10284,7 +10284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 61.3
+      value: 52
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10292,7 +10292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 72.9
+      value: 77.9
       objectReference: {fileID: 0}
     - target: {fileID: 3378232457118368859, guid: e87d1f13907f28049a897f1f8ed0f2e1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10571,10 +10571,10 @@ MonoBehaviour:
   goldenPearlPrefab: {fileID: 6948548349908798589, guid: 8e13a81c36a38ee45ba8b8dc5245ffef, type: 3}
   collectSound: {fileID: 8300000, guid: c53ceb8e1ef1b31478f297a0a755e14c, type: 3}
   goldenCollectSound: {fileID: 8300000, guid: 82c46495b1019c742b3da43c75606d2a, type: 3}
-  spawnRadius: 15
-  minSpawnDist: 7
+  spawnRadius: 20
+  minSpawnDist: 12
   spawnY: -3
-  minPearlSpacing: 5
+  minPearlSpacing: 9
   worldMinX: -35
   worldMaxX: 465
   worldMinZ: -15
