@@ -6,8 +6,7 @@ public class CoralSpawner : MonoBehaviour
     public int numberOfCorals = 15;
     public float rangeX = 40f;
     public float rangeZ = 40f;
-    public float spawnY = -8f;
-    public float yOffset = 0f;
+    public float fixedSpawnY = -8f; // Fixed Y — always on seabed
     public float minScale = 8f;
     public float maxScale = 12f;
     public Vector3 colliderSize = new Vector3(2f, 4f, 2f);
@@ -28,8 +27,9 @@ public class CoralSpawner : MonoBehaviour
             float x = center.x + Random.Range(-rangeX, rangeX);
             float z = center.z + Random.Range(-rangeZ, rangeZ);
 
+            // Always use fixedSpawnY — never relative to player
             GameObject coral = Instantiate(randomCoral,
-                new Vector3(x, spawnY + yOffset, z),
+                new Vector3(x, fixedSpawnY, z),
                 Quaternion.Euler(-90, Random.Range(0f, 360f), 0));
 
             coral.transform.localScale = new Vector3(
@@ -38,18 +38,15 @@ public class CoralSpawner : MonoBehaviour
                 Random.Range(minScale, maxScale)
             );
 
-            //collider to parent
             BoxCollider bc = coral.GetComponent<BoxCollider>();
             if (bc == null) bc = coral.AddComponent<BoxCollider>();
             bc.size = colliderSize;
             bc.center = colliderCenter;
             bc.isTrigger = false;
 
-            // collider to ALL children
             foreach (Transform child in coral.GetComponentsInChildren<Transform>())
             {
                 if (child == coral.transform) continue;
-
                 MeshRenderer mr = child.GetComponent<MeshRenderer>();
                 if (mr != null)
                 {
